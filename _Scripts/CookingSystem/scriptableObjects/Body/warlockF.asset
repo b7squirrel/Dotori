@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7a0fbd48b7a495469c9caec40c4cca9, type: 3}
+  m_Name: warlockF
+  m_EditorClassIdentifier: 
+  rollType: 2
+  rollSprite_UI: {fileID: 21300000, guid: 38e3af302ea9547409422af19b43d404, type: 3}
+  rollPrefab:
+  - {fileID: 1289749946308134405, guid: 666728c79bed8884499e320ca636aa5e, type: 3}
+  - {fileID: 950667624872959577, guid: 8f08d0af92617a64ea02814cc30a6175, type: 3}
+  - {fileID: 5994110589348398674, guid: 9dd58a1693fe7144d8a048bf25bfa07b, type: 3}
+  roll_OverrideController:
+  - {fileID: 22100000, guid: c5e9f8f3dc35f9d4f9d231af7c9e5441, type: 2}
+  - {fileID: 22100000, guid: d0efd44372997124faa8a6c4360fb109, type: 2}
+  - {fileID: 22100000, guid: 2cfec63d5167f794daecd80cf33d0322, type: 2}

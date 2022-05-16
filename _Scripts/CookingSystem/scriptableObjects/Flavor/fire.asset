@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7285e8dfb5edd94894e22c718a929c9, type: 3}
+  m_Name: fire
+  m_EditorClassIdentifier: 
+  flavorType: 1
+  flavorSprite_UI: {fileID: 21300000, guid: 127b07a4c94d1d54dbacec126e080da2, type: 3}
+  flavorPrefab:
+  - {fileID: 6502066251058201483, guid: db6ed31638c230149b429cdb45f60f61, type: 3}
+  - {fileID: 4019095362779590246, guid: 3c2c68047d21b984d9fcabfff30582fb, type: 3}
+  - {fileID: 5861914600564170152, guid: c905719ee1536624a8b8bac50777749b, type: 3}
+  flavorSprite:
+  - {fileID: 21300000, guid: 127b07a4c94d1d54dbacec126e080da2, type: 3}
+  - {fileID: 21300000, guid: 127b07a4c94d1d54dbacec126e080da2, type: 3}
+  - {fileID: 21300000, guid: 127b07a4c94d1d54dbacec126e080da2, type: 3}
+  flavorParticle: {fileID: 8142703513907301136, guid: df73389b5fb0c79448147faba92ab132, type: 3}
+  actionPrefab: {fileID: 8114638731018444618, guid: d7b9ed80bd8f40e4d91cfb16c0597564, type: 3}
