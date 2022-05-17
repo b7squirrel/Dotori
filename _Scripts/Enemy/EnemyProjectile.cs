@@ -87,6 +87,7 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (collision.CompareTag("HurtBoxPlayer"))
         {
+            PlayerHealthController.instance.isDead = true;
             DestroyProjectile();
         }
         if (collision.CompareTag("Ground"))
@@ -108,6 +109,7 @@ public class EnemyProjectile : MonoBehaviour
     }
     private void DestroyProjectile()
     {
+        // 이펙트 사운드 추가하기
         Destroy(_smoke);
         Destroy(_debris);
         Destroy(gameObject);

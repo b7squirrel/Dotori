@@ -28,7 +28,7 @@ public class PlayerHealthController : MonoBehaviour
         if(isDead)
         {
             GameObject dieEffect = Instantiate(playerDieEffect, transform.position, transform.rotation);
-            dieEffect.transform.eulerAngles = new Vector3(0, playerHurtBox.whichSideToBeHit, 0);
+            dieEffect.transform.eulerAngles = new Vector3(0, playerHurtBox.Angle_Y, 0);
             gameObject.SetActive(false);
         }
     }

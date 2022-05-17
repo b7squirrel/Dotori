@@ -12130,7 +12130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1406347592
 Transform:
   m_ObjectHideFlags: 0
@@ -101237,7 +101237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b087dfcbbf875c48afabebef7f9bbc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whichSideToBeHit: 0
 --- !u!1 &1957617656
 GameObject:
   m_ObjectHideFlags: 0
@@ -102444,11 +102443,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7174222131783036100, guid: 2f40f8d6322dd6e409d472d6244b1b9b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -27.379562
+      value: -12.11
       objectReference: {fileID: 0}
     - target: {fileID: 7174222131783036100, guid: 2f40f8d6322dd6e409d472d6244b1b9b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.35614967
+      value: -2.35
       objectReference: {fileID: 0}
     - target: {fileID: 7174222131783036100, guid: 2f40f8d6322dd6e409d472d6244b1b9b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -102481,10 +102480,6 @@ PrefabInstance:
     - target: {fileID: 7174222131783036100, guid: 2f40f8d6322dd6e409d472d6244b1b9b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7174222131783036153, guid: 2f40f8d6322dd6e409d472d6244b1b9b, type: 3}
-      propertyPath: retreatPoint
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f40f8d6322dd6e409d472d6244b1b9b, type: 3}

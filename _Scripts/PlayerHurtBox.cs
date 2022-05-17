@@ -2,37 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Player Health Controller¿¡¼­ Die Effect¸¦ ³¯¸± ‹š ¾î´À ¹æÇâÀ¸·Î ³¯¸±Áö Angle_Y¸¦ ÂüÁ¶ÇØ¼­ °áÁ¤
+/// </summary>
 public class PlayerHurtBox : MonoBehaviour
 {
-    private Animator anim;
-    public int whichSideToBeHit; // dieEffectì˜ ë‚ ì•„ê°€ëŠ” ë°©í–¥ì„ ì •í•˜ê¸° ìœ„í•¨
-    private bool isHitAfterParrying;
-    private bool assumingBeingHit;
-    private bool isAttackBoxParried; // projectileì˜ isAttackBoxParriedë¥¼ ê°€ì ¸ì˜¤ê¸° ìœ„í•œ í”Œë˜ê·¸
+    public int Angle_Y { get; private set; }
 
-    private float waitingTime;
-
-    private void Start()
-    {
-        anim = GetComponentInParent<Animator>();
-    }
-    
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("ProjectileEnemy"))
+        if (collision.CompareTag("ProjectileEnemy"))
         {
-            float distance = transform.position.x - collision.transform.position.x;
-
-            if (distance < 0)
+            Vector2 _direction = collision.transform.position - PlayerController.instance.transform.position;
+            if (_direction.x > 0)
             {
-                whichSideToBeHit = 0;
+                Angle_Y = 0;
             }
-            else if (distance > 0) 
+            else
             {
-                whichSideToBeHit = 180;
+                Angle_Y = 180;
             }
-
-            PlayerHealthController.instance.isDead = true;
+        }
+        // ÇÃ·¹ÀÌ¾î°¡ ³Ê¹« ±í°Ô µé¾î°¡¼­ Á×À¸¸é attack box´Â ÇÃ·¹ÀÌ¾îÀÇ µÚ¿¡ ÀÖÀ» ¼öµµ ÀÖÀ½. ±×·¡¼­ º»Ã¼ÀÇ À§Ä¡·Î ¹æÇâ È®ÀÎ. 
+        if (collision.CompareTag("AttackBoxEnemy"))
+        {
+            Transform _enemyTransform = collision.GetComponent<EnemyAttackBox>().BodyPoint;
+            Vector2 _direction = _enemyTransform.position - PlayerController.instance.transform.position;
+            if (_direction.x > 0)
+            {
+                Angle_Y = 0;
+            }
+            else
+            {
+                Angle_Y = 180;
+            }
         }
     }
 }
