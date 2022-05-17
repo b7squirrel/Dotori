@@ -38,9 +38,14 @@ public class PlayerController : MonoBehaviour
         Flip();
         GroundCheck();
         Gravity();
-        Move();
+        
         Jump();
         SetAnimationState();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 
     void GroundCheck()
@@ -66,6 +71,7 @@ public class PlayerController : MonoBehaviour
 
     void Flip()
     {
+
         if (currentDirection > 0f)
         {
             transform.eulerAngles = new Vector3(0f, 0f, 0f);

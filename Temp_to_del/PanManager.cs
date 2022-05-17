@@ -30,19 +30,19 @@ public class PanManager : MonoBehaviour
     // 빈 슬롯이 없으면 캡쳐가 실행되지 않으므로 AcquireRoll이 호출되었을 때는 무조건 빈 슬롯이 있음
     public void AcquireRoll(Transform _prefab)
     {
-        if(IsAvailableToCapture())
+        if (IsAvailableToCapture() == false)
+            return;
+        // 기존 롤들을 한 칸씩 올림
+        for (int i = _panSlots.Length - 1; i > -1; i--)
         {
-            // 기존 롤들을 한 칸씩 올림
-            for (int i = _panSlots.Length - 1; i > -1; i--)
+            if (_panSlots[i].isEmpty == false)
             {
-                if (_panSlots[i].isEmpty == false)
-                {
-                    _panSlots[i].MoveRoll(_panSlots[i + 1]);
-                }
+                _panSlots[i].MoveRoll(_panSlots[i + 1]);
             }
-            // 그리고 가장 아래칸에 캡쳐한 롤을 집어넣음
-            _panSlots[0].AddRoll(_prefab);
         }
+        // 그리고 가장 아래칸에 캡쳐한 롤을 집어넣음
+        _panSlots[0].AddRoll(_prefab);
+        
     }
 
     //슬롯을 돌면서 매개변수로 받은 flavorSO에서 해당 이펙트를 추출하고 각 슬롯을 따라가게 한다. 
@@ -88,11 +88,13 @@ public class PanManager : MonoBehaviour
         GameObject _roll = _panSlots[0].GetRoll().gameObject;
         _roll.transform.position = hitRollPoint.position;
 
-        if (_roll.GetComponent<EnemyRolling>().isFlavored){
+        if (_roll.GetComponent<EnemyRolling>().isFlavored)
+        {
             _roll.tag = "RollFlavored";
             _roll.GetComponent<EnemyRolling>().isFlavored = false;
         }
-        else{
+        else
+        {
             _roll.tag = "Rolling";
         }
 

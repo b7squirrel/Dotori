@@ -11,16 +11,20 @@ public class PlayerCaptureBox : MonoBehaviour
         boxCol = GetComponent<BoxCollider2D>();
     }
 
-    /// <summary>
-    /// Capture Timer가 0보다 크다는 말은 캡쳐버튼을 눌러서 Capture Duration값으로 초기화 되었다는 의미
-    /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("ProjectileEnemy") && PlayerPanAttack.instance.CaptureTimer > 0)
+        if (collision.CompareTag("ProjectileEnemy"))
         {
             EnemyProjectile _clone = collision.GetComponent<EnemyProjectile>();
             _clone.isCaptured = true;
             _clone.tag = "ProjectileCaptured";
+        }
+
+        if (collision.CompareTag("Enemy"))
+        {
+            if (PanManager.instance.IsAvailableToCapture() == false) // 슬롯이 가득 차 있으면 캡쳐를 하지 않음
+                return;
+            collision.GetComponent<EnemyHealth>().GetRolled();
         }
     }
 
@@ -28,12 +32,8 @@ public class PlayerCaptureBox : MonoBehaviour
     {
         if (boxCol == null)
             return;
-
-        if (PlayerPanAttack.instance.CaptureTimer > 0)
-        {
-            Color color = new Color(1, 0, 0, .3f);
-            Gizmos.color = color;
-            Gizmos.DrawCube(boxCol.bounds.center, boxCol.bounds.size);
-        }
+        Color color = new Color(1, 0, 0, .3f);
+        Gizmos.color = color;
+        Gizmos.DrawCube(boxCol.bounds.center, boxCol.bounds.size);
     }
 }

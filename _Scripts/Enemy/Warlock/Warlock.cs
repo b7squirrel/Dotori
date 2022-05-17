@@ -4,39 +4,42 @@ using UnityEngine;
 
 public class Warlock : MonoBehaviour
 {
-    public float moveSpeed, retreatSpeed;
+    [Header("Movement")]
+    [SerializeField] float moveSpeed;
+    [SerializeField] float retreatSpeed;
 
-    private bool isDetecting;  //플레이어를 감지. 가장 넓은 구간
-    private bool isFacingRight;
+    bool isDetecting;  //플레이어를 감지. 가장 넓은 구간
+    bool isFacingRight;
 
-    public float shootCoolTime;
-    private float shootCounter;
-    public Transform castingPoint;
-    //public GameObject energy;
-    public Transform castingRayCastPoint;
-    public float distanceToRetreat;
-    public LayerMask playerMask;
+    [Header("Attack")]
+    float shootCounter;
+    [SerializeField] float shootCoolTime;
+    [SerializeField] Transform castingPoint;
+    [SerializeField] Transform castingRayCastPoint;
+    [SerializeField] float distanceToRetreat;
+    [SerializeField] LayerMask playerMask;
 
-    private bool detectingPlayer;   //retreat해야 하는 지점까지 플레이어가 들어왔을 때
-    public float retreatCoolTime;
-    private float retreatCounter;
-    private Vector2 whereToRetreat;
-    public Transform retreatPoint;
-    public float jumpForce;
-    private bool isRetreating;
+    [Header("Retreat")]
+    bool detectingPlayer;   //retreat해야 하는 지점까지 플레이어가 들어왔을 때
+    [SerializeField] float retreatCoolTime;
+    float retreatCounter;
+    Vector2 whereToRetreat;
+    [SerializeField] Transform retreatPoint;
+    [SerializeField] float jumpForce;
+    bool isRetreating;
 
-    public Transform detectingWallPoint; // 뒤에 벽이 있으면 점프하지 않도록
-    public float distanceToWall;
-    private RaycastHit2D hitWall;
-    public LayerMask groundMask;
-    private bool detectingWall;
+    [SerializeField] Transform detectingWallPoint; // 뒤에 벽이 있으면 점프하지 않도록
+    [SerializeField] float distanceToWall;
+    RaycastHit2D hitWall;
+    [SerializeField] LayerMask groundMask;
+    bool detectingWall;
 
-    public GameObject projectile;
-    public float shootAnticTime;
+    [SerializeField] GameObject projectile;
+    [SerializeField] float shootAnticTime;
 
-    private Rigidbody2D theRB;
-    private Animator anim;
-    private RaycastHit2D hit;
+    Rigidbody2D theRB;
+    Animator anim;
+    RaycastHit2D hit;
 
     void Start()
     {
@@ -192,7 +195,7 @@ public class Warlock : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, whereToRetreat, retreatSpeed * Time.deltaTime);
 
-            if (Mathf.Abs(Vector2.Distance(transform.position, whereToRetreat)) < .5f)
+            if (Mathf.Abs(Vector2.Distance(transform.position, whereToRetreat)) < .5f || detectingWall)
             {
                 isRetreating = false;
             }

@@ -79,7 +79,7 @@ public class EnemyHealth : MonoBehaviour
             if(!isStunned)
             {
                 AudioManager.instance.Play("pan_hit_05");
-                TakeDamage(collision.GetComponent<PlayerAttackBox>().GetAttackPower());
+                TakeDamage();
             }
         }
         if (collision.CompareTag("ProjectileDeflected"))
@@ -107,15 +107,10 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage()
     {
-        currentHP -= damage;
-        if (currentHP <= 0)
-        {
-            SetStunState(true);
-            SetKnockBackState(true);
-            currentHP = maxHP;
-        }
+        SetStunState(true);
+        SetKnockBackState(true);
     }
     public void GetRolled()
     {

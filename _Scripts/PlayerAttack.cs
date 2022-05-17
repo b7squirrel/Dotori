@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    private Animator anim;
 
-    public GameObject attackBox;
-    public float attackCoolTime;
-    private float attackTimer;
+    [SerializeField] GameObject attackBox;
+    [SerializeField] float attackCoolTime;
+    float attackTimer;
 
-    public float parryDuration;
-    [HideInInspector] public float parryTimer;
+    [SerializeField] float parryDuration;
+    public float ParryTimer { get; set; }
 
-    private bool isAttacking; // 어택 애니메이션이 재생되는 동안은 다른 어택 애니메이션이 재생되지 않도록 하는 플래그
-
-    public Inventory inventory;
+    Animator anim;
 
     void Start()
     {
@@ -38,22 +35,26 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if(PanManager.instance.CountRollNumber() == 0)  // 롤이 팬 위에 없으면 일반 공격
+            if (PanManager.instance.CountRollNumber() > 0)
+                return;
+            if (attackTimer <= 0f)
             {
-                if(attackTimer <= 0f)
-                {
-                    anim.Play("Pan_Attack");
-                    AudioManager.instance.Play("whoosh_01");
-                    attackTimer = attackCoolTime;
-                }
+                anim.Play("Pan_Attack");
+                AudioManager.instance.Play("whoosh_01");
+                attackTimer = attackCoolTime;
             }
+        }
+
+        if (ParryTimer > 0)
+        {
+            ParryTimer -= Time.deltaTime;
         }
     }
     // animation event
     void AttackBoxOn()
     {
         attackBox.SetActive(true);
-        parryTimer = parryDuration;
+        ParryTimer = parryDuration;
     }
     void AttackBoxOff()
     {
