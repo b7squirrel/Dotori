@@ -25,6 +25,15 @@ public class EnemyAttackBox : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if (isHittingAttackBox)
+        {
+            Debug.Log("Hitting Attack BOx");
+            parriedBufferTimeCounter = parriedBufferTime;
+            _enemyHealth.SetParriedState(true);
+            isHittingAttackBox = false;
+            isHittingPlayer = false;
+        }
+
         if (isHittingPlayer == false)
             return;
 
@@ -36,14 +45,6 @@ public class EnemyAttackBox : MonoBehaviour
             isHittingAttackBox = false;
             isHittingPlayer = false;
             return;
-        }
-
-        if (isHittingAttackBox)
-        {
-            parriedBufferTimeCounter = parriedBufferTime;
-            _enemyHealth.SetParriedState(true);
-            isHittingAttackBox = false;
-            isHittingPlayer = false;
         }
     }
 

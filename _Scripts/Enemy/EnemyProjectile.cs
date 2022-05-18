@@ -25,6 +25,11 @@ public class EnemyProjectile : MonoBehaviour
     public float deflectionDelayTime;
     bool isDelayed;
 
+    bool isHittingPlayer;
+    bool isHittingCaptureBox;
+    [SerializeField] float captureBufferTime;
+    float captureBufferCounter;
+
     public FlavorSo flavorSo;
 
     public GameObject deflectionHitEffect;
@@ -44,10 +49,12 @@ public class EnemyProjectile : MonoBehaviour
         isFlying = false;
         _smoke = Instantiate(smokeRed, transform.position, Quaternion.identity);
         _debris = Instantiate(debris, transform.position, Quaternion.identity);
+        captureBufferCounter = captureBufferTime;
     }
 
     void Update()
     {
+        CheckPlayerDead();
         MoveParticles();
         PauseProjectileOnHit();
 
@@ -83,12 +90,24 @@ public class EnemyProjectile : MonoBehaviour
             }
         }
     }
+
+    void CheckPlayerDead()
+    {
+        if (isHittingPlayer == false)
+            return;
+        
+        captureBufferCounter -= Time.deltaTime;
+        if (captureBufferCounter < 0)
+        {
+            PlayerHealthController.instance.isDead = true;
+            DestroyProjectile();
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("HurtBoxPlayer"))
         {
-            PlayerHealthController.instance.isDead = true;
-            DestroyProjectile();
+            isHittingPlayer = true;
         }
         if (collision.CompareTag("Ground"))
         {

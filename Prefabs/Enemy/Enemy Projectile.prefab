@@ -154,6 +154,7 @@ MonoBehaviour:
   isCaptured: 0
   gettingInSpeed: 5
   deflectionDelayTime: 0.05
+  captureBufferTime: 0.1
   flavorSo: {fileID: 11400000, guid: 4a7efb159676c1e44a463d9887e4c5d9, type: 2}
   deflectionHitEffect: {fileID: 5090427162195939564, guid: cfb19a9bda3e8bd40a92995ab5a6faac, type: 3}
   smokeRed: {fileID: 8753089824342224380, guid: a4523cf7bdaf2974fa2726619e377fad, type: 3}
