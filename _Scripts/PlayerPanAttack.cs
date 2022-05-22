@@ -43,16 +43,9 @@ public class PlayerPanAttack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if (panManager.IsAvailableToCapture())
-            {
-                //panAnim.Play("Pan_HitRoll");
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
             if (panManager.CountRollNumber() == 0)
                 return;
+            panAnim.Play("Pan_HitRoll");
             PanManager.instance.ClearRoll();
             EffectsClearRoll();
         }

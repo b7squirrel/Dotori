@@ -1928,7 +1928,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
   m_Name: 
@@ -1971,7 +1971,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 13.5
+  orthographic size: 11.25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -104597,7 +104597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493158246380748831, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.63
+      value: -16.68
       objectReference: {fileID: 0}
     - target: {fileID: 6493158246380748831, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
       propertyPath: m_LocalPosition.y
@@ -106242,6 +106242,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1406347592}
     m_Modifications:
+    - target: {fileID: 7174222131630525849, guid: 2f40f8d6322dd6e409d472d6244b1b9b, type: 3}
+      propertyPath: m_Size.x
+      value: 29.19
+      objectReference: {fileID: 0}
     - target: {fileID: 7174222131783036098, guid: 2f40f8d6322dd6e409d472d6244b1b9b, type: 3}
       propertyPath: m_Name
       value: Warlock
@@ -106252,7 +106256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7174222131783036100, guid: 2f40f8d6322dd6e409d472d6244b1b9b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.11
+      value: -9.5
       objectReference: {fileID: 0}
     - target: {fileID: 7174222131783036100, guid: 2f40f8d6322dd6e409d472d6244b1b9b, type: 3}
       propertyPath: m_LocalPosition.y
