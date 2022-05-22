@@ -201,7 +201,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 384
-  projectile: {fileID: 2653982588363610841, guid: 061b54978e2c05f449089fb8d162e04c, type: 3}
+  projectile: {fileID: 4585337845338926987, guid: 061b54978e2c05f449089fb8d162e04c, type: 3}
   shootAnticTime: 0.8
 --- !u!1 &7174222131805733062
 GameObject:

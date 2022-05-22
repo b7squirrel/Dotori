@@ -21,7 +21,6 @@ public class PlayerPanAttack : MonoBehaviour
     [SerializeField] GameObject HitRollEffect;
     [SerializeField] Transform captureBox;  // 여기서 HItRoll Effect를 발생시키기
 
-
     private void Awake()
     {
         instance = this;
@@ -30,6 +29,7 @@ public class PlayerPanAttack : MonoBehaviour
     {
         panAnim = GetComponent<Animator>();
         panManager = GetComponentInChildren<PanManager>();
+        captureBox.gameObject.SetActive(false);
         //boxCol = GetComponentInChildren<PlayerCaptureBox>().GetComponent<BoxCollider2D>();
     }
     void Update()
@@ -45,13 +45,13 @@ public class PlayerPanAttack : MonoBehaviour
         {
             if (panManager.IsAvailableToCapture())
             {
-                panAnim.Play("Pan_HitRoll");
+                //panAnim.Play("Pan_HitRoll");
             }
         }
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if (PanManager.instance.CountRollNumber() == 0)
+            if (panManager.CountRollNumber() == 0)
                 return;
             PanManager.instance.ClearRoll();
             EffectsClearRoll();

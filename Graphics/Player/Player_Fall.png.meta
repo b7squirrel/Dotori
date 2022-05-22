@@ -1,37 +1,7 @@
 fileFormatVersion: 2
-guid: f71f1d45df3a8f147a47f110325fa9c0
+guid: 2e70d7a9a82c41c489fc831293cb5d1f
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 7071935623343613943
-    second: Player_Run_0
-  - first:
-      213: 7927430643088319458
-    second: Player_Run_1
-  - first:
-      213: -1396096166093489214
-    second: Player_Run_2
-  - first:
-      213: 1781292534199600417
-    second: Player_Run_3
-  - first:
-      213: 3041140956625590587
-    second: Player_Run_4
-  - first:
-      213: 5743889843950775253
-    second: Player_Run_5
-  - first:
-      213: -2326533491371090439
-    second: Player_Run_6
-  - first:
-      213: -1732827444613157014
-    second: Player_Run_7
-  - first:
-      213: 959529608333098588
-    second: Player_Run_8
-  - first:
-      213: -6458370430407502735
-    second: Player_Run_9
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -96,10 +66,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -108,10 +78,22 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -122,70 +104,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Run_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 64
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7f7a3df0bff842260800000000000000
-      internalID: 7071935623343613943
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Run_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e363d62b24e30e60800000000000000
-      internalID: 7927430643088319458
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Run_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2cb76bb0fe110ace0800000000000000
-      internalID: -1396096166093489214
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Run_3
+      name: Player_Fall_0
       rect:
         serializedVersion: 2
         x: 0
@@ -199,14 +118,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 125c5064f1c68b810800000000000000
-      internalID: 1781292534199600417
+      spriteID: c61515b60f755c640adcf36183e174ce
+      internalID: 122978996
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Run_4
+      name: Player_Fall_1
       rect:
         serializedVersion: 2
         x: 64
@@ -220,35 +139,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b395f8f569d443a20800000000000000
-      internalID: 3041140956625590587
+      spriteID: 25cd37dc3e33a254a979b6cc5810c826
+      internalID: -346332826
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Run_5
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 32
-        width: 64
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5dbe8a1716566bf40800000000000000
-      internalID: 5743889843950775253
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Run_6
+      name: Player_Fall_2
       rect:
         serializedVersion: 2
         x: 0
@@ -262,14 +160,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9fdd6c8bd1e76bfd0800000000000000
-      internalID: -2326533491371090439
+      spriteID: 6d9fff97b2c2dd646bad3730c19daae8
+      internalID: -288481785
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Run_7
+      name: Player_Fall_3
       rect:
         serializedVersion: 2
         x: 64
@@ -283,8 +181,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 17472b033d050a042849952a030d1f93
-      internalID: 1115886004
+      spriteID: b07de7853031aa04f9d0fe995bf8586d
+      internalID: 31019794
       vertices: []
       indices: 
       edges: []
@@ -300,14 +198,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player_Run_7: 1115886004
-      Player_Run_6: -2326533491371090439
-      Player_Run_4: 3041140956625590587
-      Player_Run_5: 5743889843950775253
-      Player_Run_1: 7927430643088319458
-      Player_Run_2: -1396096166093489214
-      Player_Run_0: 7071935623343613943
-      Player_Run_3: 1781292534199600417
+      Player_Fall_3: 31019794
+      Player_Fall_2: -288481785
+      Player_Fall_0: 122978996
+      Player_Fall_1: -346332826
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

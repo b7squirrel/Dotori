@@ -1,37 +1,34 @@
 fileFormatVersion: 2
-guid: f71f1d45df3a8f147a47f110325fa9c0
+guid: 7e878a089effb264f90e19f4190f7796
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7071935623343613943
-    second: Player_Run_0
+      213: -6540617442939870458
+    second: Player_Parrying_0
   - first:
-      213: 7927430643088319458
-    second: Player_Run_1
+      213: 5197362585860027485
+    second: Player_Parrying_1
   - first:
-      213: -1396096166093489214
-    second: Player_Run_2
+      213: -1515263578133854938
+    second: Player_Parrying_2
   - first:
-      213: 1781292534199600417
-    second: Player_Run_3
+      213: 3960312055063117948
+    second: Player_Parrying_3
   - first:
-      213: 3041140956625590587
-    second: Player_Run_4
+      213: -1268758832927243440
+    second: Player_Parrying_4
   - first:
-      213: 5743889843950775253
-    second: Player_Run_5
+      213: 5502686269165109670
+    second: Player_Parrying_5
   - first:
-      213: -2326533491371090439
-    second: Player_Run_6
+      213: -2241248952860883549
+    second: Player_Parrying_6
   - first:
-      213: -1732827444613157014
-    second: Player_Run_7
+      213: 5399872223377826833
+    second: Player_Parrying_7
   - first:
-      213: 959529608333098588
-    second: Player_Run_8
-  - first:
-      213: -6458370430407502735
-    second: Player_Run_9
+      213: -2643788167776128294
+    second: Player_Parrying_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -96,7 +93,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -108,7 +105,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -122,7 +119,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Run_0
+      name: Player_Parry_0
       rect:
         serializedVersion: 2
         x: 0
@@ -136,14 +133,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f7a3df0bff842260800000000000000
-      internalID: 7071935623343613943
+      spriteID: f352735ee9074e943a2d240cf1a419dd
+      internalID: -559720579
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Run_1
+      name: Player_Parry_1
       rect:
         serializedVersion: 2
         x: 64
@@ -157,14 +154,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e363d62b24e30e60800000000000000
-      internalID: 7927430643088319458
+      spriteID: 007b85f508a0ec84ea620d6149918a34
+      internalID: -2085920318
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Run_2
+      name: Player_Parry_2
       rect:
         serializedVersion: 2
         x: 128
@@ -178,14 +175,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2cb76bb0fe110ace0800000000000000
-      internalID: -1396096166093489214
+      spriteID: 6a687217fc4fd7b41b98e50434e5dce7
+      internalID: -1188776401
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Run_3
+      name: Player_Parry_3
       rect:
         serializedVersion: 2
         x: 0
@@ -199,14 +196,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 125c5064f1c68b810800000000000000
-      internalID: 1781292534199600417
+      spriteID: 0e8710858c2106d4f9da91526afbdef3
+      internalID: -1295060979
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Run_4
+      name: Player_Parry_4
       rect:
         serializedVersion: 2
         x: 64
@@ -220,14 +217,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b395f8f569d443a20800000000000000
-      internalID: 3041140956625590587
+      spriteID: 1ef80df4b040bb24d845f0982b385f15
+      internalID: -1653185803
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Run_5
+      name: Player_Parry_5
       rect:
         serializedVersion: 2
         x: 128
@@ -241,14 +238,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5dbe8a1716566bf40800000000000000
-      internalID: 5743889843950775253
+      spriteID: 93016aca6e746ef4aa76fec14f4810c7
+      internalID: -1420637347
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Run_6
+      name: Player_Parry_6
       rect:
         serializedVersion: 2
         x: 0
@@ -262,14 +259,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9fdd6c8bd1e76bfd0800000000000000
-      internalID: -2326533491371090439
+      spriteID: 5a414a940bb429649a855a8517cdf28b
+      internalID: -521210411
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Run_7
+      name: Player_Parry_7
       rect:
         serializedVersion: 2
         x: 64
@@ -283,8 +280,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 17472b033d050a042849952a030d1f93
-      internalID: 1115886004
+      spriteID: 39524e2eccd47e940bc77a404d69d7a5
+      internalID: 352644055
       vertices: []
       indices: 
       edges: []
@@ -300,14 +297,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player_Run_7: 1115886004
-      Player_Run_6: -2326533491371090439
-      Player_Run_4: 3041140956625590587
-      Player_Run_5: 5743889843950775253
-      Player_Run_1: 7927430643088319458
-      Player_Run_2: -1396096166093489214
-      Player_Run_0: 7071935623343613943
-      Player_Run_3: 1781292534199600417
+      Player_Parry_6: -521210411
+      Player_Parry_5: -1420637347
+      Player_Parry_2: -1188776401
+      Player_Parry_0: -559720579
+      Player_Parry_1: -2085920318
+      Player_Parry_7: 352644055
+      Player_Parry_4: -1653185803
+      Player_Parry_3: -1295060979
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

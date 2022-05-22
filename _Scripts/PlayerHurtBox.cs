@@ -4,6 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// Player Health Controller에서 Die Effect를 날릴 떄 어느 방향으로 날릴지 Angle_Y를 참조해서 결정
+/// Player Health Controller에서 플레이어가 죽었다면 Angle_Y값을 사용해서 파티클 생성
 /// </summary>
 public class PlayerHurtBox : MonoBehaviour
 {

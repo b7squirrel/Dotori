@@ -52,28 +52,26 @@ public class Warlock : MonoBehaviour
         if(GetComponentInChildren<EnemyHealth>().IsStunned())  // 스턴 상태라면 계속 이 반복문에 머물도록
         {
             anim.Play("Warlock_Stunned");
+            return;
         }
-        else // 스턴 상태가 아니라면 아래를 실행
+        // 스턴 상태가 아니라면 아래를 실행
+        CheckingDistance();
+        DetectingPlayer();
+        DetectingWall();
+        Retreat();
+
+        if (isDetecting == false)
+            return;
+        Direction();
+
+        if (shootCounter < 0)
         {
-            CheckingDistance();
-            DetectingPlayer();
-            DetectingWall();
-            Retreat();
-
-            if (isDetecting)
-            {
-                Direction();
-
-                if (shootCounter < 0)
-                {
-                    StartCoroutine(Shoot());
-                    shootCounter = shootCoolTime;
-                }
-                else
-                {
-                    shootCounter -= Time.deltaTime;
-                }
-            }
+            StartCoroutine(Shoot());
+            shootCounter = shootCoolTime;
+        }
+        else
+        {
+            shootCounter -= Time.deltaTime;
         }
     }
     void ResetStunnedState()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
-    public float moveSpeed;
+    [SerializeField] float moveSpeed;
     Rigidbody2D theRB;
     Animator anim;
     float currentDirection;
@@ -13,13 +13,26 @@ public class PlayerController : MonoBehaviour
 
     [Header("Ground Check")]
     bool isGrounded;
-    public LayerMask whatIsGround;
-    public Transform groundCheck;
+    [SerializeField] LayerMask whatIsGround;
+    [SerializeField] Transform groundCheck;
     
     [Header("Jump")]
-    public float jumpForce;
-    public float jumpRememberTime;
+    [SerializeField] float jumpForce;
+    [SerializeField] float jumpRememberTime;
     float jumpRemember;
+
+    [Header("Parry")]
+    [SerializeField] Transform parryStepTarget;
+    [SerializeField] float parryDashSpeed;
+    Vector2 newParryStepTarget;
+
+    [Header("Dodge")]
+    [SerializeField] Transform dodgeStepTarget;
+    [SerializeField] float dodgeSpeed;
+    Vector2 newDodgeStepTarget;
+
+    public bool IsParrying { get; set; }
+    public bool IsDodging { get; set; }
 
     private void Awake()
     {
@@ -38,7 +51,6 @@ public class PlayerController : MonoBehaviour
         Flip();
         GroundCheck();
         Gravity();
-        
         Jump();
         SetAnimationState();
     }
@@ -66,7 +78,47 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
+        if (IsDodging)
+        {
+            if (isGrounded)
+            {
+                float _distance = Mathf.Abs(transform.position.x - newDodgeStepTarget.x);
+                if (_distance > .1f)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, newDodgeStepTarget, dodgeSpeed * Time.deltaTime);
+                    return;
+                }
+            }
+        }
+        if (IsParrying)
+        {
+            if (Mathf.Abs(theRB.velocity.y) < .1f)
+            {
+                float _distance = Mathf.Abs(transform.position.x - newParryStepTarget.x);
+                if (_distance > .1f)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, newParryStepTarget, parryDashSpeed * Time.deltaTime);
+                    return;
+                }
+            }
+        }
         theRB.velocity = new Vector2(currentDirection * moveSpeed, theRB.velocity.y);
+    }
+
+    /// <summary>
+    /// 패리 대쉬할 위치 설정
+    /// </summary>
+    public void SetParryStepTarget()
+    {
+        newParryStepTarget = parryStepTarget.position;
+    }
+
+    /// <summary>
+    /// 닷지할 위치 설정
+    /// </summary>
+    public void SetDodgeStepTarget()
+    {
+        newDodgeStepTarget = dodgeStepTarget.position;
     }
 
     void Flip()

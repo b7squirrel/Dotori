@@ -5,28 +5,28 @@ using UnityEngine;
 /// <summary>
 /// PlayerAttack의 parryTimer 참조해서 패링 성공여부 판단
 /// </summary>
-public class PlayerAttackBox : MonoBehaviour
+public class PlayerParryBox : MonoBehaviour
 {
     BoxCollider2D boxCol;
     Color parryColor;
-    PlayerAttack playerAttack;
+    PlayerController playerConteroller;
 
     private void Awake()
     {
         boxCol = GetComponent<BoxCollider2D>();
         parryColor = new Color(1, 0, 1, 0.5f);
-        playerAttack = GetComponentInParent<PlayerAttack>();
+        playerConteroller = GetComponentInParent<PlayerController>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (playerAttack.ParryTimer <= 0f)
+        if (playerConteroller.IsParrying == false)
             return;
         if (collision.CompareTag("ProjectileEnemy"))
         {
             var clone = collision.GetComponent<EnemyProjectile>();
-            clone.GetComponent<EnemyProjectile>().contactPoint = new Vector2(collision.transform.position.x, collision.transform.position.y);
-            clone.GetComponent<EnemyProjectile>().isParried = true;
+            clone.GetComponent<EnemyProjectile>().ContactPoint = new Vector2(collision.transform.position.x, collision.transform.position.y);
+            clone.GetComponent<EnemyProjectile>().IsParried = true;
         }
     }
 

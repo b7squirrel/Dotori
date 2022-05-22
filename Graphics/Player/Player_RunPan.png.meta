@@ -1,34 +1,7 @@
 fileFormatVersion: 2
-guid: 7e878a089effb264f90e19f4190f7796
+guid: 2883c68abd2674b4980eb1ed9e92c108
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -6540617442939870458
-    second: Player_Parrying_0
-  - first:
-      213: 5197362585860027485
-    second: Player_Parrying_1
-  - first:
-      213: -1515263578133854938
-    second: Player_Parrying_2
-  - first:
-      213: 3960312055063117948
-    second: Player_Parrying_3
-  - first:
-      213: -1268758832927243440
-    second: Player_Parrying_4
-  - first:
-      213: 5502686269165109670
-    second: Player_Parrying_5
-  - first:
-      213: -2241248952860883549
-    second: Player_Parrying_6
-  - first:
-      213: 5399872223377826833
-    second: Player_Parrying_7
-  - first:
-      213: -2643788167776128294
-    second: Player_Parrying_8
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -93,7 +66,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -108,7 +81,19 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -119,190 +104,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Parrying_0
+      name: Player_RunPan_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e3bfe00eac95d14384c72e54959f0f4
+      internalID: -592247680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_RunPan_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cbb002f5935a584785c7cb0e19d5374
+      internalID: 44906816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_RunPan_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 406a9d09c69cfaf4ca2715954b80d063
+      internalID: -2034600080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_RunPan_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 64
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05527630e21de1941b6a653b7aa3af94
+      internalID: -935573876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_RunPan_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 64
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bbc733ae040584439e08fb6a3ef6fec
+      internalID: -207049008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_RunPan_5
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 64
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82c26969528b0be47a12a186cffaaddd
+      internalID: -367820950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_RunPan_6
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 108
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60368ddd61f0b35a0800000000000000
-      internalID: -6540617442939870458
+      spriteID: 48480a7b784000747a844c9e03ce5485
+      internalID: -1818577984
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Parrying_1
+      name: Player_RunPan_7
       rect:
         serializedVersion: 2
-        x: 108
+        x: 64
         y: 0
-        width: 108
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d54b71b2cbdb02840800000000000000
-      internalID: 5197362585860027485
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Parrying_2
-      rect:
-        serializedVersion: 2
-        x: 216
-        y: 0
-        width: 108
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6258e3ccdc3b8fae0800000000000000
-      internalID: -1515263578133854938
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Parrying_3
-      rect:
-        serializedVersion: 2
-        x: 324
-        y: 0
-        width: 108
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c700cb9d4dad5f630800000000000000
-      internalID: 3960312055063117948
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Parrying_4
-      rect:
-        serializedVersion: 2
-        x: 432
-        y: 0
-        width: 108
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0538bb94096746ee0800000000000000
-      internalID: -1268758832927243440
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Parrying_5
-      rect:
-        serializedVersion: 2
-        x: 540
-        y: 0
-        width: 108
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6a18100e1087d5c40800000000000000
-      internalID: 5502686269165109670
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Parrying_6
-      rect:
-        serializedVersion: 2
-        x: 648
-        y: 0
-        width: 108
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3a5c287b3fb75e0e0800000000000000
-      internalID: -2241248952860883549
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Parrying_7
-      rect:
-        serializedVersion: 2
-        x: 756
-        y: 0
-        width: 108
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1142fea6d2330fa40800000000000000
-      internalID: 5399872223377826833
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Parrying_8
-      rect:
-        serializedVersion: 2
-        x: 864
-        y: 0
-        width: 108
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ad2b2563ba06f4bd0800000000000000
-      internalID: -2643788167776128294
+      spriteID: 911c7a61c9a15d5449ae44e259ec7e90
+      internalID: -1160224952
       vertices: []
       indices: 
       edges: []
@@ -318,15 +282,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player_Parrying_7: 5399872223377826833
-      Player_Parrying_4: -1268758832927243440
-      Player_Parrying_0: -6540617442939870458
-      Player_Parrying_3: 3960312055063117948
-      Player_Parrying_1: 5197362585860027485
-      Player_Parrying_2: -1515263578133854938
-      Player_Parrying_5: 5502686269165109670
-      Player_Parrying_8: -2643788167776128294
-      Player_Parrying_6: -2241248952860883549
+      Player_RunPan_5: -367820950
+      Player_RunPan_1: 44906816
+      Player_RunPan_0: -592247680
+      Player_RunPan_3: -935573876
+      Player_RunPan_7: -1160224952
+      Player_RunPan_6: -1818577984
+      Player_RunPan_2: -2034600080
+      Player_RunPan_4: -207049008
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
