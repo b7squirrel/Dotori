@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float dodgeSpeed;
     Vector2 newDodgeStepTarget;
 
-    public bool IsParrying { get; set; }
+    public bool IsAttacking { get; set; }
     public bool IsDodging { get; set; }
 
     private void Awake()
@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        if (IsParrying)
+        if (IsAttacking)
         {
             if (Mathf.Abs(theRB.velocity.y) < .1f)
             {

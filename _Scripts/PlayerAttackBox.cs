@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// PlayerAttack의 parryTimer 참조해서 패링 성공여부 판단
 /// </summary>
-public class PlayerParryBox : MonoBehaviour
+public class PlayerAttackBox : MonoBehaviour
 {
     BoxCollider2D boxCol;
     Color parryColor;
@@ -20,7 +20,7 @@ public class PlayerParryBox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (playerConteroller.IsParrying == false)
+        if (playerConteroller.IsAttacking == false)
             return;
         if (collision.CompareTag("ProjectileEnemy"))
         {

@@ -8,15 +8,15 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] float parryCoolTime;
     float parryCoolingCounter;
     PlayerController playerController;
-    PlayerParryBox playerParryBox;
-    Animator anim;
+    PlayerAttackBox playerAttackBox;
+    Animator animPan;
 
     void Start()
     {
-        anim = GetComponent<Animator>();
-        playerController = GetComponent<PlayerController>();
-        playerParryBox = GetComponentInChildren<PlayerParryBox>();
-        playerParryBox.gameObject.SetActive(false);
+        animPan = GetComponentInChildren<PlayerCapture>().GetComponent<Animator>();
+        playerController = GetComponentInParent<PlayerController>();
+        playerAttackBox = GetComponentInChildren<PlayerAttackBox>();
+        playerAttackBox.gameObject.SetActive(false);
     }
 
     void Update()
@@ -27,47 +27,48 @@ public class PlayerAttack : MonoBehaviour
         }
 
         //어택 동작이 부득이하게 도중에 취소되어 attackboxOff가 실행되지 않았을 경우를 대비
-        if (IsPlayingAnimation("Player_Parry") == false)
+        if (IsPlayingPanAnimation("Pan_Attack") == false)
         {
-            playerParryBox.gameObject.SetActive(false);
+            playerAttackBox.gameObject.SetActive(false);
         }
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
             if (PanManager.instance.CountRollNumber() > 0)
                 return;
-            if (IsPlayingAnimation("Player_Parry"))
+            if (IsPlayingPanAnimation("Pan_Attack"))
+                return;
+            if (IsPlayingPanAnimation("Pan_HitRoll"))
                 return;
             if (parryCoolingCounter <= 0f)
             {
-                anim.Play("Player_Parry");
+                animPan.Play("Pan_Attack");
                 AudioManager.instance.Play("whoosh_01");
                 parryCoolingCounter = parryCoolTime;
             }
         }
     }
-    bool IsPlayingAnimation(string _animation)
+    bool IsPlayingPanAnimation(string _animation)
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName(_animation))
+        if (animPan.GetCurrentAnimatorStateInfo(0).IsName(_animation))
         {
             return true;
         }
         return false;
     }
-    //animation events
     /// <summary>
+    /// animation events
     /// parry할 때 움직임을 제어하기 위해 IsParrying 플레이어 컨트롤러에 전달. parry box 켜기
     /// </summary>
-    void EnterParry()
+    void EnterAttack()
     {
-        playerController.IsParrying = true;
-        playerParryBox.gameObject.SetActive(true);
+        playerController.IsAttacking = true;
+        playerAttackBox.gameObject.SetActive(true);
         playerController.SetParryStepTarget();
     }
-    void ExitParry()
+    void ExitAttack()
     {
-        playerController.IsParrying = false;
-        playerParryBox.gameObject.SetActive(false);
-
+        playerController.IsAttacking = false;
+        playerAttackBox.gameObject.SetActive(false);
     }
 }
