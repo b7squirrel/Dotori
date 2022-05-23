@@ -4,42 +4,43 @@ using UnityEngine;
 
 public class GoulFighter : MonoBehaviour
 {
-    private enum enemyState { idle, follow, attack, stunned, parried };
+    enum enemyState { idle, follow, attackAntic, attack, stunned, parried };
     [SerializeField] private enemyState currentState;
 
-    private Animator anim;
-    private Rigidbody2D theRB;
+    Animator anim;
+    Rigidbody2D theRB;
 
     [Header("Detecting")]
-    public Transform castPoint;
-    public LayerMask action;
+    [SerializeField] Transform castPoint;
+    [SerializeField] LayerMask action;
     [SerializeField] BoxCollider2D detectingArea;
     Vector2 _center, _size;
     [SerializeField] float _debugAlpha;
 
-    private bool canSeePlayer;
+    bool canSeePlayer;
 
     [HideInInspector]
-    public bool isFacingLeft;
-    private bool isPlayerToLeft, wasPlayerToLeft;
+    bool isFacingLeft;
+    bool isPlayerToLeft, wasPlayerToLeft;
 
     [Header("Follow")]
-    public float moveSpeed;
-    public float timeToStopFollowing;
-    private bool isDetecting; // 시야에서 사라진 플레이어를 쫒는 구간을 위한 플래그
-    private bool isSearching; // 플레이어가 시야에서 사라졌고 isDetecting도 false일 때 stopFollowingPlayer 함수를 계속 호출하려 들어가지 못하도록 하는 플래그
-    private bool isChangingDirection;
+    [SerializeField] float moveSpeed;
+    [SerializeField] float timeToStopFollowing;
+    bool isDetecting; // 시야에서 사라진 플레이어를 쫒는 구간을 위한 플래그
+    bool isSearching; // 플레이어가 시야에서 사라졌고 isDetecting도 false일 때 stopFollowingPlayer 함수를 계속 호출하려 들어가지 못하도록 하는 플래그
+    bool isChangingDirection;
 
     [Header("Stunned")]
     EnemyHealth _enemyHealth;
 
     [Header("Attack")]
-    public float attackDistnace;   // raycast 거리 설정
-    public float attackCoolTime;
-    private float attackCounter;
+    [SerializeField] float attackDistnace;   // raycast 거리 설정
+    [SerializeField] float attackCoolTime;
+    [SerializeField] float attackStepForce;
+    float attackCounter;
 
     [Header("HitBox")]
-    public GameObject attackBox;
+    [SerializeField] GameObject attackBox;
 
     private void Start()
     {
@@ -52,6 +53,14 @@ public class GoulFighter : MonoBehaviour
         wasPlayerToLeft = isPlayerToLeft;
         attackBox.gameObject.SetActive(false);
     }
+    bool IsPlayingAnim(string _animation)
+    {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName(_animation))
+        {
+            return true;
+        }
+        return false;
+    }
 
     private void Update()
     {
@@ -62,26 +71,11 @@ public class GoulFighter : MonoBehaviour
         switch (currentState)
         {
             case enemyState.attack:
-
-                if (CanAttackPlayer())
+                if (IsPlayingAnim("Goul_Fighter_Attack"))
+                    return;
+                if (IsAttackRange() == false)
                 {
-                    if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Goul_Fighter_Attack"))
-                    {
-                        if (attackCounter <= 0f)
-                        {
-                            attackCounter = attackCoolTime;
-
-                            Attack();
-                        }
-                        else
-                        {
-                            attackCounter -= Time.deltaTime;
-                        }
-                    }
-                }
-                else
-                {
-                    if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Goul_Fighter_Attack"))
+                    if (!IsPlayingAnim("Goul_Fighter_Attack"))
                     {
                         // 공격 모션 중이라면 그 모션이 끝이 날 때까지 기다림
                         // Attack 모션은 끝이나면 walk 모션으로 들어감.
@@ -92,8 +86,18 @@ public class GoulFighter : MonoBehaviour
                     {
                         currentState = enemyState.attack;
                     }
+                    return;
                 }
-
+                // 공격 모션 중이 아니면서 공격범위 안에 플레이어가 있다면
+                if (attackCounter > 0f)
+                {
+                    attackCounter -= Time.deltaTime;
+                }
+                else
+                {
+                    attackCounter = attackCoolTime;
+                    Attack();
+                }
                 break;
 
             case enemyState.follow:
@@ -122,7 +126,7 @@ public class GoulFighter : MonoBehaviour
                     FollowPlayer();
                 }
 
-                if (CanAttackPlayer())
+                if (IsAttackRange())
                 {
                     currentState = enemyState.attack;
                 }
@@ -148,9 +152,17 @@ public class GoulFighter : MonoBehaviour
         }
     }
 
+    Vector2 GetDirection()
+    {
+        if (isFacingLeft)
+        {
+            return new Vector2(-1, 0);
+        }
+        return new Vector2(1, 0);
+    }
     void CheckIsFollowing()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Goul_Fighter_Walk"))
+        if (IsPlayingAnim("Goul_Fighter_Walk"))
         {
             currentState = enemyState.follow;
         }
@@ -160,7 +172,7 @@ public class GoulFighter : MonoBehaviour
     {
         if (_enemyHealth.IsStunned())
         {
-            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Goul_Fighter_Stunned"))
+            if (!IsPlayingAnim("Goul_Fighter_Stunned"))
             {
                 anim.Play("Goul_Fighter_Stunned");
             }
@@ -173,7 +185,7 @@ public class GoulFighter : MonoBehaviour
     {
         if (_enemyHealth.IsParried())
         {
-            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Goul_Fighter_Parried"))
+            if (!IsPlayingAnim("Goul_Fighter_Parried"))
             {
                 anim.Play("Goul_Fighter_Parried");
             }
@@ -182,7 +194,7 @@ public class GoulFighter : MonoBehaviour
         }
     }
 
-    bool CanAttackPlayer()
+    bool IsAttackRange()
     {
         float _castDistance = attackDistnace;
         bool _canAttackPlayer = false;
@@ -220,10 +232,16 @@ public class GoulFighter : MonoBehaviour
 
     void Attack()
     {
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Goul_Fighter_Stunned"))
+        if (!IsPlayingAnim("Goul_Fighter_Stunned"))
         {
             anim.Play("Goul_Fighter_Attack");
         }
+    }
+
+    //animation event
+    void AttackStep()
+    {
+        theRB.AddForce(attackStepForce * GetDirection(), ForceMode2D.Impulse);
     }
 
     void AttackBoxOn()

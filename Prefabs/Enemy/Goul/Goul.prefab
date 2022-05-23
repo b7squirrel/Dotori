@@ -339,7 +339,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.66, y: 1.34}
+  m_Size: {x: 3.66, y: 0.66}
   m_EdgeRadius: 0
 --- !u!114 &2018819581
 MonoBehaviour:
@@ -443,7 +443,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 9.375, y: 6.0625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -509,11 +509,12 @@ MonoBehaviour:
     m_Bits: 8
   detectingArea: {fileID: 6493158245768596053}
   _debugAlpha: 0
-  isFacingLeft: 0
   moveSpeed: 3
   timeToStopFollowing: 5
-  attackDistnace: 4
-  attackCoolTime: 0.5
+  attackDistnace: 6
+  attackCoolTime: 1.6
+  attackStepPoint: {fileID: 0}
+  attackStepForce: 1800
   attackBox: {fileID: 6493158246076871488}
 --- !u!1 &6493158246652257842
 GameObject:
@@ -575,7 +576,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6493158246076871491}
-  - {fileID: 3393527217593461598}
   m_Father: {fileID: 6493158246380748831}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -609,35 +609,4 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6493158245389905573}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7763786608711987370
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3393527217593461598}
-  m_Layer: 0
-  m_Name: Attack Step Point
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3393527217593461598
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7763786608711987370}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5973949498746433467}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
