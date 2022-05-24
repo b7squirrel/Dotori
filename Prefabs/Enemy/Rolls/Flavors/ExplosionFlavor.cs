@@ -4,48 +4,43 @@ using UnityEngine;
 
 public class ExplosionFlavor : MonoBehaviour
 {
-    public LayerMask groundLayer;
-    public LayerMask enemyLayer;
-    public GameObject[] explosionEffect = new GameObject[3];
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] LayerMask enemyLayer;
+    [SerializeField] GameObject[] explosionEffect = new GameObject[3];
 
-    private BoxCollider2D boxCol_1;  // 1Â÷ Æø¹ß
-    private BoxCollider2D[] boxCol = new BoxCollider2D[8];  
+    BoxCollider2D boxCol_1;  // 1Â÷ Æø¹ß
+    BoxCollider2D[] boxCol = new BoxCollider2D[8];  
 
-    private Vector2 centerOffset_1;
-    private Vector2 centerOffset_2;
+    Vector2 centerOffset_1;
+    Vector2 centerOffset_2;
 
-    private Vector2 centerOffset_0;
-    private Vector2[,] centerOutside = new Vector2[2, 4];
+    Vector2 centerOffset_0;
+    Vector2[,] centerOutside = new Vector2[2, 4];
 
-    private Vector2 boxSizeCore;
-    private Vector2[] boxSize = new Vector2[2];
+    Vector2 boxSizeCore;
+    Vector2[] boxSize = new Vector2[2];
 
     [Header("OffsetScale")]
-    public float scale_1;
-    public float scale_2;
-    public float scale_3;
+    [SerializeField] float scale_1;
+    [SerializeField] float scale_2;
+    [SerializeField] float scale_3;
 
     [Header("Debris")]
-    public GameObject debris;
-    public GameObject debrisDirt;
-    public GameObject debrisParticleEffect;
+    [SerializeField] GameObject debris;
+    [SerializeField] GameObject debrisDirt;
+    [SerializeField] GameObject debrisParticleEffect;
 
     [Header("Delay")]
-    private bool isDelaying;
-    public float timeToDelay;
-    private float delayCounter;
+    [SerializeField] float timeToDelay;
+    float delayCounter;
     bool isLastExplosion;
 
     [Header("Debug")]
-    public GameObject debugDot;
-    public float dotAlpha = .5f;
+    [SerializeField] GameObject debugDot;
+    [SerializeField] float dotAlpha = .5f;
 
 
-    public int numberOfRolls = 1;
-
-    private Vector2[] explosionSize = new Vector2[3];
-    private bool temp;
-
+    [SerializeField] int numberOfRolls = 1;
 
     private void Start()
     {
@@ -56,7 +51,6 @@ public class ExplosionFlavor : MonoBehaviour
         Explode(centerOffset_0, boxSizeCore, 0);
         //½Ã°£ ¸ØÃß°í Ä«¸Þ¶ó½¦ÀÌÅ©
         GameManager.instance.StartCameraShake(8, .9f);
-        //GameManager.instance.TimeStop(.1f);
     }
 
     private void Update()
@@ -64,24 +58,20 @@ public class ExplosionFlavor : MonoBehaviour
         if (delayCounter < timeToDelay)
         {
             delayCounter += Time.deltaTime;
+            return;
+        }
+        if (!isLastExplosion)
+        {
+            DelayExplosion(0, 1);
+            isLastExplosion = true;
+            delayCounter = 0;
         }
         else
         {
-            if (!isLastExplosion)
-            {
-                DelayExplosion(0, 1);
-                isLastExplosion = true;
-                delayCounter = 0;
-            }
-            else
-            {
-                DelayExplosion(1, 2);
-                isLastExplosion = false;
-                GenerateColliders();
-
-                
-                Destroy(gameObject);
-            }
+            DelayExplosion(1, 2);
+            isLastExplosion = false;
+            GenerateColliders();
+            Destroy(gameObject);
         }
 
     }

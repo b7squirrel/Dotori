@@ -8,6 +8,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] float parryCoolTime;
     float parryCoolingCounter;
     PlayerController playerController;
+    PanManager panManager;
     PlayerAttackBox playerAttackBox;
     Animator animPan;
 
@@ -15,6 +16,7 @@ public class PlayerAttack : MonoBehaviour
     {
         animPan = GetComponentInChildren<PlayerCapture>().GetComponent<Animator>();
         playerController = GetComponentInParent<PlayerController>();
+        panManager = GetComponentInChildren<PanManager>();
         playerAttackBox = GetComponentInChildren<PlayerAttackBox>();
         playerAttackBox.gameObject.SetActive(false);
     }
@@ -34,11 +36,9 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if (PanManager.instance.CountRollNumber() > 0)
+            if (panManager.CountRollNumber() > 0)
                 return;
             if (IsPlayingPanAnimation("Pan_Attack"))
-                return;
-            if (IsPlayingPanAnimation("Pan_HitRoll"))
                 return;
             if (parryCoolingCounter <= 0f)
             {

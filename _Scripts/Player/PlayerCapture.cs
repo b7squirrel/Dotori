@@ -36,7 +36,7 @@ public class PlayerCapture : MonoBehaviour
             if (panManager.CountRollNumber() == 0)
                 return;
             panAnim.Play("Pan_HitRoll");
-            PanManager.instance.ClearRoll();
+            panManager.ClearRoll();
             EffectsClearRoll();
         }
     }
@@ -44,7 +44,7 @@ public class PlayerCapture : MonoBehaviour
     // Capture의 마지막 프레임에서 애니메이션 이벤트로 실행
     void Panning()
     {
-        if (PanManager.instance.CountRollNumber() == 0)
+        if (panManager.CountRollNumber() == 0)
             return;
         if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_Pan"))
             return;

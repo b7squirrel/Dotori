@@ -90,18 +90,18 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        if (IsAttacking)
-        {
-            if (Mathf.Abs(theRB.velocity.y) < .1f)
-            {
-                float _distance = Mathf.Abs(transform.position.x - newParryStepTarget.x);
-                if (_distance > .1f)
-                {
-                    transform.position = Vector2.MoveTowards(transform.position, newParryStepTarget, parryDashSpeed * Time.deltaTime);
-                    return;
-                }
-            }
-        }
+        //if (IsAttacking)
+        //{
+        //    if (Mathf.Abs(theRB.velocity.y) < .1f)
+        //    {
+        //        float _distance = Mathf.Abs(transform.position.x - newParryStepTarget.x);
+        //        if (_distance > .1f)
+        //        {
+        //            transform.position = Vector2.MoveTowards(transform.position, newParryStepTarget, parryDashSpeed * Time.deltaTime);
+        //            return;
+        //        }
+        //    }
+        //}
         theRB.velocity = new Vector2(currentDirection * moveSpeed, theRB.velocity.y);
     }
 

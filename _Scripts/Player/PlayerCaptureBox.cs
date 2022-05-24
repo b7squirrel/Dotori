@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCaptureBox : MonoBehaviour
 {
-    [HideInInspector] public BoxCollider2D boxCol;
+    BoxCollider2D boxCol;
 
     private void Awake()
     {
