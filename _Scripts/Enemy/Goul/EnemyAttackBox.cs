@@ -9,6 +9,8 @@ public class EnemyAttackBox : MonoBehaviour
     float parriedBufferTimeCounter;
     bool isHittingPlayer;
     bool isHittingAttackBox;
+    [SerializeField] GameObject parriedEffect;
+    Vector2 parriedEffectPoint;
 
     [field: SerializeField]
     public Transform BodyPoint { get; private set; } // Player Hurt Box에서 접근해서 Enmey본체의 x position을 참조
@@ -27,9 +29,9 @@ public class EnemyAttackBox : MonoBehaviour
     {
         if (isHittingAttackBox)
         {
-            Debug.Log("Hitting Attack BOx");
             parriedBufferTimeCounter = parriedBufferTime;
             _enemyHealth.SetParriedState(true);
+            FeedbackOnParried();
             isHittingAttackBox = false;
             isHittingPlayer = false;
         }
@@ -53,10 +55,17 @@ public class EnemyAttackBox : MonoBehaviour
         if(collision.CompareTag("AttackBoxPlayer"))
         {
             isHittingAttackBox = true;
+            parriedEffectPoint = collision.ClosestPoint(transform.position);
         }
         if (collision.CompareTag("HurtBoxPlayer"))  // 패리와 거의 동시에 hurt box에 닿으면 무시하도록
         {
             isHittingPlayer = true;
         }
+    }
+
+    void FeedbackOnParried()
+    {
+        AudioManager.instance.Play("pan_hit_05");
+        Instantiate(parriedEffect, parriedEffectPoint, Quaternion.identity);
     }
 }

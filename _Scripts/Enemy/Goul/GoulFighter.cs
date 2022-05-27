@@ -135,6 +135,8 @@ public class GoulFighter : MonoBehaviour
 
             case enemyState.stunned:
 
+                theRB.velocity = new Vector2(0, theRB.velocity.y);
+
                 if (_enemyHealth.IsStunned() == false)
                 {
                     currentState = enemyState.follow;
@@ -143,6 +145,8 @@ public class GoulFighter : MonoBehaviour
                 break;
 
             case enemyState.parried:
+
+                theRB.velocity = new Vector2(0, theRB.velocity.y);
 
                 if (_enemyHealth.IsParried() == false)
                 {

@@ -169,10 +169,12 @@ public class EnemyHealth : MonoBehaviour
     public void SetStunState(bool state)
     {
         isStunned = state;
+        isParried = false;
     }
     public void SetParriedState(bool state)
     {
         isParried = state;
+        isStunned = false;
     }
     public void SetKnockBackState(bool state)
     {

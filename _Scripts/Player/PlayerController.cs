@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float jumpRememberTime;
     float jumpRemember;
+    [SerializeField] float coyoteTIme;
+    float coyoteTimeCounter;
 
     [Header("Parry")]
     [SerializeField] Transform parryStepTarget;
@@ -49,8 +51,8 @@ public class PlayerController : MonoBehaviour
     {
         DirectionCheck();
         Flip();
-        GroundCheck();
         Gravity();
+        GroundCheck();
         Jump();
         SetAnimationState();
     }
@@ -90,18 +92,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        //if (IsAttacking)
-        //{
-        //    if (Mathf.Abs(theRB.velocity.y) < .1f)
-        //    {
-        //        float _distance = Mathf.Abs(transform.position.x - newParryStepTarget.x);
-        //        if (_distance > .1f)
-        //        {
-        //            transform.position = Vector2.MoveTowards(transform.position, newParryStepTarget, parryDashSpeed * Time.deltaTime);
-        //            return;
-        //        }
-        //    }
-        //}
         theRB.velocity = new Vector2(currentDirection * moveSpeed, theRB.velocity.y);
     }
 
@@ -137,15 +127,28 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         jumpRemember -= Time.deltaTime;
+        ManageCoyoteTime();
 
         if (Input.GetKeyDown(KeyCode.X))
         {
             jumpRemember = jumpRememberTime;
         }
 
-        if(isGrounded && jumpRemember > 0f)
+        if(jumpRemember > 0f && coyoteTimeCounter > 0)
         {
             theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+        }
+    }
+
+    void ManageCoyoteTime()
+    {
+        if (isGrounded)
+        {
+            coyoteTimeCounter = coyoteTIme;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
         }
     }
 
@@ -155,7 +158,7 @@ public class PlayerController : MonoBehaviour
     }
     void Gravity()
     {
-        if (theRB.velocity.y > 0)
+        if (theRB.velocity.y > 0 || coyoteTimeCounter > 0 || isGrounded)
         {
             theRB.gravityScale = 7f;
         }

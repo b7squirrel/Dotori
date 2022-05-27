@@ -40,6 +40,8 @@ public class PlayerAttack : MonoBehaviour
                 return;
             if (IsPlayingPanAnimation("Pan_Attack"))
                 return;
+            if (IsPlayingPanAnimation("Pan_HitRoll"))
+                return;
             if (parryCoolingCounter <= 0f)
             {
                 animPan.Play("Pan_Attack");

@@ -12562,7 +12562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1406347592
 Transform:
   m_ObjectHideFlags: 0
@@ -105643,8 +105643,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2432
   groundCheck: {fileID: 1369391127}
-  jumpForce: 21
-  jumpRememberTime: 0.1
+  jumpForce: 17
+  jumpRememberTime: 0.15
+  coyoteTIme: 0.1
   parryStepTarget: {fileID: 408946436}
   parryDashSpeed: 6
   dodgeStepTarget: {fileID: 163341542}
@@ -105699,11 +105700,11 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
+  m_UseAutoMass: 0
   m_Mass: 0.4
   m_LinearDrag: 0
   m_AngularDrag: 0.5
-  m_GravityScale: 2
+  m_GravityScale: 7
   m_Material: {fileID: 6200000, guid: 270892ecd09a56847b1b38992b33fd9b, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
