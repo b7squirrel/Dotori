@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Bricks
+  m_Name: Bricks_Black_18
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: b68511a0e6b38dd4a8491c80c9003eb5, type: 3}
+  m_Sprite: {fileID: 312308135, guid: 359e8120d21652240aed11f6e7668fe0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
