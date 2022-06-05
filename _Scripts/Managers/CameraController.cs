@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
     private void FixedUpdate()
     {
         float clampedY = Mathf.Clamp(transform.position.y, minHeight, maxHeight);
-        targetPosition = new Vector3(cameraTarget.position.x, clampedY, transform.position.z);
+        targetPosition = new Vector3(cameraTarget.position.x, cameraTarget.position.y, transform.position.z);
         transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed * Time.fixedDeltaTime);
     }
 }

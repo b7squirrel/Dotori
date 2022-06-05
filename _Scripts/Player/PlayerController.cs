@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     float jumpRemember;
     [SerializeField] float coyoteTIme;
     float coyoteTimeCounter;
+    bool canDoubleJump;
 
     [Header("Parry")]
     [SerializeField] Transform parryStepTarget;
@@ -32,6 +33,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform dodgeStepTarget;
     [SerializeField] float dodgeSpeed;
     Vector2 newDodgeStepTarget;
+
+    [Header("Particle")]
+    [SerializeField] ParticleSystem dustTrailParticle;
+    [SerializeField] GameObject dustTrail;
+    [SerializeField] GameObject dustJump;
+    [SerializeField] GameObject dustExtraJump;
+    [SerializeField] GameObject dustLand;
+    [SerializeField] GameObject debugDot;
+    ParticleSystem.EmissionModule footEmission;
+    bool wasGrounded;
 
     public bool IsAttacking { get; set; }
     public bool IsDodging { get; set; }
@@ -45,6 +56,8 @@ public class PlayerController : MonoBehaviour
     {
         theRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        footEmission = dustTrailParticle.emission;
     }
 
     void Update()
@@ -54,6 +67,8 @@ public class PlayerController : MonoBehaviour
         Gravity();
         GroundCheck();
         Jump();
+        GenerateDustTrail();
+        GenerateLandEffect();
         SetAnimationState();
     }
 
@@ -126,6 +141,11 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
+        if (isGrounded)
+        {
+            canDoubleJump = true;
+        }
+
         jumpRemember -= Time.deltaTime;
         ManageCoyoteTime();
 
@@ -134,9 +154,20 @@ public class PlayerController : MonoBehaviour
             jumpRemember = jumpRememberTime;
         }
 
-        if(jumpRemember > 0f && coyoteTimeCounter > 0)
+        if (jumpRemember > 0f && coyoteTimeCounter > 0)
         {
             theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+            GenerateJumpEffect();
+        }
+
+        if (coyoteTimeCounter <= 0)
+        {
+            if (Input.GetKeyDown(KeyCode.X) && canDoubleJump)
+            {
+                theRB.velocity = new Vector2(theRB.velocity.x, jumpForce * 1.2f);
+                canDoubleJump = false;
+                GenerateJumpEffect();
+            }
         }
     }
 
@@ -167,6 +198,55 @@ public class PlayerController : MonoBehaviour
             theRB.gravityScale = 11f;
         }
     }
+
+    void GenerateDustTrail()
+    {
+        if (Input.GetAxisRaw("Horizontal") != 0 && isGrounded)
+        {
+            footEmission.rateOverTime = 5;
+            dustTrail.gameObject.SetActive(true);
+        }
+        else
+        {
+            footEmission.rateOverTime = 0;
+            dustTrail.gameObject.SetActive(false);
+        }
+    }
+
+    void GenerateJumpEffect()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, .1f, whatIsGround);
+        Vector2 contactPoint = hit.point;
+        DebugRay(Color.red);
+        if (hit)
+        {
+            DebugRay(Color.green);
+            Instantiate(dustJump, contactPoint, Quaternion.identity);
+            return;
+        }
+        if (canDoubleJump == false)
+        {
+            Instantiate(dustExtraJump, groundCheck.position, Quaternion.identity);
+        }
+    }
+
+    void DebugRay(Color _color)
+    {
+        Debug.DrawRay(groundCheck.position, Vector2.down, _color);
+    }
+
+    void GenerateLandEffect()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, .1f, whatIsGround);
+        Vector2 contactPoint = hit.point;
+        if (!wasGrounded && isGrounded)
+        {
+            Instantiate(dustLand, contactPoint, Quaternion.identity);
+        }
+
+        wasGrounded = isGrounded;
+    }
+
     void SetAnimationState()
     {
         if (Input.GetAxisRaw("Horizontal") == 0)  // idle
