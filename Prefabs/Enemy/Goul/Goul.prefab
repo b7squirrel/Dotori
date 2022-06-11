@@ -386,7 +386,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyHealth: {fileID: 6493158245389905574}
   parriedBufferTime: 0.15
-  parriedEffectPoint: {fileID: 0}
   parriedEffect: {fileID: 5090427162195939564, guid: cfb19a9bda3e8bd40a92995ab5a6faac, type: 3}
   <BodyPoint>k__BackingField: {fileID: 6493158246380748831}
 --- !u!1 &6493158246380748803
@@ -546,7 +545,7 @@ MonoBehaviour:
   timeToStopFollowing: 5
   attackDistnace: 6
   attackCoolTime: 1.6
-  attackStepForce: 1800
+  attackStepForce: 2000
   attackBox: {fileID: 6493158246076871488}
 --- !u!1 &6493158246652257842
 GameObject:
