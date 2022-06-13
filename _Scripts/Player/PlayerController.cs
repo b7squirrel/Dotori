@@ -13,11 +13,7 @@ public class PlayerController : MonoBehaviour
 
     bool isGrounded;
     bool canDoubleJump;
-    bool isTouchingWall;
-    bool isWallSliding;
-    bool isTouchingLedge;
-    bool ledgeDetected;
-
+    
     [Header("Ground Check")]
     [SerializeField] LayerMask whatIsGround;
     [SerializeField] Transform groundCheck;
@@ -81,7 +77,6 @@ public class PlayerController : MonoBehaviour
         Flip();
         Gravity();
         SurroundingCheck();
-        CheckIfWallSliding();
         Jump();
         GenerateDustTrail();
         GenerateLandEffect();
@@ -97,8 +92,6 @@ public class PlayerController : MonoBehaviour
     void SurroundingCheck()
     {
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(.55f, .34f), 0, whatIsGround);
-        isTouchingWall = Physics2D.OverlapBox(wallCheck.position, new Vector2(.2f, .1f), 0, whatIsGround);
-        isTouchingLedge = Physics2D.OverlapBox(ledgeCheck.position, new Vector2(.2f, .1f), 0, whatIsGround);
     }
 
     void DirectionCheck()
@@ -122,11 +115,6 @@ public class PlayerController : MonoBehaviour
                 transform.position = Vector2.MoveTowards(transform.position, newDodgeStepTarget, dodgeSpeed * Time.deltaTime);
                 return;
             }
-        }
-        if (isWallSliding)
-        {
-            theRB.velocity = new Vector2(currentDirection * moveSpeed, -wallSlidingSpeed);
-            return;
         }
         theRB.velocity = new Vector2(currentDirection * moveSpeed, theRB.velocity.y);
     }
@@ -159,45 +147,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void CheckIfWallSliding()
-    {
-        if (isTouchingWall && !isGrounded && theRB.velocity.y < 0)
-        {
-            isWallSliding = true;
-            return;
-        }
-        isWallSliding = false;
-    }
-
-    void CheckIfDetectingLedge()
-    {
-        if (isTouchingWall && !isTouchingLedge && !ledgeDetected)
-        {
-            ledgeDetected = true;
-        }
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = gizmoColorNotTouching;
         if (isGrounded)
             Gizmos.color = gizmoColorIsTouching;
         Gizmos.DrawWireCube(groundCheck.position, new Vector2(.55f, .34f));
-
-        Gizmos.color = gizmoColorNotTouching;
-        if (isTouchingWall)
-            Gizmos.color = gizmoColorIsTouching;
-        Gizmos.DrawWireCube(wallCheck.position, new Vector2(.2f, .1f));
-
-        Gizmos.color = gizmoColorNotTouching;
-        if (isTouchingLedge)
-            Gizmos.color = gizmoColorIsTouching;
-        Gizmos.DrawWireCube(ledgeCheck.position, new Vector2(.2f, .1f));
     }
 
     void Jump()
     {
-        if (isGrounded || isWallSliding)
+        if (isGrounded)
         {
             canDoubleJump = true;
         }
@@ -229,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
     void ManageCoyoteTime()
     {
-        if (isGrounded || isTouchingWall)
+        if (isGrounded)
         {
             coyoteTimeCounter = coyoteTIme;
         }
@@ -282,7 +242,7 @@ public class PlayerController : MonoBehaviour
     }
     void GenerateExtraJumpDust()
     {
-        if (canDoubleJump == true && !isGrounded && !isTouchingWall)
+        if (canDoubleJump == true && !isGrounded)
         {
             Instantiate(dustExtraJump, groundCheck.position, Quaternion.identity);
         }
@@ -306,7 +266,6 @@ public class PlayerController : MonoBehaviour
         wallContactPoint = hitWall.point;
 
         wasGrounded = isGrounded;
-        wasTouchingWall = isTouchingWall;
     }
 
     void SetAnimationState()

@@ -101,9 +101,13 @@ public class PanManager : MonoBehaviour
         float _direction = PlayerController.instance.GetPlayerDirection();
         float _hSpeed = _roll.GetComponent<EnemyRolling>().horizontalSpeed;
         float _vSpeed = _roll.GetComponent<EnemyRolling>().verticalSpeed;
+        PhysicsMaterial2D _physicsMat = _roll.GetComponent<EnemyRolling>().physicsMat;
         Rigidbody2D _theRB = _roll.AddComponent<Rigidbody2D>();
-        BoxCollider2D _boxCol = _roll.AddComponent<BoxCollider2D>();
-        _boxCol.isTrigger = true;
+        CapsuleCollider2D _capColl = _roll.AddComponent<CapsuleCollider2D>();
+        //_capColl.isTrigger = true;
+        _theRB.sharedMaterial = _physicsMat;
+        _capColl.size = new Vector2(1f, 1f);
+        _capColl.direction = CapsuleDirection2D.Horizontal;
         _theRB.gravityScale = _roll.GetComponent<EnemyRolling>().gravity;
         _theRB.velocity = new Vector2(_direction * _hSpeed, _vSpeed);
 

@@ -8,8 +8,8 @@ using UnityEngine;
 /// </summary>
 public class EnemyRolling : MonoBehaviour
 {
-    private enum rollingState { shooting, captured, onPan };
-    private rollingState currentState;
+    enum rollingState { shooting, captured, onPan };
+    rollingState currentState;
 
     /// <summary>
     /// projectile을 캡쳐하면 EnemyProjectile이 PanManager의 acquireFlavor실행
@@ -23,10 +23,15 @@ public class EnemyRolling : MonoBehaviour
     public float horizontalSpeed;
     public float verticalSpeed;
     public float gravity;
+    public PhysicsMaterial2D physicsMat;
 
     [Header("Hit Effects")]
-    public GameObject hitEffect;
-    public Transform hitEffectPoint;
+    [SerializeField] GameObject hitEffect;
+    [SerializeField] Transform hitEffectPoint;
+
+    [Header("Time to Explode")]
+    [SerializeField] float timeToExplode;
+    float explodeCounter;
 
     // 캡쳐되는 순간 pan manager에서 acquireRoll이 실행해서 빈 슬롯을 검색하고 add시킴
     void Start()
@@ -34,38 +39,48 @@ public class EnemyRolling : MonoBehaviour
         currentState = rollingState.onPan;
         this.tag = "RollsOnPan";
         PanManager.instance.AcquireRoll(transform);
+        explodeCounter = timeToExplode;
     }
 
     void Update()
     {
         // Pan Manager의 ClearRoll에서 모든 롤의 tag를 Rolling으로 적용.
-        if (this.tag == "Rolling")
+        if (this.tag == "Rolling" || this.tag == "RollFlavored")
         {
             currentState = rollingState.shooting;
         }
         switch (currentState)
         {
             case rollingState.shooting:
+                CountDown();
                 break;
 
             case rollingState.onPan:
                 // 아무것도 하지 않음. PanSlot에서 AddRoll로 슬롯에 페어런트를 해버리기 때문
                 break;
         }
+        //CountDown();
     }
-    // ground나 enemy에 충돌하면 자신을 destroy시킨다
+    
     // 만약 flavor가 있다면 폭발을 생성한다, 폭발을 생성할 때 크기를 결정하는 numberOfRoll을 Explosion Flavor에 넘겨준다
-    private void OnTriggerEnter2D(Collider2D collision)
+    
+    void CountDown()
     {
-        if (collision.CompareTag("Ground") || collision.CompareTag("Enemy"))
+        if (explodeCounter > 0)
         {
-            if (m_flavorSO != null)
-            {
-                var _explosion = Instantiate(m_flavorSO.actionPrefab, transform.position, transform.rotation);
-                //_explosion.GetComponent<ExplosionFlavor>().numberOfRolls = 1;
-            }
-            DestroyPrefab();
+            explodeCounter -= Time.deltaTime;
+            return;
         }
+        Explode();
+    }
+    void Explode()
+    {
+        if (m_flavorSO != null)
+        {
+            var _explosion = Instantiate(m_flavorSO.actionPrefab, transform.position, transform.rotation);
+            //_explosion.GetComponent<ExplosionFlavor>().numberOfRolls = 1;
+        }
+        DestroyPrefab();
     }
     public void DestroyPrefab()
     {

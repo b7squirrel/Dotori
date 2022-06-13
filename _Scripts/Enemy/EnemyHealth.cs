@@ -98,7 +98,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (collision.CompareTag("RollFlavored"))
         {
-            Die();
+            SetStunState(true);
         }
 
         if (collision.CompareTag("Rolling"))
