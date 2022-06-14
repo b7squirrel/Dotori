@@ -18,6 +18,7 @@ public class EnemyHealth : MonoBehaviour
     [Header("Stunned")]
     [SerializeField] float stunnedTime;
     float stunnedTImeCounter;
+    Rigidbody2D theRB;
 
     [Header("Parried")]
     [SerializeField] float parriedTime;
@@ -39,6 +40,7 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHP = maxHP;
         theSR = mSprite.GetComponent<SpriteRenderer>();
+        theRB = GetComponentInParent<Rigidbody2D>();
         initialMat = theSR.material;
         parriedTimeCounter = parriedTime;
         stunnedTImeCounter = stunnedTime;
@@ -70,7 +72,6 @@ public class EnemyHealth : MonoBehaviour
                 SetStunState(false);
             }
         }
-        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -170,6 +171,12 @@ public class EnemyHealth : MonoBehaviour
     {
         isStunned = state;
         isParried = false;
+        if (isStunned)
+        {
+            theRB.bodyType = RigidbodyType2D.Kinematic;
+            return;
+        }
+        theRB.bodyType = RigidbodyType2D.Dynamic;
     }
     public void SetParriedState(bool state)
     {
