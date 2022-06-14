@@ -17,6 +17,9 @@ public class PanManager : MonoBehaviour
 
     public Transform hitRollPoint;  // HitRoll을 할 때 자꾸 롤이 그라운드 판정이 나면서 사라짐. 그래서 좀 띄워서 발사해봄
 
+    Vector2 mouseDirection;
+    [SerializeField] PlayerTargetController playerTargetController;
+
     private void Awake()
     {
         instance = this;
@@ -109,7 +112,9 @@ public class PanManager : MonoBehaviour
         _capColl.size = new Vector2(1f, 1f);
         _capColl.direction = CapsuleDirection2D.Horizontal;
         _theRB.gravityScale = _roll.GetComponent<EnemyRolling>().gravity;
-        _theRB.velocity = new Vector2(_direction * _hSpeed, _vSpeed);
+        //_theRB.velocity = new Vector2(_direction * _hSpeed, _vSpeed);
+        Vector2 _mouseDirection = playerTargetController.GetMouseDirection();
+        _theRB.velocity = new Vector2(_mouseDirection.x * _hSpeed, _mouseDirection.y * _hSpeed);
 
         _panSlots[0].RemoveRoll();
 

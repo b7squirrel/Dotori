@@ -14,6 +14,7 @@ public class EnemyProjectile : MonoBehaviour
     public Vector2 ContactPoint { get; set; } // Player Parry Box 로부터 전달받음. parry 된 지점을 시작점으로 하기 위한 변수
 
     [SerializeField] float moveSpeed;
+    [SerializeField] float deflectionSpeed;
     [SerializeField] float homingTime; // 반사되어서 타겟에 도달하기까지 걸리는 시간
     Vector2 moveDirection;
     Rigidbody2D theRB;
@@ -39,6 +40,8 @@ public class EnemyProjectile : MonoBehaviour
     GameObject smoke;
     GameObject debris;
 
+    [SerializeField] PlayerTargetController playerTargetController;
+
     void Start()
     {
         theRB = GetComponent<Rigidbody2D>();
@@ -51,6 +54,7 @@ public class EnemyProjectile : MonoBehaviour
         debris = Instantiate(fireParticleCore, transform.position, Quaternion.identity);
         captureBufferCounter = captureBufferTime;
         parriedBufferCounter = parriedBufferTime;
+        playerTargetController = FindObjectOfType<PlayerTargetController>();
     }
 
     /// <summary>
@@ -186,8 +190,9 @@ public class EnemyProjectile : MonoBehaviour
         effectPoint.position += new Vector3(2f, .7f, 0f);
         effectPoint.eulerAngles = new Vector3(transform.rotation.x, PlayerController.instance.transform.rotation.y, -10f);
 
-        theRB.velocity = CalculateVelecity(initialPoint, (Vector2)ContactPoint, homingTime);
-
+        //theRB.velocity = CalculateVelecity(initialPoint, (Vector2)ContactPoint, homingTime);
+        Vector2 _mouseDirection = playerTargetController.GetMouseDirection();
+        theRB.velocity = deflectionSpeed * _mouseDirection;
     }
     Vector2 CalculateVelecity(Vector2 _target, Vector2 _origin, float time)
     {

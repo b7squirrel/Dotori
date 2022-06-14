@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 25
+  deflectionSpeed: 20
   homingTime: 0.3
   deflectionDelayTime: 0.05
   captureBufferTime: 0.001
@@ -156,6 +157,7 @@ MonoBehaviour:
   deflectionHitEffect: {fileID: 5090427162195939564, guid: cfb19a9bda3e8bd40a92995ab5a6faac, type: 3}
   fireParticle: {fileID: 8753089824342224380, guid: a4523cf7bdaf2974fa2726619e377fad, type: 3}
   fireParticleCore: {fileID: 2012451515213665982, guid: fc1219255ba7a354da593d64d54ea793, type: 3}
+  playerTargetController: {fileID: 0}
 --- !u!96 &5919002032963727284
 TrailRenderer:
   serializedVersion: 2

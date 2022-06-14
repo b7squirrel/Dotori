@@ -152,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlavored: 0
   m_flavorSO: {fileID: 0}
-  horizontalSpeed: 18
+  horizontalSpeed: 17
   verticalSpeed: 5
   gravity: 2
   physicsMat: {fileID: 6200000, guid: 69162b284af75af4f8bfa17706f2d1d4, type: 2}

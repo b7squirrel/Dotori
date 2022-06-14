@@ -34,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
             playerAttackBox.gameObject.SetActive(false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(0))
         {
             if (panManager.CountRollNumber() > 0)
                 return;

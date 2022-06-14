@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
         jumpRemember -= Time.deltaTime;
         ManageCoyoteTime();
 
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             jumpRemember = jumpRememberTime;
         }
@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
 
         if (coyoteTimeCounter < 0)
         {
-            if (Input.GetKeyDown(KeyCode.X) && canDoubleJump)
+            if (Input.GetKeyDown(KeyCode.W) && canDoubleJump)
             {
                 theRB.velocity = new Vector2(theRB.velocity.x, jumpForce * 1.2f);
                 GenerateExtraJumpDust();

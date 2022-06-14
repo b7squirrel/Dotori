@@ -24,14 +24,14 @@ public class PlayerCapture : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            if (Input.GetKey(KeyCode.Z))
+            if (Input.GetKey(KeyCode.Z) || Input.GetMouseButtonDown(0))  // 캡쳐 캔슬
                 return;
             panAnim.Play("Pan_Capture");
         }
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(0))
         {
             if (panManager.CountRollNumber() == 0)
                 return;
