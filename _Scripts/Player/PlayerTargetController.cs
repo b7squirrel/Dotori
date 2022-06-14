@@ -6,7 +6,6 @@ public class PlayerTargetController : MonoBehaviour
 {
     [SerializeField] Transform mouseDirection;
     [SerializeField] Camera mainCamera;
-
     Vector2 offset;
 
     private void Update()
@@ -23,4 +22,5 @@ public class PlayerTargetController : MonoBehaviour
     {
         return offset.normalized;
     }
+
 }
