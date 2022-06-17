@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackBoxGoblin : MonoBehaviour
 {
-    private GoblinBolt goblinBolt;
+    GoblinBolt goblinBolt;
 
     private void Awake()
     {
@@ -14,7 +14,7 @@ public class AttackBoxGoblin : MonoBehaviour
     {
         if (collision.CompareTag("HurtBoxPlayer") && !goblinBolt.isParried)
         {
-            PlayerHealthController.instance.isDead = true;
+            PlayerHealthController.instance.KillPlayer();
         }
     }
 }

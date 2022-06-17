@@ -214,7 +214,7 @@ public class PlayerController : MonoBehaviour
             theRB.gravityScale = 11f;
         }
     }
-
+    
     void GenerateDustTrail()
     {
         if (Input.GetAxisRaw("Horizontal") != 0 && isGrounded)

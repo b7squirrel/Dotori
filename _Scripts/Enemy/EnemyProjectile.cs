@@ -105,7 +105,7 @@ public class EnemyProjectile : MonoBehaviour
             isCaptureBufferChecked = true;
             return;
         }
-        PlayerHealthController.instance.isDead = true;
+        PlayerHealthController.instance.KillPlayer();
         DestroyProjectile();
     }
     /// <summary>
@@ -126,7 +126,7 @@ public class EnemyProjectile : MonoBehaviour
             isParriedBufferChecked = true;
             return;
         }
-        PlayerHealthController.instance.isDead = true;
+        PlayerHealthController.instance.KillPlayer();
         DestroyProjectile();
     }
 

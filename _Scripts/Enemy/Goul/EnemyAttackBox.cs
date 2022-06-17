@@ -43,7 +43,7 @@ public class EnemyAttackBox : MonoBehaviour
 
         if (parriedBufferTimeCounter <= 0)
         {
-            PlayerHealthController.instance.isDead = true;
+            PlayerHealthController.instance.KillPlayer();
             isHittingAttackBox = false;
             isHittingPlayer = false;
             return;

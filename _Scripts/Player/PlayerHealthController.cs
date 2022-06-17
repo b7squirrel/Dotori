@@ -5,13 +5,10 @@ using UnityEngine;
 public class PlayerHealthController : MonoBehaviour
 {
     public static PlayerHealthController instance;
-
-    private PlayerHurtBox playerHurtBox;
-
-    public bool isDead;
-
-    public GameObject playerDieEffect;
-    
+    PlayerHurtBox playerHurtBox;
+    [SerializeField] GameObject playerDieEffect;
+    [SerializeField] GameObject playerCaptured;
+    bool isDead;
 
     private void Awake()
     {
@@ -25,11 +22,24 @@ public class PlayerHealthController : MonoBehaviour
 
     private void Update()
     {
-        if(isDead)
+        if (isDead)
         {
             GameObject dieEffect = Instantiate(playerDieEffect, transform.position, transform.rotation);
             dieEffect.transform.eulerAngles = new Vector3(0, playerHurtBox.Angle_Y, 0);
             gameObject.SetActive(false);
         }
+    }
+
+    public void KillPlayer()
+    {
+        isDead = true; 
+    }
+
+    public void CapturePlayer(Transform parentPosition)
+    {
+        GameObject capturedPlayer = Instantiate(playerCaptured, transform.position, transform.rotation);
+        capturedPlayer.transform.position = parentPosition.position;
+        capturedPlayer.transform.parent = parentPosition;
+        KillPlayer();
     }
 }

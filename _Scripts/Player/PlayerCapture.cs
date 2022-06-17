@@ -24,7 +24,7 @@ public class PlayerCapture : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetMouseButtonDown(1))
         {
             if (Input.GetKey(KeyCode.Z) || Input.GetMouseButtonDown(0))  // 캡쳐 캔슬
                 return;

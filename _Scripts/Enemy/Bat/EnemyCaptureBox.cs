@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spike : MonoBehaviour
+public class EnemyCaptureBox : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("HurtBoxPlayer"))
         {
-            PlayerHealthController.instance.KillPlayer();
+            PlayerHealthController.instance.CapturePlayer(this.transform);
         }
     }
 }
