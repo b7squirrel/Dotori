@@ -492,11 +492,12 @@ MonoBehaviour:
   attackSpeed: 7
   jumpForce: 5
   jumpCoolTime: 0.5
-  attackCoolTime: 3
+  attackCoolTime: 2
   groundCheckPoint: {fileID: 219603772238091152}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  debugDot: {fileID: 2412131369309645206, guid: 713b23e23f8b1c549abcb77e78dcea62, type: 3}
 --- !u!1 &219603772367473386
 GameObject:
   m_ObjectHideFlags: 0
