@@ -21,11 +21,17 @@ public class Bat : MonoBehaviour
     Vector2 attackTarget; 
 
     SpriteRenderer theSR;
+    Animator anim;
+
+    [Header("Debug")]
+    [SerializeField] GameObject debugDot;
+
 
 
     void Start()
     {
         theSR = GetComponentInChildren<SpriteRenderer>();
+        anim = GetComponent<Animator>();
         foreach (var points in patrolPoints)
         {
             points.transform.parent = null;
@@ -89,9 +95,14 @@ public class Bat : MonoBehaviour
         if (isDetectingPlayer == false)
             return;
 
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("ReturnToIdle"))
+            return;
+
         if (attackTarget == Vector2.zero)
         {
             attackTarget = PlayerController.instance.transform.position;
+            Instantiate(debugDot, attackTarget, Quaternion.identity);
+            anim.Play("Attack");
         }
     }
     void Attack()
@@ -108,6 +119,7 @@ public class Bat : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, attackTarget, attackSpeed * Time.deltaTime);
         if (Vector2.Distance(transform.position, attackTarget) < 1f)
         {
+            anim.Play("Walk");
             isDetectingPlayer = false;
             attackTarget = Vector2.zero;
             attackCounter = attackCoolTime;
