@@ -11,14 +11,16 @@ public class PlayerController : MonoBehaviour
     float currentDirection;
     float staticDirection;
 
-    bool isGrounded;
-    bool canDoubleJump;
+    [SerializeField] bool isGrounded;
+    [SerializeField] bool canDoubleJump;
+    [SerializeField] bool isOnSlope;
     
     [Header("Ground Check")]
     [SerializeField] LayerMask whatIsGround;
     [SerializeField] Transform groundCheck;
     [SerializeField] Transform wallCheck;
     [SerializeField] Transform ledgeCheck;
+    [SerializeField] float groundCheckRadius;
 
     [Header("Ground Check Gizmo parameters")]
     Color gizmoColorNotTouching = Color.red;
@@ -26,6 +28,19 @@ public class PlayerController : MonoBehaviour
 
     [Header("Wall Sliding")]
     [SerializeField] float wallSlidingSpeed;
+
+    [Header("Slope")]
+    [SerializeField] float slopeCheckDistance;
+    [SerializeField] PhysicsMaterial2D noFriction;
+    [SerializeField] PhysicsMaterial2D fullFriction;
+    
+    [Header("Debug")]
+    [SerializeField] float xInput; // 디버깅용
+    [SerializeField] float friction;
+
+    Vector2 slopeNormalPerp;
+    float slopeDownAngle;
+    float slopeDownAngleOld;
 
     [Header("Jump")]
     [SerializeField] float jumpForce;
@@ -77,6 +92,7 @@ public class PlayerController : MonoBehaviour
         Flip();
         Gravity();
         SurroundingCheck();
+        SlopeCheck();
         Jump();
         GenerateDustTrail();
         GenerateLandEffect();
@@ -91,7 +107,58 @@ public class PlayerController : MonoBehaviour
 
     void SurroundingCheck()
     {
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(.55f, .34f), 0, whatIsGround);
+        //isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(.55f, .34f), 0, whatIsGround);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+
+    }
+
+    void SlopeCheck()
+    {
+        Vector2 checkPos = groundCheck.position;
+        SlopeCheckVertical(checkPos);
+    }
+
+    void SlopeCheckHorizontal(Vector2 checkPos)
+    {
+
+    }
+    void SlopeCheckVertical(Vector2 checkPos)
+    {
+        xInput = Input.GetAxisRaw("Horizontal");
+        friction = theRB.sharedMaterial.friction;
+        RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, whatIsGround);
+
+        if (hit)
+        {
+            slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+            slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+            if (slopeDownAngle != 0f)
+            {
+                isOnSlope = true;
+            }
+            else
+            {
+                isOnSlope = false;
+            }
+
+            if (isOnSlope && Input.GetAxisRaw("Horizontal") == 0.0f)
+            {
+                theRB.sharedMaterial = noFriction;
+                theRB.sharedMaterial.friction = 100f;
+            }
+            else
+            {
+                theRB.sharedMaterial = noFriction;
+                theRB.sharedMaterial.friction = 0f;
+            }
+
+
+            slopeDownAngleOld = slopeDownAngle;
+
+            Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
+            Debug.DrawRay(hit.point, hit.normal, Color.green);
+        }
     }
 
     void DirectionCheck()
@@ -107,16 +174,24 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        if (IsDodging && isGrounded)
+        //if (IsDodging && isGrounded)
+        //{
+        //    float _distance = Mathf.Abs(transform.position.x - newDodgeStepTarget.x);
+        //    if (_distance > .1f)
+        //    {
+        //        transform.position = Vector2.MoveTowards(transform.position, newDodgeStepTarget, dodgeSpeed * Time.deltaTime);
+        //        return;
+        //    }
+        //}
+        
+        if (isGrounded && isOnSlope)
         {
-            float _distance = Mathf.Abs(transform.position.x - newDodgeStepTarget.x);
-            if (_distance > .1f)
-            {
-                transform.position = Vector2.MoveTowards(transform.position, newDodgeStepTarget, dodgeSpeed * Time.deltaTime);
-                return;
-            }
+            //theRB.velocity = new Vector2(-currentDirection * moveSpeed * slopeNormalPerp.x, -currentDirection * moveSpeed * slopeNormalPerp.y);
+            theRB.velocity = -currentDirection * moveSpeed * slopeNormalPerp;
+            return;
         }
         theRB.velocity = new Vector2(currentDirection * moveSpeed, theRB.velocity.y);
+
     }
 
     /// <summary>
@@ -152,12 +227,13 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = gizmoColorNotTouching;
         if (isGrounded)
             Gizmos.color = gizmoColorIsTouching;
-        Gizmos.DrawWireCube(groundCheck.position, new Vector2(.55f, .34f));
+        //Gizmos.DrawWireCube(groundCheck.position, new Vector2(.55f, .34f));
+        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 
     void Jump()
     {
-        if (isGrounded)
+        if (isGrounded || isOnSlope)
         {
             canDoubleJump = true;
         }
@@ -189,7 +265,7 @@ public class PlayerController : MonoBehaviour
 
     void ManageCoyoteTime()
     {
-        if (isGrounded)
+        if (isGrounded || isOnSlope)
         {
             coyoteTimeCounter = coyoteTIme;
         }
@@ -287,13 +363,13 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isFalling", false);
             anim.SetBool("isGrounded", true);
         }
-        else if (theRB.velocity.y > 0.1f)  // jump
+        else if (theRB.velocity.y > 0.1f && !isOnSlope && !isGrounded)  // jump
         {
             anim.SetBool("isJumping", true);
             anim.SetBool("isFalling", false);
             anim.SetBool("isGrounded", false);
         }
-        else if (theRB.velocity.y < 0)  // falling
+        else if (theRB.velocity.y < 0 && !isOnSlope && !isGrounded)  // falling
 
         {
             anim.SetBool("isFalling", true);
