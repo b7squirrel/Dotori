@@ -2462,7 +2462,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.084905684, g: 0.07492403, b: 0.074092224, a: 0}
+  m_BackGroundColor: {r: 0.1525899, g: 0.22799431, b: 0.254717, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -35076,29 +35076,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 656048493}
     m_Modifications:
-    - target: {fileID: 4071721333344830440, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_Size.x
-      value: 1.669529
-      objectReference: {fileID: 0}
-    - target: {fileID: 4071721333344830440, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_Size.y
-      value: 1.9495461
-      objectReference: {fileID: 0}
-    - target: {fileID: 4071721333344830440, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.17260933
-      objectReference: {fileID: 0}
-    - target: {fileID: 4071721333344830440, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_Offset.y
-      value: -2.048707
-      objectReference: {fileID: 0}
     - target: {fileID: 6493158246380748803, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
       propertyPath: m_Name
       value: Goul (5)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6493158246380748803, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_Layer
-      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6493158246380748831, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
       propertyPath: m_RootOrder
@@ -36988,6 +36968,7 @@ MonoBehaviour:
   isGrounded: 0
   canDoubleJump: 0
   isOnSlope: 0
+  isJumping: 0
   whatIsGround:
     serializedVersion: 2
     m_Bits: 2304
@@ -36997,8 +36978,7 @@ MonoBehaviour:
   groundCheckRadius: 0.26
   wallSlidingSpeed: 4
   slopeCheckDistance: 0.5
-  noFriction: {fileID: 6200000, guid: 270892ecd09a56847b1b38992b33fd9b, type: 2}
-  fullFriction: {fileID: 6200000, guid: cf02e3fd09d1ed04c8833dfccc77573e, type: 2}
+  playerFriction: {fileID: 6200000, guid: 270892ecd09a56847b1b38992b33fd9b, type: 2}
   xInput: 0
   friction: 0
   jumpForce: 14
@@ -37021,7 +37001,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2809493762570032321}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -35.86, y: 0.81, z: 0}
+  m_LocalPosition: {x: -62.88, y: 0.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

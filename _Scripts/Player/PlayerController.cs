@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool isGrounded;
     [SerializeField] bool canDoubleJump;
     [SerializeField] bool isOnSlope;
+    [SerializeField] bool isJumping;
     
     [Header("Ground Check")]
     [SerializeField] LayerMask whatIsGround;
@@ -31,8 +32,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Slope")]
     [SerializeField] float slopeCheckDistance;
-    [SerializeField] PhysicsMaterial2D noFriction;
-    [SerializeField] PhysicsMaterial2D fullFriction;
+    [SerializeField] PhysicsMaterial2D playerFriction;
     
     [Header("Debug")]
     [SerializeField] float xInput; // 디버깅용
@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
             slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
             slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-            if (slopeDownAngle != 0f)
+            if (isGrounded && slopeDownAngle != 0f)
             {
                 isOnSlope = true;
             }
@@ -144,21 +144,23 @@ public class PlayerController : MonoBehaviour
 
             if (isOnSlope && Input.GetAxisRaw("Horizontal") == 0.0f)
             {
-                theRB.sharedMaterial = noFriction;
-                theRB.sharedMaterial.friction = 100f;
+                theRB.sharedMaterial = playerFriction;
+                theRB.sharedMaterial.friction = 10000f;
             }
             else
             {
-                theRB.sharedMaterial = noFriction;
+                theRB.sharedMaterial = playerFriction;
                 theRB.sharedMaterial.friction = 0f;
             }
-
-
-            slopeDownAngleOld = slopeDownAngle;
 
             Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
             Debug.DrawRay(hit.point, hit.normal, Color.green);
         }
+        else
+        {
+            isOnSlope = false;
+        }
+        
     }
 
     void DirectionCheck()
@@ -174,24 +176,13 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        //if (IsDodging && isGrounded)
-        //{
-        //    float _distance = Mathf.Abs(transform.position.x - newDodgeStepTarget.x);
-        //    if (_distance > .1f)
-        //    {
-        //        transform.position = Vector2.MoveTowards(transform.position, newDodgeStepTarget, dodgeSpeed * Time.deltaTime);
-        //        return;
-        //    }
-        //}
-        
-        if (isGrounded && isOnSlope)
+        if (isGrounded && isOnSlope && isJumping == false)
         {
             //theRB.velocity = new Vector2(-currentDirection * moveSpeed * slopeNormalPerp.x, -currentDirection * moveSpeed * slopeNormalPerp.y);
             theRB.velocity = -currentDirection * moveSpeed * slopeNormalPerp;
             return;
         }
         theRB.velocity = new Vector2(currentDirection * moveSpeed, theRB.velocity.y);
-
     }
 
     /// <summary>
@@ -248,6 +239,7 @@ public class PlayerController : MonoBehaviour
 
         if (jumpRemember > 0f && coyoteTimeCounter > 0)
         {
+            isJumping = true;
             theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
             GenerateJumpEffect();
         }
@@ -260,6 +252,11 @@ public class PlayerController : MonoBehaviour
                 GenerateExtraJumpDust();
                 canDoubleJump = false;
             }
+        }
+
+        if (theRB.velocity.y < .1f)
+        {
+            isJumping = false;
         }
     }
 
