@@ -245,7 +245,7 @@ public class GoulFighter : MonoBehaviour
     //animation event
     void AttackStep()
     {
-        theRB.AddForce(attackStepForce * GetDirection(), ForceMode2D.Impulse);
+        //theRB.AddForce(attackStepForce * GetDirection(), ForceMode2D.Impulse);
     }
 
     void AttackBoxOn()

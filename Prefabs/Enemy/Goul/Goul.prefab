@@ -544,8 +544,8 @@ MonoBehaviour:
   moveSpeed: 3
   timeToStopFollowing: 5
   attackDistnace: 6
-  attackCoolTime: 1.6
-  attackStepForce: 2000
+  attackCoolTime: 3
+  attackStepForce: 1000
   attackBox: {fileID: 6493158246076871488}
 --- !u!1 &6493158246652257842
 GameObject:
