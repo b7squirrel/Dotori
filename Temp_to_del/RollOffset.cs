@@ -25,7 +25,7 @@ public class RollOffset : MonoBehaviour
 
     [Header("Gravity")]
     public float gravityScale;
-    float _gravity = 9.8f;
+    [SerializeField] float _gravity;
 
     [Header("Debug")]
     public bool[] isGrounded = new bool[3];
@@ -51,6 +51,7 @@ public class RollOffset : MonoBehaviour
     }
     private void Update()
     {
+        GetGravityScale();
         CalDeltaDistant();
         BaseSlotMovement();
         HorizontalMovement();
@@ -60,6 +61,19 @@ public class RollOffset : MonoBehaviour
     {
         VerticalMovement();
 
+    }
+
+    void GetGravityScale()
+    {
+        if (PlayerController.instance.IsOnSlope)
+        {
+            _gravity = 0f;
+        }
+        else
+        {
+            _gravity = 9.8f;
+        }
+        Debug.Log("IsOnSlope = " + PlayerController.instance.IsOnSlope);
     }
     void CalDeltaDistant()
     {

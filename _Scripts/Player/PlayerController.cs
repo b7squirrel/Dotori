@@ -73,6 +73,10 @@ public class PlayerController : MonoBehaviour
 
     public bool IsAttacking { get; set; }
     public bool IsDodging { get; set; }
+    public bool IsOnSlope 
+    { 
+        get { return isOnSlope; }
+    }
 
     private void Awake()
     {
@@ -92,7 +96,7 @@ public class PlayerController : MonoBehaviour
         Flip();
         Gravity();
         SurroundingCheck();
-        SlopeCheck();
+        
         Jump();
         GenerateDustTrail();
         GenerateLandEffect();
@@ -102,6 +106,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        SlopeCheck();
         Move();
     }
 
@@ -127,40 +132,37 @@ public class PlayerController : MonoBehaviour
         xInput = Input.GetAxisRaw("Horizontal");
         friction = theRB.sharedMaterial.friction;
         RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, whatIsGround);
-
-        if (hit)
+        if (hit == false)
         {
-            slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
-            slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+            isOnSlope = false;
+            theRB.isKinematic = false;
+            return;
+        }
 
-            if (isGrounded && slopeDownAngle != 0f)
-            {
-                isOnSlope = true;
-            }
-            else
-            {
-                isOnSlope = false;
-            }
+        slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+        slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-            if (isOnSlope && Input.GetAxisRaw("Horizontal") == 0.0f)
-            {
-                theRB.sharedMaterial = playerFriction;
-                theRB.sharedMaterial.friction = 10000f;
-            }
-            else
-            {
-                theRB.sharedMaterial = playerFriction;
-                theRB.sharedMaterial.friction = 0f;
-            }
-
-            Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
-            Debug.DrawRay(hit.point, hit.normal, Color.green);
+        if (isGrounded && slopeDownAngle != 0f)
+        {
+            isOnSlope = true;
         }
         else
         {
             isOnSlope = false;
         }
-        
+
+        if (isOnSlope && Input.GetAxisRaw("Horizontal") == 0.0f)
+        {
+            theRB.isKinematic = true;
+        }
+        else
+        {
+            theRB.isKinematic = false;
+        }
+
+        Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
+        Debug.DrawRay(hit.point, hit.normal, Color.green);
+
     }
 
     void DirectionCheck()
