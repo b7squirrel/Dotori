@@ -73,7 +73,6 @@ public class RollOffset : MonoBehaviour
         {
             _gravity = 9.8f;
         }
-        Debug.Log("IsOnSlope = " + PlayerController.instance.IsOnSlope);
     }
     void CalDeltaDistant()
     {

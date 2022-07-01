@@ -6,23 +6,29 @@ public class SpawnEnemy : MonoBehaviour
 {
     [SerializeField] GameObject[] enemies;
     [SerializeField] float initialSpawnTime;
+    [SerializeField] int maxSpawnEnemy;
     [SerializeField] bool isPlayerIn;
     [SerializeField] LayerMask playerLayer;
     [SerializeField] LayerMask enemyLayer;
-    
+
     [Range(1f, 20f)]
-    [SerializeField] float sizeX;
+    [SerializeField] float sizeX = 16f;
     [Range(1f, 20f)]
-    [SerializeField] float sizeY;
+    [SerializeField] float sizeY = 9f;
+    [Range(-10f, 10f)]
+    [SerializeField] float offsetX = 0;
+    [Range(-10f, 10f)]
+    [SerializeField] float offsetY = 0;
     Vector2 size;
+    Vector2 offset;
     float spawnCoolTime;
     float spawnTimeCounter;
     int currentIndex;
+    int numberOfSpawnedEnemy;
 
     private void Start()
     {
         spawnTimeCounter = initialSpawnTime;
-        size = new Vector2(sizeX, sizeY);
     }
     private void Update()
     {
@@ -31,9 +37,12 @@ public class SpawnEnemy : MonoBehaviour
     }
     void CheckPlayerEnemies()
     {
-        Vector2 pointA = new Vector2(transform.position.x - sizeX/2, transform.position.y - sizeY/2);
-        Vector2 pointB = new Vector2(transform.position.x + sizeX / 2, transform.position.y + sizeY / 2);
-        isPlayerIn = Physics2D.OverlapArea(pointA , pointB, playerLayer);
+        size = new Vector2(sizeX, sizeY);
+        offset = new Vector2(offsetX, offsetY);
+
+        Vector2 _pointA = (Vector2)transform.position + offset - size / 2;
+        Vector2 _pointB = (Vector2)transform.position + offset + size / 2;
+        isPlayerIn = Physics2D.OverlapArea(_pointA , _pointB, playerLayer);
     }
 
     void Spawn()
@@ -46,6 +55,8 @@ public class SpawnEnemy : MonoBehaviour
             spawnTimeCounter -= Time.deltaTime;
             return;
         }
+        if (numberOfSpawnedEnemy >= maxSpawnEnemy)
+            return;
 
         if (currentIndex > enemies.Length - 1)
         {
@@ -53,6 +64,7 @@ public class SpawnEnemy : MonoBehaviour
         }
 
         Instantiate(enemies[currentIndex], transform.position, Quaternion.identity);
+        numberOfSpawnedEnemy++;
         currentIndex++;
         isPlayerIn = false;
         spawnCoolTime = initialSpawnTime + 3f;
@@ -62,6 +74,6 @@ public class SpawnEnemy : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = new Color(0, 1, 0, .2f);
-        Gizmos.DrawCube(transform.position, size);
+        Gizmos.DrawCube((Vector2)transform.position + offset, size);
     }
 }
