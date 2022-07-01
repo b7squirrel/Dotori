@@ -9,16 +9,17 @@ public class PanManager : MonoBehaviour
 {
     public static PanManager instance;
     
-    public PanSlot spareSlot;
-
-    PanSlot[] _panSlots;
-    public Transform _flavorEffectRot;  //파티클이 이상하게 붙어서 x축으로 -90도 회전시킴
-    BoxCollider2D _boxCol;
-
-    public Transform hitRollPoint;  // HitRoll을 할 때 자꾸 롤이 그라운드 판정이 나면서 사라짐. 그래서 좀 띄워서 발사해봄
-
-    Vector2 mouseDirection;
+    [SerializeField] PanSlot spareSlot;
+    [SerializeField] Transform _flavorEffectRot;  //파티클이 이상하게 붙어서 x축으로 -90도 회전시킴
+    [SerializeField] Transform hitRollPoint;  // HitRoll을 할 때 자꾸 롤이 그라운드 판정이 나면서 사라짐. 그래서 좀 띄워서 발사해봄
     [SerializeField] PlayerTargetController playerTargetController;
+    [SerializeField] FlavorSo defaultFlavorSo;
+    [SerializeField] float flavorTime;
+    PanSlot[] _panSlots;
+    BoxCollider2D _boxCol;
+    FlavorSo m_flavorSo;
+    float flavorCounter;
+
 
     private void Awake()
     {
@@ -28,6 +29,16 @@ public class PanManager : MonoBehaviour
     {
         _panSlots = GetComponentsInChildren<PanSlot>();
         _boxCol = GetComponent<BoxCollider2D>();
+        m_flavorSo = defaultFlavorSo;
+    }
+    private void Update()
+    {
+        if (m_flavorSo.flavorType == Flavor.flavorType.none)
+        {
+            m_flavorSo.flavorType = Flavor.flavorType.none;
+            return;
+        }
+        flavorCounter -= Time.deltaTime;
     }
 
     // 빈 슬롯이 없으면 캡쳐가 실행되지 않으므로 AcquireRoll이 호출되었을 때는 무조건 빈 슬롯이 있음
@@ -45,7 +56,9 @@ public class PanManager : MonoBehaviour
         }
         // 그리고 가장 아래칸에 캡쳐한 롤을 집어넣음
         _panSlots[0].AddRoll(_prefab);
-        
+        // Flavored 상태라면 롤에 플레이버를 입혀줌
+        if (flavorCounter > 0)
+            AcquireFlavor(m_flavorSo);
     }
 
     //슬롯을 돌면서 매개변수로 받은 flavorSO에서 해당 이펙트를 추출하고 각 슬롯을 따라가게 한다. 
@@ -63,6 +76,9 @@ public class PanManager : MonoBehaviour
                 _panSlots[i].GetRoll().GetComponent<EnemyRolling>().m_flavorSO = _flavorSo;
             }
         }
+        m_flavorSo = _flavorSo;
+        m_flavorSo.flavorType = _flavorSo.flavorType;
+        flavorCounter = flavorTime;
     }
 
     public void FlipRoll()
@@ -107,12 +123,10 @@ public class PanManager : MonoBehaviour
         PhysicsMaterial2D _physicsMat = _roll.GetComponent<EnemyRolling>().physicsMat;
         Rigidbody2D _theRB = _roll.AddComponent<Rigidbody2D>();
         CapsuleCollider2D _capColl = _roll.AddComponent<CapsuleCollider2D>();
-        //_capColl.isTrigger = true;
         _theRB.sharedMaterial = _physicsMat;
         _capColl.size = new Vector2(1f, 1f);
         _capColl.direction = CapsuleDirection2D.Horizontal;
         _theRB.gravityScale = _roll.GetComponent<EnemyRolling>().gravity;
-        //_theRB.velocity = new Vector2(_direction * _hSpeed, _vSpeed);
         Vector2 _mouseDirection = playerTargetController.GetMouseDirection();
         _theRB.velocity = new Vector2(_mouseDirection.x * _hSpeed, _mouseDirection.y * _hSpeed);
 

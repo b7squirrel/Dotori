@@ -15,10 +15,8 @@ public class EnemyProjectile : MonoBehaviour
 
     [SerializeField] float moveSpeed;
     [SerializeField] float deflectionSpeed;
-    [SerializeField] float homingTime; // 반사되어서 타겟에 도달하기까지 걸리는 시간
     Vector2 moveDirection;
     Rigidbody2D theRB;
-    Vector2 initialPoint; // parry 되었을 때 다시 되돌아 오기 위한 위치값
     bool isFlying; // parry 되어서 날아가는 상태. 아무것도 안함. 
 
     [SerializeField] float deflectionDelayTime;
@@ -47,7 +45,6 @@ public class EnemyProjectile : MonoBehaviour
         theRB = GetComponent<Rigidbody2D>();
         // 플레이어의 피봇이 bottom이므로 살짝 높은 곳을 향해 날아가게 한다
         moveDirection = (PlayerController.instance.transform.position - transform.position + new Vector3(0f, .7f, 0f)).normalized * moveSpeed;
-        initialPoint = new Vector2(transform.position.x, transform.position.y - 1f);
         IsParried = false;
         isFlying = false;
         smoke = Instantiate(fireParticle, transform.position, Quaternion.identity);
@@ -190,7 +187,6 @@ public class EnemyProjectile : MonoBehaviour
         effectPoint.position += new Vector3(2f, .7f, 0f);
         effectPoint.eulerAngles = new Vector3(transform.rotation.x, PlayerController.instance.transform.rotation.y, -10f);
 
-        //theRB.velocity = CalculateVelecity(initialPoint, (Vector2)ContactPoint, homingTime);
         Vector2 _mouseDirection = playerTargetController.GetMouseDirection();
         theRB.velocity = deflectionSpeed * _mouseDirection;
     }

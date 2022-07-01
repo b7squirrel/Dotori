@@ -4199,6 +4199,8 @@ MonoBehaviour:
   _flavorEffectRot: {fileID: 553785562}
   hitRollPoint: {fileID: 1296989807}
   playerTargetController: {fileID: 2809493762570032330}
+  defaultFlavorSo: {fileID: 11400000, guid: 398028c4e1b6d6c4694034f891f8ba31, type: 2}
+  flavorTime: 10
 --- !u!114 &885729760
 MonoBehaviour:
   m_ObjectHideFlags: 0
