@@ -22,8 +22,6 @@ public class PlayerCaptureBox : MonoBehaviour
 
         if (collision.CompareTag("Enemy"))
         {
-            if (PanManager.instance.IsAvailableToCapture() == false) // 슬롯이 가득 차 있으면 캡쳐를 하지 않음
-                return;
             collision.GetComponent<EnemyHealth>().GetRolled();
         }
     }

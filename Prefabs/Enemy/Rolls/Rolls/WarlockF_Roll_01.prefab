@@ -125,6 +125,8 @@ MonoBehaviour:
   verticalSpeed: 5
   gravity: 1
   physicsMat: {fileID: 6200000, guid: 69162b284af75af4f8bfa17706f2d1d4, type: 2}
+  verticalDropSpeed: 8
+  dropGravity: 2
   hitEffect: {fileID: 2720419082649462560, guid: e6a0bf88b6867174bb7e0843401eeb70, type: 3}
   hitEffectPoint: {fileID: 3410760840224446877}
   timeToExplode: 1

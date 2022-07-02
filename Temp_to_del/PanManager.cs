@@ -21,10 +21,6 @@ public class PanManager : MonoBehaviour
     FlavorSo currentFlavourSo;
     float flavorCounter;
 
-    
-
-
-
     private void Awake()
     {
         instance = this;
@@ -40,11 +36,14 @@ public class PanManager : MonoBehaviour
         ManagetFlavour();
     }
 
-    // 빈 슬롯이 없으면 캡쳐가 실행되지 않으므로 AcquireRoll이 호출되었을 때는 무조건 빈 슬롯이 있음
     public void AcquireRoll(Transform _prefab)
     {
+        Debug.Log(IsAvailableToCapture());
+        // 팬이 가득 차 있다면 맨 위에 위치한 Roll을 떨어트린다. 
         if (IsAvailableToCapture() == false)
-            return;
+        {
+            DropRoll();
+        }
         // 기존 롤들을 한 칸씩 올림
         for (int i = _panSlots.Length - 1; i > -1; i--)
         {
@@ -131,7 +130,8 @@ public class PanManager : MonoBehaviour
         }
     }
 
-    public void ClearRoll(){
+    public void ClearRoll()
+    {
         int _numberOfRolls = CountRollNumber();
         GameObject _roll = _panSlots[0].GetRoll().gameObject;
         _roll.transform.position = hitRollPoint.position;
@@ -139,7 +139,6 @@ public class PanManager : MonoBehaviour
         if (_roll.GetComponent<EnemyRolling>().isFlavored)
         {
             _roll.tag = "RollFlavored";
-            //_roll.GetComponent<EnemyRolling>().isFlavored = false;
         }
         else
         {
@@ -159,12 +158,30 @@ public class PanManager : MonoBehaviour
         Vector2 _mouseDirection = playerTargetController.GetMouseDirection();
         _theRB.velocity = new Vector2(_mouseDirection.x * _hSpeed, _mouseDirection.y * _hSpeed);
 
-        _panSlots[0].RemoveRoll();
-
         // 0번 슬롯의 롤을 비워주고 롤 갯수를 하나 줄임
+        _panSlots[0].RemoveRoll();
         for (int i = 0; i < _numberOfRolls - 1; i++){
             _panSlots[i + 1].MoveRoll(_panSlots[i]);
         }
+    }
+
+    void DropRoll()
+    {
+        GameObject _roll = _panSlots[_panSlots.Length - 1].GetRoll().gameObject;
+
+        float _direction = PlayerController.instance.GetPlayerDirection();
+        float _vSpeed = _roll.GetComponent<EnemyRolling>().verticalDropSpeed;
+        PhysicsMaterial2D _physicsMat = _roll.GetComponent<EnemyRolling>().physicsMat;
+        Rigidbody2D _theRB = _roll.AddComponent<Rigidbody2D>();
+        CapsuleCollider2D _capColl = _roll.AddComponent<CapsuleCollider2D>();
+        _theRB.sharedMaterial = _physicsMat;
+        _capColl.size = new Vector2(1f, 1f);
+        _capColl.direction = CapsuleDirection2D.Horizontal;
+        _theRB.gravityScale = _roll.GetComponent<EnemyRolling>().dropGravity;
+        _theRB.velocity = new Vector2(0, _vSpeed);
+
+        _panSlots[_panSlots.Length - 1].RemoveRoll();
+        Debug.Log("Dropped");
     }
 
     public int CountRollNumber()

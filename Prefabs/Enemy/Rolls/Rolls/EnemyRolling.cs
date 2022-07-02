@@ -25,6 +25,10 @@ public class EnemyRolling : MonoBehaviour
     public float gravity;
     public PhysicsMaterial2D physicsMat;
 
+    [Header("When Dropped")]
+    public float verticalDropSpeed;
+    public float dropGravity;
+
     [Header("Hit Effects")]
     [SerializeField] GameObject hitEffect;
     [SerializeField] Transform hitEffectPoint;
