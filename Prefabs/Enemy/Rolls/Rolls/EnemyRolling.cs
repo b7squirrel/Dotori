@@ -75,11 +75,13 @@ public class EnemyRolling : MonoBehaviour
     }
     void Explode()
     {
-        if (m_flavorSO != null)
-        {
-            var _explosion = Instantiate(m_flavorSO.actionPrefab, transform.position, transform.rotation);
-            //_explosion.GetComponent<ExplosionFlavor>().numberOfRolls = 1;
-        }
+        if (m_flavorSO == null)
+            return;
+        if (m_flavorSO.flavorType == Flavor.flavorType.none)
+            return;
+
+        FlavorSo _flavorSo = RecipeFlavor.instance.GetFlavourSo(m_flavorSO);
+        Instantiate(_flavorSo.actionPrefab, transform.position, transform.rotation);
         DestroyPrefab();
     }
     public void DestroyPrefab()

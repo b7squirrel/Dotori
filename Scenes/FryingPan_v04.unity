@@ -4134,6 +4134,7 @@ GameObject:
   - component: {fileID: 885729757}
   - component: {fileID: 885729759}
   - component: {fileID: 885729760}
+  - component: {fileID: 885729761}
   - component: {fileID: 885729758}
   m_Layer: 0
   m_Name: Pan Manager
@@ -4200,7 +4201,7 @@ MonoBehaviour:
   hitRollPoint: {fileID: 1296989807}
   playerTargetController: {fileID: 2809493762570032330}
   defaultFlavorSo: {fileID: 11400000, guid: 398028c4e1b6d6c4694034f891f8ba31, type: 2}
-  flavorTime: 10
+  flavorTime: 5
 --- !u!114 &885729760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4217,6 +4218,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b4a2007186b53344ab578941dcd2845, type: 2}
   - {fileID: 11400000, guid: 0ca4c343adfc845469173fb00ba80984, type: 2}
   - {fileID: 11400000, guid: d7902472d1c4d4e408a3ff5686a0a7d8, type: 2}
+--- !u!114 &885729761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885729756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19ac5828127438d4cbfb2258c27f6a78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recipeFlavor:
+  - {fileID: 11400000, guid: 398028c4e1b6d6c4694034f891f8ba31, type: 2}
+  - {fileID: 11400000, guid: 4a7efb159676c1e44a463d9887e4c5d9, type: 2}
+  - {fileID: 11400000, guid: 2aca71d46e669f746b443b5802f8a82d, type: 2}
 --- !u!4 &893323862 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6493158246380748831, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}

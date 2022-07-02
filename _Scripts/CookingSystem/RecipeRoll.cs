@@ -22,7 +22,5 @@ public class RecipeRoll : MonoBehaviour
             }
         }
         return null;
-
     }
-
 }

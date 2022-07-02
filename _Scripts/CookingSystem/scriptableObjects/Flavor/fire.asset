@@ -14,10 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flavorType: 1
   flavorSprite_UI: {fileID: 21300000, guid: 127b07a4c94d1d54dbacec126e080da2, type: 3}
-  flavorPrefab:
-  - {fileID: 6502066251058201483, guid: db6ed31638c230149b429cdb45f60f61, type: 3}
-  - {fileID: 4019095362779590246, guid: 3c2c68047d21b984d9fcabfff30582fb, type: 3}
-  - {fileID: 5861914600564170152, guid: c905719ee1536624a8b8bac50777749b, type: 3}
   flavorSprite:
   - {fileID: 21300000, guid: 127b07a4c94d1d54dbacec126e080da2, type: 3}
   - {fileID: 21300000, guid: 127b07a4c94d1d54dbacec126e080da2, type: 3}

@@ -16,9 +16,13 @@ public class PanManager : MonoBehaviour
     [SerializeField] FlavorSo defaultFlavorSo;
     [SerializeField] float flavorTime;
     PanSlot[] _panSlots;
+    GameObject[] flavourParticle = new GameObject[3];
     BoxCollider2D _boxCol;
-    FlavorSo m_flavorSo;
+    FlavorSo currentFlavourSo;
     float flavorCounter;
+
+    
+
 
 
     private void Awake()
@@ -29,16 +33,11 @@ public class PanManager : MonoBehaviour
     {
         _panSlots = GetComponentsInChildren<PanSlot>();
         _boxCol = GetComponent<BoxCollider2D>();
-        m_flavorSo = defaultFlavorSo;
+        currentFlavourSo = defaultFlavorSo;
     }
     private void Update()
     {
-        if (m_flavorSo.flavorType == Flavor.flavorType.none)
-        {
-            m_flavorSo.flavorType = Flavor.flavorType.none;
-            return;
-        }
-        flavorCounter -= Time.deltaTime;
+        ManagetFlavour();
     }
 
     // 빈 슬롯이 없으면 캡쳐가 실행되지 않으므로 AcquireRoll이 호출되었을 때는 무조건 빈 슬롯이 있음
@@ -58,29 +57,59 @@ public class PanManager : MonoBehaviour
         _panSlots[0].AddRoll(_prefab);
         // Flavored 상태라면 롤에 플레이버를 입혀줌
         if (flavorCounter > 0)
-            AcquireFlavor(m_flavorSo);
+            AcquireFlavor(currentFlavourSo);
     }
 
     //슬롯을 돌면서 매개변수로 받은 flavorSO에서 해당 이펙트를 추출하고 각 슬롯을 따라가게 한다. 
     //슬롯의 롤들에게 isFlavored = true 값을 전달한다. 
     public void AcquireFlavor(FlavorSo _flavorSo)
     {
+        ResetFlavour();
         for (int i = 0; i < _panSlots.Length; i++)
         {
             if (!_panSlots[i].IsEmpty())
             {
-                var _clone = Instantiate(_flavorSo.flavorParticle, _panSlots[i].transform.position, _flavorEffectRot.rotation);
-                _clone.GetComponent<ParticleController>().SetSlotToFollow(_panSlots[i]);
+                flavourParticle[i] = Instantiate(_flavorSo.flavorParticle, _panSlots[i].transform.position, _flavorEffectRot.rotation);
+                flavourParticle[i].GetComponent<ParticleController>().SetSlotToFollow(_panSlots[i]);
 
                 _panSlots[i].GetRoll().GetComponent<EnemyRolling>().isFlavored = true;
                 _panSlots[i].GetRoll().GetComponent<EnemyRolling>().m_flavorSO = _flavorSo;
-            }
+;            }
         }
-        m_flavorSo = _flavorSo;
-        m_flavorSo.flavorType = _flavorSo.flavorType;
+        currentFlavourSo = _flavorSo;
         flavorCounter = flavorTime;
     }
+    void ResetFlavour()
+    {
+        for (int i = 0; i < _panSlots.Length; i++)
+        {
+            if (!_panSlots[i].IsEmpty())
+            {
+                if (flavourParticle[i] != null)
+                {
+                    // 파티클 없애고, Flavour 상태 초기화, FlavourSo 초기화
+                    flavourParticle[i].GetComponent<ParticleController>().DestroyParticle();
+                    _panSlots[i].GetRoll().GetComponent<EnemyRolling>().isFlavored = false;
+                    _panSlots[i].GetRoll().GetComponent<EnemyRolling>().m_flavorSO = defaultFlavorSo;
+                }
+            }
+        }
+        currentFlavourSo = defaultFlavorSo;
+        currentFlavourSo.flavorType = defaultFlavorSo.flavorType;
+        flavorCounter = 0f;
+    }
 
+    void ManagetFlavour()
+    {
+        if (flavorCounter > 0)
+        {
+            flavorCounter -= Time.deltaTime;
+        }
+        else
+        {
+            ResetFlavour();
+        }
+    }
     public void FlipRoll()
     {
         if (_panSlots[0].IsEmpty())
@@ -110,7 +139,7 @@ public class PanManager : MonoBehaviour
         if (_roll.GetComponent<EnemyRolling>().isFlavored)
         {
             _roll.tag = "RollFlavored";
-            _roll.GetComponent<EnemyRolling>().isFlavored = false;
+            //_roll.GetComponent<EnemyRolling>().isFlavored = false;
         }
         else
         {
