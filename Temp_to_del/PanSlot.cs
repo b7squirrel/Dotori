@@ -32,6 +32,8 @@ public class PanSlot : MonoBehaviour
         _prefab.position = transform.position;
         _prefab.rotation = transform.rotation;
         _prefab.parent = transform;
+
+        _prefab.GetComponent<SpriteRenderer>().sortingOrder = 3;
         IsEmpty = false;
     }
 
@@ -42,24 +44,22 @@ public class PanSlot : MonoBehaviour
 
     public void MoveRoll(PanSlot _targetSlot)
     {
-        if (!IsEmpty)
-        {
-            isMoving = true;
-            targetSlot = _targetSlot;
-            movingRoll = GetRoll().gameObject;
-            IsEmpty = true;
-            movingRoll.transform.parent = targetSlot.transform;
-            _targetSlot.SetToOccupied();
-            //GetRoll().position = _targetSlot.transform.position;
-            //GetRoll().parent = _targetSlot.transform;
-            //IsEmpty = true;
-            //_targetSlot.SetToOccupied();
-        }
+        if (IsEmpty)
+            return;
+        isMoving = true;
+        targetSlot = _targetSlot;
+        movingRoll = GetRoll().gameObject;
+        movingRoll.GetComponent<SpriteRenderer>().sortingOrder--;
+        IsEmpty = true;
+        movingRoll.transform.parent = targetSlot.transform;
+        _targetSlot.SetToOccupied();
     }
 
     void UpdateRollMovement()
     {
         if (isMoving == false)
+            return;
+        if (movingRoll == null)
             return;
         movingRoll.transform.position = 
             Vector2.MoveTowards(movingRoll.transform.position, targetSlot.transform.position, moveSpeed * Time.deltaTime);

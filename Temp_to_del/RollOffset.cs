@@ -38,7 +38,7 @@ public class RollOffset : MonoBehaviour
         _slots[0].transform.position = anchorPoint.transform.position + new Vector3(0f, .5f);
         for (int i = 1; i < _slots.Length; i++)
         {
-            _slots[i].transform.localPosition = _slots[i - 1].transform.localPosition + new Vector3(0, 1f);
+            _slots[i].transform.localPosition = _slots[i - 1].transform.localPosition + new Vector3(0, .6f);
         }
         pastAnchorPoint = anchorPoint.transform.position;
         currentAnchorPoint = pastAnchorPoint;
