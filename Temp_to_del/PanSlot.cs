@@ -4,25 +4,22 @@ using UnityEngine;
 
 public class PanSlot : MonoBehaviour
 {
-    public bool isEmpty = true;
+    public bool IsEmpty { get; private set; } = true;
+    [SerializeField] float moveSpeed;
+    PanSlot targetSlot;
+    GameObject movingRoll;
+    bool isMoving;
     float _height;
     int _capacity;
 
-    public bool IsEmpty()
+    private void Update()
     {
-        if (isEmpty)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        UpdateRollMovement();
     }
 
     public void SetToOccupied()
     {
-        isEmpty = false;
+        IsEmpty = false;
     }
 
     void UpdateSlot(RollSO _rollSO)
@@ -35,7 +32,7 @@ public class PanSlot : MonoBehaviour
         _prefab.position = transform.position;
         _prefab.rotation = transform.rotation;
         _prefab.parent = transform;
-        isEmpty = false;
+        IsEmpty = false;
     }
 
     public Transform GetRoll()
@@ -45,19 +42,37 @@ public class PanSlot : MonoBehaviour
 
     public void MoveRoll(PanSlot _targetSlot)
     {
-        if (!isEmpty)
+        if (!IsEmpty)
         {
-            GetRoll().position = _targetSlot.transform.position;
-            GetRoll().parent = _targetSlot.transform;
-            isEmpty = true;
+            isMoving = true;
+            targetSlot = _targetSlot;
+            movingRoll = GetRoll().gameObject;
+            IsEmpty = true;
+            movingRoll.transform.parent = targetSlot.transform;
             _targetSlot.SetToOccupied();
+            //GetRoll().position = _targetSlot.transform.position;
+            //GetRoll().parent = _targetSlot.transform;
+            //IsEmpty = true;
+            //_targetSlot.SetToOccupied();
+        }
+    }
+
+    void UpdateRollMovement()
+    {
+        if (isMoving == false)
+            return;
+        movingRoll.transform.position = 
+            Vector2.MoveTowards(movingRoll.transform.position, targetSlot.transform.position, moveSpeed * Time.deltaTime);
+        if (Vector2.Distance(movingRoll.transform.position, targetSlot.transform.position) < .1f)
+        {
+            isMoving = false;
         }
     }
 
     public void RemoveRoll()
     {
         GetRoll().parent = null;
-        isEmpty = true;
+        IsEmpty = true;
     }
 
     public void FlipRoll()
@@ -67,7 +82,7 @@ public class PanSlot : MonoBehaviour
 
     public void FlipSprite()
     {
-        if (!isEmpty)
+        if (!IsEmpty)
         {
             if (PlayerController.instance.GetPlayerDirection() > 0)
             {

@@ -5224,7 +5224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b049eae09e9ae148813aaf5ebe3581a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEmpty: 1
+  moveSpeed: 4
 --- !u!212 &995501094
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5438,7 +5438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b049eae09e9ae148813aaf5ebe3581a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEmpty: 1
+  moveSpeed: 0
 --- !u!1001 &1042790808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6384,7 +6384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b049eae09e9ae148813aaf5ebe3581a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEmpty: 1
+  moveSpeed: 4
 --- !u!212 &1287392688
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -36859,7 +36859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b049eae09e9ae148813aaf5ebe3581a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEmpty: 1
+  moveSpeed: 4
 --- !u!212 &1957617659
 SpriteRenderer:
   m_ObjectHideFlags: 0

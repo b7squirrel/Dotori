@@ -38,7 +38,6 @@ public class PanManager : MonoBehaviour
 
     public void AcquireRoll(Transform _prefab)
     {
-        Debug.Log(IsAvailableToCapture());
         // 팬이 가득 차 있다면 맨 위에 위치한 Roll을 떨어트린다. 
         if (IsAvailableToCapture() == false)
         {
@@ -47,7 +46,7 @@ public class PanManager : MonoBehaviour
         // 기존 롤들을 한 칸씩 올림
         for (int i = _panSlots.Length - 1; i > -1; i--)
         {
-            if (_panSlots[i].isEmpty == false)
+            if (_panSlots[i].IsEmpty == false)
             {
                 _panSlots[i].MoveRoll(_panSlots[i + 1]);
             }
@@ -66,7 +65,7 @@ public class PanManager : MonoBehaviour
         ResetFlavour();
         for (int i = 0; i < _panSlots.Length; i++)
         {
-            if (!_panSlots[i].IsEmpty())
+            if (!_panSlots[i].IsEmpty)
             {
                 flavourParticle[i] = Instantiate(_flavorSo.flavorParticle, _panSlots[i].transform.position, _flavorEffectRot.rotation);
                 flavourParticle[i].GetComponent<ParticleController>().SetSlotToFollow(_panSlots[i]);
@@ -82,7 +81,7 @@ public class PanManager : MonoBehaviour
     {
         for (int i = 0; i < _panSlots.Length; i++)
         {
-            if (!_panSlots[i].IsEmpty())
+            if (!_panSlots[i].IsEmpty)
             {
                 if (flavourParticle[i] != null)
                 {
@@ -111,7 +110,7 @@ public class PanManager : MonoBehaviour
     }
     public void FlipRoll()
     {
-        if (_panSlots[0].IsEmpty())
+        if (_panSlots[0].IsEmpty)
             return;
         _panSlots[0].FlipRoll();
     }
@@ -181,14 +180,13 @@ public class PanManager : MonoBehaviour
         _theRB.velocity = new Vector2(0, _vSpeed);
 
         _panSlots[_panSlots.Length - 1].RemoveRoll();
-        Debug.Log("Dropped");
     }
 
     public int CountRollNumber()
     {
         for (int i = 0; i < _panSlots.Length; i++)
         {
-            if (_panSlots[i].IsEmpty())
+            if (_panSlots[i].IsEmpty)
             {
                 return i;
             }
