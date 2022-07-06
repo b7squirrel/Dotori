@@ -8,16 +8,15 @@ public class RollMovement : MonoBehaviour
     [SerializeField] float verticalMax;
     [SerializeField] float horizontalMax;
     [SerializeField] Vector2 moveSpeed;
-    Vector2 currentAnchorPosition;
-    Vector2 pastAnchorPosition;
+
+    [SerializeField] Animator animPan;
 
     Vector2[] currentPosition = new Vector2[4];
     Vector2[] pastPosition = new Vector2[4];
     Vector2[] direction = new Vector2[4];
     Vector2[] slotDeltaPosition = new Vector2[4];
-    Vector2 slotMovement;
-    Vector2 anchorDeltaDistance;
 
+    
     void Start()
     {
         InitiateSlots();
@@ -25,6 +24,7 @@ public class RollMovement : MonoBehaviour
 
     void Update()
     {
+        SetVerticalMax();
         GetDirecitons();
         GetDeltaPositions();
         ApplyMovements();
@@ -64,7 +64,6 @@ public class RollMovement : MonoBehaviour
             float xPosition = Mathf.Clamp(slotDeltaPosition[i].x, -horizontalMax, horizontalMax);
             slotDeltaPosition[i] = new Vector2(xPosition, yPosition);
         }
-        
     }
     void ApplyMovements()
     {
@@ -73,27 +72,20 @@ public class RollMovement : MonoBehaviour
             slotProxies[i + 1].transform.position =
                 Vector2.Lerp(slotProxies[i + 1].transform.position, 
                 slotDeltaPosition[i] + (Vector2)slotProxies[i].transform.position, 10f * Time.deltaTime);
-            //if (Mathf.Abs(slotProxies[i + 1].transform.position.y) < .1f) 
-            //{
-            //    slotProxies[i + 1].transform.position =
-            //        new Vector2(slotProxies[i + 1].transform.position.x, -moveSpeed.y);
-            //}
         }
     }
-    Vector2 GetSlotMovement()
+
+    void SetVerticalMax()
     {
-        slotMovement = moveSpeed;
-        float yPosition = Mathf.Clamp(slotMovement.y, 1f, verticalMax);
-        float xPosition = Mathf.Clamp(slotMovement.x, -horizontalMax, horizontalMax);
-        slotMovement = new Vector2(xPosition, yPosition);
-        return slotMovement;
-    }
-    void ApplySlotMovement()
-    {
-        for (int i = 0; i < slotProxies.Length - 1; i++)
+        if (animPan.GetCurrentAnimatorStateInfo(0).IsName("Pan_Pan")
+            || animPan.GetCurrentAnimatorStateInfo(0).IsName("Pan_Capture")
+            || animPan.GetCurrentAnimatorStateInfo(0).IsName("Pan_HitRoll"))
         {
-            slotProxies[i + 1].transform.position =
-                Vector2.Lerp(slotProxies[i + 1].transform.position, GetSlotMovement() + (Vector2)slotProxies[i].transform.position, 10f * Time.deltaTime);
+            verticalMax = 1.5f;
+        }
+        else
+        {
+            verticalMax = 3f;
         }
     }
 }
