@@ -2692,6 +2692,14 @@ MonoBehaviour:
   - {fileID: 1112798306}
   - {fileID: 255364302}
   - {fileID: 694232837}
+  anchor: {fileID: 1405039048}
+  tossForce: 15
+  tossGravity: 9.8
+  tossGravityScale: 4
+  tossVelocity: 0
+  anchorInitialPoint: {fileID: 1923925783}
+  IsAnchorGrounded: 0
+  <IsRollsOnPan>k__BackingField: 0
 --- !u!4 &432231497
 Transform:
   m_ObjectHideFlags: 0
@@ -3772,14 +3780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rollso: {fileID: 11400000, guid: 7786f313465a50441a19c196721aacdb, type: 2}
   flavorSo: {fileID: 11400000, guid: 398028c4e1b6d6c4694034f891f8ba31, type: 2}
-  anchor: {fileID: 1405039048}
-  tossForce: 17
-  tossGravity: 9.8
-  tossGravityScale: 5
-  isAnchorGrounded: 0
-  anchorInitialPoint: {fileID: 1923925783}
-  tossVelocity: 0
-  <IsRollsOnPan>k__BackingField: 0
+  slotPhysics: {fileID: 432231496}
   HitRollEffect: {fileID: 5090427162195939564, guid: cfb19a9bda3e8bd40a92995ab5a6faac, type: 3}
   captureBox: {fileID: 2029100655}
 --- !u!114 &619753140

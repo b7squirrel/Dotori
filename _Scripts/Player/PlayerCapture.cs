@@ -12,18 +12,7 @@ public class PlayerCapture : MonoBehaviour
     [SerializeField] FlavorSo flavorSo;
 
     [Header("Toss Rolls")]
-    [SerializeField] Transform anchor;
-    [SerializeField] float tossForce;
-    [SerializeField] float tossGravity;
-    [SerializeField] float tossGravityScale;
-
-    [Header("Toss Debug")]
-    [SerializeField] bool isAnchorGrounded;
-    [SerializeField] Transform anchorInitialPoint;
-    [SerializeField] float tossVelocity;
-
-    [field: SerializeField]
-    public bool IsRollsOnPan { get; private set; }
+    [SerializeField] SlotPhysics slotPhysics;
 
     [Header("Effects")]
     [SerializeField] GameObject HitRollEffect;
@@ -34,19 +23,12 @@ public class PlayerCapture : MonoBehaviour
         panAnim = GetComponent<Animator>();
         panManager = GetComponentInChildren<PanManager>();
         captureBox.gameObject.SetActive(false);
-
-        anchor.position = anchorInitialPoint.position;
     }
     void Update()
     {
-        AnchorGroundCheck();
-        CheckIsRollsOnPan();
-
         Capture();
         HitRolls();
-        TollRolls();
-
-        OnTossRolls();
+        TossRolls();
     }
     void Capture()
     {
@@ -68,15 +50,15 @@ public class PlayerCapture : MonoBehaviour
             EffectsClearRoll();
         }
     }
-    void TollRolls()
+    void TossRolls()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            if (IsRollsOnPan == false)
+            if (slotPhysics.IsRollsOnPan == false)
             {
                 return;
             }
-            tossVelocity = tossForce;
+            slotPhysics.TossRolls();
         }
     }
     // Capture의 마지막 프레임에서 애니메이션 이벤트로 실행
@@ -95,36 +77,6 @@ public class PlayerCapture : MonoBehaviour
     void CaptureBoxOff()
     {
         captureBox.gameObject.SetActive(false);
-    }
-    void OnTossRolls()
-    {
-        tossVelocity += -tossGravity * tossGravityScale * Time.deltaTime;
-        if (isAnchorGrounded == true && tossVelocity < 0)
-        {
-            tossVelocity = 0;
-        }
-        anchor.transform.Translate(new Vector3(0, tossVelocity, 0) * Time.deltaTime);
-
-    }
-    void AnchorGroundCheck()
-    {
-        if (Vector2.Distance(anchor.position, anchorInitialPoint.position) < .1f)
-        {
-            isAnchorGrounded = true;
-            anchor.position = anchorInitialPoint.position;
-            return;
-        }
-        isAnchorGrounded = false;
-    }
-    void CheckIsRollsOnPan()
-    {
-        // 롤이 팬위에 붙어 있는가
-        if (panManager.CountRollNumber() > 0 && isAnchorGrounded)
-        {
-            IsRollsOnPan = true;
-            return;
-        }
-        IsRollsOnPan = false;
     }
 
     void EffectsClearRoll()
