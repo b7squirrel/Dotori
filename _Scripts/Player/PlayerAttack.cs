@@ -34,6 +34,7 @@ public class PlayerAttack : MonoBehaviour
             playerAttackBox.gameObject.SetActive(false);
         }
 
+        // 공격이 발동되면 패링카운터까지 초기화 되어 패링도 가능하게 된다.
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(0))
         {
             if (panManager.CountRollNumber() > 0)
