@@ -3050,10 +3050,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.0012406948
     y: 0
-    width: 1
-    height: 1
+    width: 0.9975186
+    height: 0.9988975
   near clip plane: 1
   far clip plane: 1000
   field of view: 60
@@ -8502,9 +8502,9 @@ GameObject:
   - component: {fileID: 1605916233}
   - component: {fileID: 1605916232}
   - component: {fileID: 1605916231}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Temp_obstacle (3)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37077,9 +37077,9 @@ GameObject:
   - component: {fileID: 1719632281}
   - component: {fileID: 1719632280}
   - component: {fileID: 1719632279}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Temp_obstacle (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37438,9 +37438,9 @@ GameObject:
   - component: {fileID: 1825249383}
   - component: {fileID: 1825249382}
   - component: {fileID: 1825249381}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Temp_obstacle (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
