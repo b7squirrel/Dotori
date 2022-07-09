@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 실제 slot들이 Proxy Slot들을 따라다니도록 함.
+/// </summary>
 public class RollOffset : MonoBehaviour
 {
     [SerializeField] PanSlot[] slots;
