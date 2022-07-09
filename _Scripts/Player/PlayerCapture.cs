@@ -12,7 +12,7 @@ public class PlayerCapture : MonoBehaviour
     [SerializeField] FlavorSo flavorSo;
 
     [Header("Toss Rolls")]
-    [SerializeField] SlotPhysics slotPhysics;
+    [SerializeField] SlotPhysics slotPhysicsSet;
 
     [Header("Effects")]
     [SerializeField] GameObject HitRollEffect;
@@ -54,11 +54,11 @@ public class PlayerCapture : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            if (slotPhysics.IsRollsOnPan == false)
+            if (slotPhysicsSet.IsRollsOnPan == false)
             {
                 return;
             }
-            slotPhysics.TossRolls();
+            slotPhysicsSet.TossRolls();
         }
     }
     // Capture의 마지막 프레임에서 애니메이션 이벤트로 실행

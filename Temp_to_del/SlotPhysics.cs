@@ -6,6 +6,7 @@ public class SlotPhysics : MonoBehaviour
 {
     [Header("Slots")]
     [SerializeField] Transform[] slots = new Transform[3];
+    [SerializeField] Transform slotPhysicsBase;
 
     [Header("Toss Rolls")]
     [SerializeField] Transform anchor;
@@ -16,9 +17,12 @@ public class SlotPhysics : MonoBehaviour
     [Header("Toss Debug")]
     [SerializeField] float tossVelocity;
     [SerializeField] Transform anchorInitialPoint;
+    [SerializeField] GameObject dotDebugging;
+    [SerializeField] Transform targetDebugging;
+    GameObject dotOnAnchor;
 
     [field: SerializeField]
-    public bool IsAnchorGrounded;
+    public bool IsAnchorGrounded { get; private set; }
 
     [field: SerializeField]
     public bool IsRollsOnPan { get; private set; }
@@ -27,6 +31,9 @@ public class SlotPhysics : MonoBehaviour
     {
         InitSlotPosition();
         anchor.position = anchorInitialPoint.position;
+        transform.parent = null;
+        dotOnAnchor = Instantiate(dotDebugging, targetDebugging.position, Quaternion.identity);
+        dotOnAnchor.transform.parent = anchorInitialPoint;
     }
 
     private void Update()
@@ -34,6 +41,7 @@ public class SlotPhysics : MonoBehaviour
         AnchorGroundCheck();
         CheckIsRollsOnPan();
         OnTossRolls();
+        Follow();
     }
 
     void InitSlotPosition()
@@ -54,7 +62,7 @@ public class SlotPhysics : MonoBehaviour
         if (Vector2.Distance(anchor.position, anchorInitialPoint.position) < .1f)
         {
             IsAnchorGrounded = true;
-            anchor.position = anchorInitialPoint.position;
+            //anchor.position = anchorInitialPoint.position;
         }
     }
     void CheckIsRollsOnPan()
@@ -74,7 +82,22 @@ public class SlotPhysics : MonoBehaviour
         {
             tossVelocity = 0;
         }
-        anchor.transform.Translate(new Vector3(0, tossVelocity, 0) * Time.deltaTime);
+        transform.Translate(new Vector3(0, tossVelocity, 0) * Time.deltaTime);
+    }
+    void Follow()
+    {
+        // slot physics set
+        float _xPosition = slotPhysicsBase.position.x;
+        float _yPosition = transform.position.y;
+        if (IsAnchorGrounded)
+        {
+            _yPosition = slotPhysicsBase.position.y;
+        }
+        _yPosition = Mathf.Clamp(_yPosition, slotPhysicsBase.position.y, _yPosition);
+        transform.position = new Vector2(_xPosition, _yPosition);
+
+        // anchor initial point
+        anchorInitialPoint.position = slotPhysicsBase.position;
     }
     public void TossRolls()
     {
