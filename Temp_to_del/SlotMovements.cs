@@ -15,12 +15,12 @@ public class SlotMovements : MonoBehaviour
 
     private void Update()
     {
-        SetLimits();
+        //SetLimits();
     }
 
     private void FixedUpdate()
     {
-        SetLimits();
+        //SetLimits();
     }
     void SetLimits()
     {

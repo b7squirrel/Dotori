@@ -36,6 +36,7 @@ public class PlayerCapture : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Z) || Input.GetMouseButtonDown(0))  // 캡쳐 캔슬
                 return;
+            slotPhysicsSet.TossRolls();
             panAnim.Play("Pan_Capture");
         }
     }
@@ -45,6 +46,8 @@ public class PlayerCapture : MonoBehaviour
         {
             if (panManager.CountRollNumber() == 0)
                 return;
+            if (slotPhysicsSet.IsRollsOnPan == false)
+                return;
             panAnim.Play("Pan_HitRoll");
             panManager.ClearRoll();
             EffectsClearRoll();
@@ -52,14 +55,14 @@ public class PlayerCapture : MonoBehaviour
     }
     void TossRolls()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            if (slotPhysicsSet.IsRollsOnPan == false)
-            {
-                return;
-            }
-            slotPhysicsSet.TossRolls();
-        }
+        //if (Input.GetKeyDown(KeyCode.LeftShift))
+        //{
+        //    if (slotPhysicsSet.IsRollsOnPan == false)
+        //    {
+        //        return;
+        //    }
+        //    slotPhysicsSet.TossRolls();
+        //}
     }
     // Capture의 마지막 프레임에서 애니메이션 이벤트로 실행
     void Panning()

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    [Header("Attack")]
+    [SerializeField] SlotPhysics slotPhysicsSet;
     [Header("Parry")]
     [SerializeField] float parryCoolTime;
     float parryCoolingCounter;
@@ -37,7 +39,7 @@ public class PlayerAttack : MonoBehaviour
         // 공격이 발동되면 패링카운터까지 초기화 되어 패링도 가능하게 된다.
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(0))
         {
-            if (panManager.CountRollNumber() > 0)
+            if (slotPhysicsSet.IsRollsOnPan)
                 return;
             if (IsPlayingPanAnimation("Pan_Attack"))
                 return;

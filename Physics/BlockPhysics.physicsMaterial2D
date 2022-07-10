@@ -6,6 +6,6 @@ PhysicsMaterial2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SlotPhysics
-  friction: 0
+  m_Name: BlockPhysics
+  friction: 0.3
   bounciness: 0.4
