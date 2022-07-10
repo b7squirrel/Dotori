@@ -36,7 +36,13 @@ public class PlayerCapture : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Z) || Input.GetMouseButtonDown(0))  // 캡쳐 캔슬
                 return;
-            slotPhysicsSet.TossRolls();
+            if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_Capture"))
+                return;
+            
+            if (slotPhysicsSet.IsAnchorGrounded)
+            {
+                slotPhysicsSet.TossRolls();
+            }
             panAnim.Play("Pan_Capture");
         }
     }
