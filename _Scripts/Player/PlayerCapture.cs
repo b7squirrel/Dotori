@@ -34,8 +34,8 @@ public class PlayerCapture : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S) || Input.GetMouseButtonDown(1))
         {
-            if (Input.GetKey(KeyCode.Z) || Input.GetMouseButtonDown(0))  // 캡쳐 캔슬
-                return;
+            //if (Input.GetKey(KeyCode.Z) || Input.GetMouseButtonDown(0))  // 캡쳐 캔슬
+            //    return;
             if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_Capture"))
                 return;
             

@@ -12,11 +12,11 @@ public class PlayerAttack : MonoBehaviour
     PlayerController playerController;
     PanManager panManager;
     PlayerAttackBox playerAttackBox;
-    Animator animPan;
+    Animator panAnim;
 
     void Start()
     {
-        animPan = GetComponentInChildren<PlayerCapture>().GetComponent<Animator>();
+        panAnim = GetComponentInChildren<PlayerCapture>().GetComponent<Animator>();
         playerController = GetComponentInParent<PlayerController>();
         panManager = GetComponentInChildren<PanManager>();
         playerAttackBox = GetComponentInChildren<PlayerAttackBox>();
@@ -41,13 +41,15 @@ public class PlayerAttack : MonoBehaviour
         {
             if (slotPhysicsSet.IsRollsOnPan)
                 return;
+            if (IsPlayingPanAnimation("Pan_Capture"))
+                return;
             if (IsPlayingPanAnimation("Pan_Attack"))
                 return;
             if (IsPlayingPanAnimation("Pan_HitRoll"))
                 return;
             if (parryCoolingCounter <= 0f)
             {
-                animPan.Play("Pan_Attack");
+                panAnim.Play("Pan_Attack");
                 AudioManager.instance.Play("whoosh_01");
                 parryCoolingCounter = parryCoolTime;
             }
@@ -55,7 +57,7 @@ public class PlayerAttack : MonoBehaviour
     }
     bool IsPlayingPanAnimation(string _animation)
     {
-        if (animPan.GetCurrentAnimatorStateInfo(0).IsName(_animation))
+        if (panAnim.GetCurrentAnimatorStateInfo(0).IsName(_animation))
         {
             return true;
         }

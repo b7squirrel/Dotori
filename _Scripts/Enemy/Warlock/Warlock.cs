@@ -52,6 +52,7 @@ public class Warlock : MonoBehaviour
         if(GetComponentInChildren<EnemyHealth>().IsStunned())  // 스턴 상태라면 계속 이 반복문에 머물도록
         {
             anim.Play("Warlock_Stunned");
+            shootCounter = shootCoolTime;
             return;
         }
         // 스턴 상태가 아니라면 아래를 실행

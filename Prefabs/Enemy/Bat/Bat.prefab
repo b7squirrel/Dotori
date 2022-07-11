@@ -493,6 +493,7 @@ MonoBehaviour:
   jumpForce: 5
   jumpCoolTime: 0.5
   attackCoolTime: 2
+  isDetectingPlayer: 0
   captureBox: {fileID: 219603772180381835}
   debugDot: {fileID: 2412131369309645206, guid: 713b23e23f8b1c549abcb77e78dcea62, type: 3}
 --- !u!1 &219603772367473386
@@ -569,6 +570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myRollType: 1
   maxHP: 1
+  blockCapture: 1
   stunnedTime: 2
   parriedTime: 0.8
   dieEffect: {fileID: 6987084327100221053, guid: 036f43595c5bb0743a94c6b3227bc1f5, type: 3}

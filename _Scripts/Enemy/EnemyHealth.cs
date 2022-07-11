@@ -15,6 +15,9 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] int maxHP;
     int currentHP;
 
+    [Header("Can this enemy block Capture?")]
+    [SerializeField] bool blockCapture;
+
     [Header("Stunned")]
     [SerializeField] float stunnedTime;
     float stunnedTImeCounter;
@@ -79,7 +82,7 @@ public class EnemyHealth : MonoBehaviour
         {
             if(!isStunned)
             {
-                AudioManager.instance.Play("pan_hit_05");
+                
                 TakeDamage();
             }
         }
@@ -98,25 +101,30 @@ public class EnemyHealth : MonoBehaviour
 
         if (collision.CompareTag("RollFlavored"))
         {
-            SetStunState(true);
+            TakeDamage();
         }
 
         if (collision.CompareTag("Rolling"))
         {
-            SetStunState(true);
+            TakeDamage();
         }
     }
 
     public void TakeDamage()
     {
+        AudioManager.instance.Play("pan_hit_05");
         SetStunState(true);
         SetKnockBackState(true);
     }
     public void GetRolled()
     {
-        if (!isStunned && !isParried) // 스턴상태이거나 패리된 상태가 아니라면 GetRoll되지 않음
-            return;
+        if (blockCapture) // 캡쳐를 블락하는 적인가?
+        {
+            if (!isStunned && !isParried) // 그렇다면 스턴상태이거나 패리된 상태가 아니라면 GetRoll되지 않음
+                return;
+        }
         
+        // 캡쳐를 블락하는 적이 아니라면 바로 GetRolled 됨
         AudioManager.instance.Stop("Energy_01");
         AudioManager.instance.Play("GetRolled_01");
 
