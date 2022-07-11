@@ -114,6 +114,9 @@ public class EnemyHealth : MonoBehaviour
     }
     public void GetRolled()
     {
+        if (!isStunned && !isParried) // 스턴상태이거나 패리된 상태가 아니라면 GetRoll되지 않음
+            return;
+        
         AudioManager.instance.Stop("Energy_01");
         AudioManager.instance.Play("GetRolled_01");
 
@@ -140,6 +143,7 @@ public class EnemyHealth : MonoBehaviour
         theSR.material = initialMat;
     }
 
+    // 본체에서 참조하는 함수들
     public bool IsStunned()
     {
         if (isStunned)
@@ -173,6 +177,7 @@ public class EnemyHealth : MonoBehaviour
         if (isStunned)
         {
             theRB.bodyType = RigidbodyType2D.Kinematic;
+            StartCoroutine(WhiteFlash());
             return;
         }
         theRB.bodyType = RigidbodyType2D.Dynamic;

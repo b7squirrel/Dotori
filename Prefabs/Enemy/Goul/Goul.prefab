@@ -170,7 +170,7 @@ MonoBehaviour:
   dieEffectPoint: {fileID: 247175487961203935}
   mSprite: {fileID: 6493158245600938859}
   whiteMat: {fileID: 2100000, guid: 8ec93e96670acbe42ad1c1e3ea6e9768, type: 2}
-  blinkingDuration: 0.2
+  blinkingDuration: 0.1
 --- !u!1 &6493158245600938859
 GameObject:
   m_ObjectHideFlags: 0

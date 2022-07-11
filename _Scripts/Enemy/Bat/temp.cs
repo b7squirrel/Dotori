@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bat : MonoBehaviour
+public class temp : MonoBehaviour
 {
     [SerializeField] Transform[] patrolPoints;
     [SerializeField] float moveSpeed;
@@ -10,12 +10,14 @@ public class Bat : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float jumpCoolTime;
     [SerializeField] float attackCoolTime;
-    [SerializeField] bool isDetectingPlayer;  // serialized for debugging
+    bool isDetectingPlayer;
 
+    float jumpCounter;
     float attackCounter;
     int currentIndex;
     Vector2 attackTarget;
 
+    SpriteRenderer theSR;
     Animator anim;
     Rigidbody2D theRB;
 
@@ -32,6 +34,7 @@ public class Bat : MonoBehaviour
 
     void Start()
     {
+        theSR = GetComponentInChildren<SpriteRenderer>();
         anim = GetComponent<Animator>();
         theRB = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponentInChildren<EnemyHealth>();
@@ -39,6 +42,7 @@ public class Bat : MonoBehaviour
         {
             points.transform.parent = null;
         }
+        jumpCounter = jumpCoolTime;
     }
 
     void Update()
@@ -111,11 +115,9 @@ public class Bat : MonoBehaviour
 
         if (attackTarget == Vector2.zero)
         {
-            Debug.Log("Saw Player");
             attackTarget = PlayerController.instance.transform.position;
             Instantiate(debugDot, attackTarget, Quaternion.identity);
             anim.Play("Attack");
-            currentState = EnemyState.attack;
         }
     }
     void Stunned()
@@ -153,11 +155,10 @@ public class Bat : MonoBehaviour
             {
                 anim.Play("Walk");
             }
-
+            
             isDetectingPlayer = false;
             attackTarget = Vector2.zero;
             attackCounter = attackCoolTime;
-            currentState = EnemyState.patrol;
         }
     }
 
