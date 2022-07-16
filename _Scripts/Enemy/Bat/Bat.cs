@@ -111,7 +111,6 @@ public class Bat : MonoBehaviour
 
         if (attackTarget == Vector2.zero)
         {
-            Debug.Log("Saw Player");
             attackTarget = PlayerController.instance.transform.position;
             Instantiate(debugDot, attackTarget, Quaternion.identity);
             anim.Play("Attack");

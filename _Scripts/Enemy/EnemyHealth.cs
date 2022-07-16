@@ -7,16 +7,20 @@ public class EnemyHealth : MonoBehaviour
     [Header("RollType")]
     [SerializeField] Roll.rollType myRollType;
 
-    bool isStunned;
-    bool isParried;
-    bool knockBack;
+    // 디버깅을 위해 serialized
+    [SerializeField] bool isStunned;
+    [SerializeField] bool isParried;
+    [SerializeField] bool isBlocking;
+    [SerializeField] bool knockBack;
 
     [Header("HP")]
     [SerializeField] int maxHP;
     int currentHP;
 
     [Header("Can this enemy block Capture?")]
-    [SerializeField] bool blockCapture;
+    [SerializeField] bool canBlockCapture;
+    [SerializeField] float blockTime;
+    float blockTimeCounter;
 
     [Header("Stunned")]
     [SerializeField] float stunnedTime;
@@ -47,6 +51,7 @@ public class EnemyHealth : MonoBehaviour
         initialMat = theSR.material;
         parriedTimeCounter = parriedTime;
         stunnedTImeCounter = stunnedTime;
+        blockTimeCounter = blockTime;
     }
 
     private void Update()
@@ -56,24 +61,32 @@ public class EnemyHealth : MonoBehaviour
             if (parriedTimeCounter > 0)
             {
                 parriedTimeCounter -= Time.deltaTime;
+                return;
             }
-            else
-            {
-                parriedTimeCounter = parriedTime;
-                SetParriedState(false);
-            }
+            parriedTimeCounter = parriedTime;
+            SetParriedState(false);
         }
         if (isStunned)
         {
             if (stunnedTImeCounter > 0)
             {
                 stunnedTImeCounter -= Time.deltaTime;
+                return;
             }
-            else
+            stunnedTImeCounter = stunnedTime;
+            SetStunState(false);
+        }
+        if (isBlocking)
+        {
+            if (canBlockCapture == false)
+                return;
+            if (blockTimeCounter > 0)
             {
-                stunnedTImeCounter = stunnedTime;
-                SetStunState(false);
+                blockTimeCounter -= Time.deltaTime;
+                return;
             }
+            blockTimeCounter = blockTime;
+            SetBlockState(false);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -82,7 +95,6 @@ public class EnemyHealth : MonoBehaviour
         {
             if(!isStunned)
             {
-                
                 TakeDamage();
             }
         }
@@ -118,13 +130,6 @@ public class EnemyHealth : MonoBehaviour
     }
     public void GetRolled()
     {
-        if (blockCapture) // 캡쳐를 블락하는 적인가?
-        {
-            if (!isStunned && !isParried) // 그렇다면 스턴상태이거나 패리된 상태가 아니라면 GetRoll되지 않음
-                return;
-        }
-        
-        // 캡쳐를 블락하는 적이 아니라면 바로 GetRolled 됨
         AudioManager.instance.Stop("Energy_01");
         AudioManager.instance.Play("GetRolled_01");
 
@@ -134,6 +139,33 @@ public class EnemyHealth : MonoBehaviour
         Instantiate(_rollSo.rollPrefab[0], dieEffectPoint.position, transform.rotation);
         Die();
     }
+
+    // Player Capture Box가 닿으면
+    public void PlayerCaptureBoxIn()
+    {
+        if (isBlocking)
+        {
+            SetBlockState(true);
+            return;
+        }
+            
+        if (canBlockCapture) // 캡쳐를 블락하는 적인가?
+        {
+            if (!isStunned && !isParried) // 그렇다면 스턴상태, 패리된 상태가 둘 다 아닐때만 블락
+            {
+                SetBlockState(true);
+                return;
+            }
+            else
+            {
+                GetRolled();
+                return;
+            }
+        }
+
+        GetRolled(); // 캡쳐를 블락하는 적이 아니라면 그냥 GetRolled
+    }
+
     public void Die()
     {
         Instantiate(dieBones, dieEffectPoint.position, transform.rotation);
@@ -155,36 +187,37 @@ public class EnemyHealth : MonoBehaviour
     public bool IsStunned()
     {
         if (isStunned)
-        {
             return true;
-        }
         return false;
     }
-
     public bool IsParried()
     {
         if (isParried)
-        {
             return true;
-        }
         return false;
     }
     public bool IsKnockBacked()
     {
         if (knockBack)
-        {
             return true;
-        }
         return false;
     }
-
+    public bool IsBlocking()
+    {
+        if (isBlocking)
+            return true;
+        return false;
+    }
     public void SetStunState(bool state)
     {
         isStunned = state;
-        isParried = false;
+        
         if (isStunned)
         {
-            theRB.bodyType = RigidbodyType2D.Kinematic;
+            isParried = false;
+            knockBack = false;
+            isBlocking = false;
+
             StartCoroutine(WhiteFlash());
             return;
         }
@@ -193,10 +226,32 @@ public class EnemyHealth : MonoBehaviour
     public void SetParriedState(bool state)
     {
         isParried = state;
-        isStunned = false;
+        if (isParried)
+        {
+            theRB.bodyType = RigidbodyType2D.Kinematic;
+            StartCoroutine(WhiteFlash());
+            return;
+        }
     }
     public void SetKnockBackState(bool state)
     {
         knockBack = state;
+        if (knockBack)
+        {
+            theRB.bodyType = RigidbodyType2D.Kinematic;
+            StartCoroutine(WhiteFlash());
+            return;
+        }
     }
+    public void SetBlockState(bool state)
+    {
+        isBlocking = state;
+        if (isBlocking)
+        {
+            theRB.bodyType = RigidbodyType2D.Kinematic;
+            StartCoroutine(WhiteFlash());
+            return;
+        }
+    }
+    
 }

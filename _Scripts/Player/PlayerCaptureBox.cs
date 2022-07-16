@@ -22,7 +22,7 @@ public class PlayerCaptureBox : MonoBehaviour
 
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<EnemyHealth>().GetRolled();
+            collision.GetComponent<EnemyHealth>().PlayerCaptureBoxIn();
         }
     }
 

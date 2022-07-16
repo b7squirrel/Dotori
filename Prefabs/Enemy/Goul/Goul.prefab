@@ -162,8 +162,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRollType: 1
+  isStunned: 0
+  isParried: 0
+  isBlocking: 0
+  knockBack: 0
   maxHP: 1
-  blockCapture: 1
+  canBlockCapture: 1
+  blockTime: 1
   stunnedTime: 1
   parriedTime: 0.8
   dieEffect: {fileID: 6987084327100221053, guid: 036f43595c5bb0743a94c6b3227bc1f5, type: 3}

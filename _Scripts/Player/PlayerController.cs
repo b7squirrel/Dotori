@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool canDoubleJump;
     [SerializeField] bool isOnSlope;
     [SerializeField] bool isJumping;
-    
+
     [Header("Ground Check")]
     [SerializeField] LayerMask whatIsGround;
     [SerializeField] Transform groundCheck;
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     [Header("Slope")]
     [SerializeField] float slopeCheckDistance;
     [SerializeField] PhysicsMaterial2D playerFriction;
-    
+
     [Header("Debug")]
     [SerializeField] float xInput; // 디버깅용
     [SerializeField] float friction;
@@ -73,8 +73,8 @@ public class PlayerController : MonoBehaviour
 
     public bool IsAttacking { get; set; }
     public bool IsDodging { get; set; }
-    public bool IsOnSlope 
-    { 
+    public bool IsOnSlope
+    {
         get { return isOnSlope; }
     }
 
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
         Flip();
         Gravity();
         SurroundingCheck();
-        
+
         Jump();
         GenerateDustTrail();
         GenerateLandEffect();
@@ -289,7 +289,7 @@ public class PlayerController : MonoBehaviour
             theRB.gravityScale = 6f;
         }
     }
-    
+
     void GenerateDustTrail()
     {
         if (Input.GetAxisRaw("Horizontal") != 0 && isGrounded)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GoulFighter : MonoBehaviour
 {
-    enum enemyState { idle, follow, attackAntic, attack, stunned, parried };
+    enum enemyState { idle, follow, attackAntic, attack, stunned, parried, block };
     [SerializeField] private enemyState currentState;
 
     Animator anim;
@@ -66,6 +66,7 @@ public class GoulFighter : MonoBehaviour
     {
         SetStunnedState();
         SetParriedState();
+        SetBlockState();
         DetectingArea();
 
         switch (currentState)
@@ -153,6 +154,16 @@ public class GoulFighter : MonoBehaviour
                     currentState = enemyState.follow;
                 }
                 break;
+
+            case enemyState.block:
+
+                theRB.velocity = new Vector2(0, theRB.velocity.y);
+
+                if (_enemyHealth.IsBlocking() == false)
+                {
+                    currentState = enemyState.follow;
+                }
+                break;
         }
     }
 
@@ -195,6 +206,19 @@ public class GoulFighter : MonoBehaviour
             }
             AttackBoxOff();
             currentState = enemyState.parried;
+        }
+    }
+
+    void SetBlockState()
+    {
+        if (_enemyHealth.IsBlocking())
+        {
+            if (!IsPlayingAnim("Goul_Fighter_Block"))
+            {
+                anim.Play("Goul_Fighter_Block");
+            }
+            AttackBoxOff();
+            currentState = enemyState.block;
         }
     }
 

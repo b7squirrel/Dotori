@@ -4,34 +4,37 @@ using UnityEngine;
 
 public class Warlock : MonoBehaviour
 {
+    EnemyHealth enemyHealth;
+
+    bool isDetecting;  //ÇÃ·¹ÀÌ¾î¸¦ °¨Áö. °¡Àå ³ĞÀº ±¸°£
+    bool isFacingRight;
+
     [Header("Movement")]
     [SerializeField] float moveSpeed;
     [SerializeField] float retreatSpeed;
 
-    bool isDetecting;  //í”Œë ˆì´ì–´ë¥¼ ê°ì§€. ê°€ì¥ ë„“ì€ êµ¬ê°„
-    bool isFacingRight;
 
     [Header("Attack")]
-    float shootCounter;
-    [SerializeField] float shootCoolTime;
-    [SerializeField] Transform castingPoint;
+    [SerializeField] Transform castingPoint; // projectileÀ» »ı¼ºÇÒ °÷
     [SerializeField] Transform castingRayCastPoint;
     [SerializeField] float distanceToRetreat;
     [SerializeField] LayerMask playerMask;
+    [SerializeField] float shootCoolTime;
+    float shootCounter;
 
     [Header("Retreat")]
-    bool detectingPlayer;   //retreatí•´ì•¼ í•˜ëŠ” ì§€ì ê¹Œì§€ í”Œë ˆì´ì–´ê°€ ë“¤ì–´ì™”ì„ ë•Œ
-    [SerializeField] float retreatCoolTime;
-    float retreatCounter;
-    Vector2 whereToRetreat;
     [SerializeField] Transform retreatPoint;
     [SerializeField] float jumpForce;
-    bool isRetreating;
+    [SerializeField] float retreatCoolTime;
+    Vector2 whereToRetreat;
+    float retreatCounter;
+    bool detectingPlayer;   //retreatÇØ¾ß ÇÏ´Â ÁöÁ¡±îÁö ÇÃ·¹ÀÌ¾î°¡ µé¾î¿ÔÀ» ¶§
+    bool canRetreat;
 
-    [SerializeField] Transform detectingWallPoint; // ë’¤ì— ë²½ì´ ìˆìœ¼ë©´ ì í”„í•˜ì§€ ì•Šë„ë¡
+    [SerializeField] Transform detectingWallPoint; // µÚ¿¡ º®ÀÌ ÀÖÀ¸¸é Á¡ÇÁÇÏÁö ¾Êµµ·Ï
     [SerializeField] float distanceToWall;
-    RaycastHit2D hitWall;
     [SerializeField] LayerMask groundMask;
+    RaycastHit2D hitWall;
     bool detectingWall;
 
     [SerializeField] GameObject projectile;
@@ -41,45 +44,94 @@ public class Warlock : MonoBehaviour
     Animator anim;
     RaycastHit2D hit;
 
+    enum EnemyState { attack, retreat, idle, stunned}
+    [SerializeField] EnemyState currentState; // µğ¹ö±× ¸ñÀûÀ¸·Î serialized
+
     void Start()
     {
         theRB = GetComponent<Rigidbody2D>();
+        enemyHealth = GetComponentInChildren<EnemyHealth>();
         anim = GetComponent<Animator>();
         retreatCounter = 0f;
+        currentState = EnemyState.idle;
     }
     void Update()
     {
-        if(GetComponentInChildren<EnemyHealth>().IsStunned())  // ìŠ¤í„´ ìƒíƒœë¼ë©´ ê³„ì† ì´ ë°˜ë³µë¬¸ì— ë¨¸ë¬¼ë„ë¡
+        if (enemyHealth.IsStunned())
         {
-            anim.Play("Warlock_Stunned");
-            shootCounter = shootCoolTime;
-            return;
-        }
-        // ìŠ¤í„´ ìƒíƒœê°€ ì•„ë‹ˆë¼ë©´ ì•„ë˜ë¥¼ ì‹¤í–‰
-        CheckingDistance();
-        DetectingPlayer();
-        DetectingWall();
-        Retreat();
-
-        if (isDetecting == false)
-            return;
-        Direction();
-
-        if (shootCounter < 0)
-        {
-            StartCoroutine(Shoot());
-            shootCounter = shootCoolTime;
+            currentState = EnemyState.stunned;
         }
         else
         {
-            shootCounter -= Time.deltaTime;
+            Direction();
+            AttackCoolTIme();
+            CheckingDistance();
+            DetectingWall();
+
+            DetectingPlayer();
+        }
+
+        // ¸ğµç »óÅÂ´Â ³¡³ª¸é Idle»óÅÂ·Î µé¾î°¨. 
+        switch (currentState)
+        {
+            case EnemyState.attack:
+                PlayAnimation("Warlock_Attack");
+                break;
+
+            case EnemyState.retreat:
+                Retreat();
+                break;
+
+            case EnemyState.idle:
+
+                PlayAnimation("Warlock_Idle");
+                if (canRetreat)
+                {
+                    theRB.velocity = new Vector2(theRB.velocity.x, jumpForce); // ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÏ¸é yÃà ÃÊ±â¼Óµµ·Î ÇÑ ¹ø ÈûÀ» °¡ÇØÁÜ. 
+                    currentState = EnemyState.retreat;
+                }
+                else if (isDetecting && shootCounter <= 0)
+                {
+                    currentState = EnemyState.attack;
+                }
+                break;
+
+            case EnemyState.stunned:
+                anim.Play("Warlock_Stunned");
+                theRB.velocity = new Vector2(0, theRB.velocity.y);
+
+                if (enemyHealth.IsStunned() == false)
+                {
+                    currentState = EnemyState.idle;
+                }
+                break;
         }
     }
-    void ResetStunnedState()
+
+    /// <summary>
+    /// º®À» °¨ÁöÇÏ¸é ±×³É idle »óÅÂ·Î
+    /// retreat point·Î ÀÌµ¿ÇÏ¸é idle »óÅÂ·Î
+    /// </summary>
+    void Retreat()
     {
-        //animation event
-        GetComponentInChildren<EnemyHealth>().SetStunState(false);
+        if (detectingWall)
+        {
+            canRetreat = false;
+            retreatCounter = retreatCoolTime;
+            currentState = EnemyState.idle;
+            return;
+        }
+
+        transform.position = Vector2.MoveTowards(transform.position, whereToRetreat, retreatSpeed * Time.deltaTime);
+
+        if (Mathf.Abs(Vector2.Distance(transform.position, whereToRetreat)) < .5f || detectingWall)
+        {
+            canRetreat = false;
+            retreatCounter = retreatCoolTime;
+            currentState = EnemyState.idle;
+        }
     }
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("HurtBoxPlayer"))
@@ -103,6 +155,7 @@ public class Warlock : MonoBehaviour
     }
     void Direction()
     {
+        
         if (PlayerController.instance.transform.position.x - transform.position.x < 0)
         {
             isFacingRight = false;
@@ -114,16 +167,33 @@ public class Warlock : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 180f, 0);
         }
     }
-    IEnumerator Shoot()
+    void AttackCoolTIme()
     {
-        anim.Play("Warlock_Attack");
-        AudioManager.instance.Stop("Energy_01"); // ì´ì „ì— ì¬ìƒë˜ê³  ìˆëŠ” ì—ë„ˆì§€ ì‚¬ìš´ë“œë¥¼ ì¤‘ë‹¨
+        if (shootCounter > 0)
+        {
+            shootCounter -= Time.deltaTime;
+        }
+    }
+
+    void AnticShoot() // animation event
+    {
+        
+        AudioManager.instance.Stop("Energy_01"); // ÀÌÀü¿¡ Àç»ıµÇ°í ÀÖ´Â ¿¡³ÊÁö »ç¿îµå¸¦ Áß´Ü
         AudioManager.instance.Play("Energy_01");
-        yield return new WaitForSeconds(shootAnticTime);
+    }
+    void Shoot() // aniamtion event
+    {
         AudioManager.instance.Stop("Energy_01");
         AudioManager.instance.Play("FireSpell_01");
         Instantiate(projectile, castingPoint.position, Quaternion.identity);
     }
+    void ExitAttack() // animation event
+    {
+        shootCounter = shootCoolTime;
+        currentState = EnemyState.idle;
+    }
+    
+    // retreatÇÒ ¸¸Å­ player°¡ °¡±îÀÌ ¿Ô´ÂÁö Ã¼Å©
     void CheckingDistance()
     {
         float _retreatDistance = distanceToRetreat;
@@ -167,39 +237,37 @@ public class Warlock : MonoBehaviour
             Debug.DrawLine(detectingWallPoint.position, _endPoint, Color.blue);
         }
     }
+    // 
+    /// <summary>
+    /// RetreatÀ» ÇÏ±â À§ÇÑ Á¶°Çµé °Ë»ç
+    /// retreat ÄğÅ¸ÀÓÀÌ Â÷Áö ¾Ê¾Ò°Å³ª, ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÏÁö ¸øÇß°Å³ª, µÚ¿¡ º®ÀÌ ÀÖ´Ù¸é retreatÇÏÁö ¾ÊÀ½
+    /// </summary>
     void DetectingPlayer()
     {
-        if (retreatCounter <= 0)
-        {
-            if (detectingPlayer)
-            {
-                if (!detectingWall)
-                {
-                    isRetreating = true;
-                    retreatCounter = retreatCoolTime;
-                    whereToRetreat = retreatPoint.position;
-                    detectingPlayer = false;
-                    theRB.velocity = new Vector2(theRB.velocity.x, jumpForce); // í”Œë ˆì´ì–´ë¥¼ ê°ì§€í•˜ë©´ yì¶• ì´ˆê¸°ì†ë„ë¡œ í•œ ë²ˆ í˜ì„ ê°€í•´ì¤Œ. 
-                }
-            }
-        }
-        else
+        if (retreatCounter > 0)
         {
             retreatCounter -= Time.deltaTime;
+            return;
         }
-    }
-    void Retreat()
-    {
-        if (isRetreating)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, whereToRetreat, retreatSpeed * Time.deltaTime);
+        if (detectingPlayer == false)
+            return;
+        if (detectingWall)
+            return;
 
-            if (Mathf.Abs(Vector2.Distance(transform.position, whereToRetreat)) < .5f || detectingWall)
-            {
-                isRetreating = false;
-            }
+        retreatCounter = retreatCoolTime;
+        whereToRetreat = retreatPoint.position;
+        
+        canRetreat = true;
+    }
+    
+    void PlayAnimation(string _animation)
+    {
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName(_animation))
+        {
+            anim.Play(_animation);
         }
     }
+
     void Gravity()
     {
         if (theRB.velocity.y > 0)
