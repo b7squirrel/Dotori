@@ -31,7 +31,14 @@ public class GoulFighter : MonoBehaviour
     bool isChangingDirection;
 
     [Header("Stunned")]
-    EnemyHealth _enemyHealth;
+    EnemyHealth enemyHealth;
+
+    [Header("Blocking")]
+    [SerializeField] float pushedBackDistance;
+    [SerializeField] float pushedBackForce;
+    [SerializeField] GameObject blockingEffect;
+    Vector2 pushedBackPosition;
+
 
     [Header("Attack")]
     [SerializeField] float attackDistnace;   // raycast 거리 설정
@@ -46,7 +53,7 @@ public class GoulFighter : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         theRB = GetComponent<Rigidbody2D>();
-        _enemyHealth = GetComponentInChildren<EnemyHealth>();
+        enemyHealth = GetComponentInChildren<EnemyHealth>();
         currentState = enemyState.follow;
         isDetecting = false;
         isFacingLeft = true;
@@ -102,6 +109,10 @@ public class GoulFighter : MonoBehaviour
                 break;
 
             case enemyState.follow:
+                if (!IsPlayingAnim("Goul_Fighter_Walk"))
+                {
+                    anim.Play("Goul_Fighter_Walk");
+                }
 
                 attackCounter = 0f; // canAttack 상태가 되었을 때 바로 공격할 수 있도록 미리 초기화 시켜둠
 
@@ -138,7 +149,7 @@ public class GoulFighter : MonoBehaviour
 
                 theRB.velocity = new Vector2(0, theRB.velocity.y);
 
-                if (_enemyHealth.IsStunned() == false)
+                if (enemyHealth.IsStunned() == false)
                 {
                     currentState = enemyState.follow;
                 }
@@ -149,7 +160,7 @@ public class GoulFighter : MonoBehaviour
 
                 theRB.velocity = new Vector2(0, theRB.velocity.y);
 
-                if (_enemyHealth.IsParried() == false)
+                if (enemyHealth.IsParried() == false)
                 {
                     currentState = enemyState.follow;
                 }
@@ -157,9 +168,14 @@ public class GoulFighter : MonoBehaviour
 
             case enemyState.block:
 
-                theRB.velocity = new Vector2(0, theRB.velocity.y);
+                if (Vector2.Distance((Vector2)transform.position, pushedBackPosition) > .2)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, pushedBackPosition, pushedBackForce * Time.deltaTime);
+                }
 
-                if (_enemyHealth.IsBlocking() == false)
+                //theRB.velocity = new Vector2(0, theRB.velocity.y);
+
+                if (enemyHealth.IsBlocking() == false)
                 {
                     currentState = enemyState.follow;
                 }
@@ -175,6 +191,15 @@ public class GoulFighter : MonoBehaviour
         }
         return new Vector2(1, 0);
     }
+    Vector2 GetPushedBackDirection()
+    {
+        if (transform.position.x - PlayerController.instance.transform.position.x >= 0)
+        {
+            return new Vector2(1, 0);
+        }
+        return new Vector2(-1, 0);
+    }
+
     void CheckIsFollowing()
     {
         if (IsPlayingAnim("Goul_Fighter_Walk"))
@@ -185,7 +210,7 @@ public class GoulFighter : MonoBehaviour
 
     void SetStunnedState()
     {
-        if (_enemyHealth.IsStunned())
+        if (enemyHealth.IsStunned())
         {
             if (!IsPlayingAnim("Goul_Fighter_Stunned"))
             {
@@ -198,7 +223,7 @@ public class GoulFighter : MonoBehaviour
 
     void SetParriedState()
     {
-        if (_enemyHealth.IsParried())
+        if (enemyHealth.IsParried())
         {
             if (!IsPlayingAnim("Goul_Fighter_Parried"))
             {
@@ -211,12 +236,26 @@ public class GoulFighter : MonoBehaviour
 
     void SetBlockState()
     {
-        if (_enemyHealth.IsBlocking())
+        if (enemyHealth.IsBlocking())
         {
-            if (!IsPlayingAnim("Goul_Fighter_Block"))
+            if (!IsPlayingAnim("Goul_Fighter_Block"))  // Block 상태로 들어가기 전 한 번만 실행
             {
                 anim.Play("Goul_Fighter_Block");
+                enemyHealth.WhiteFlash();
+                // 플레이어를 바라보면서 block 하도록
+                if (GetPushedBackDirection().x == 1)
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                }
+                else if (GetPushedBackDirection().x == -1)
+                {
+                    transform.eulerAngles = new Vector3(0, 180, 0);
+                }
+                        
+                pushedBackPosition = (Vector2)transform.position + new Vector2(GetPushedBackDirection().x * pushedBackDistance, 0);
+                Instantiate(blockingEffect, transform.position, Quaternion.identity);
             }
+
             AttackBoxOff();
             currentState = enemyState.block;
         }

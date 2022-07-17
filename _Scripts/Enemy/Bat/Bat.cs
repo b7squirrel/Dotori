@@ -10,11 +10,16 @@ public class Bat : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float jumpCoolTime;
     [SerializeField] float attackCoolTime;
+    [SerializeField] float pushedBackDistance; // blocking 때 밀려나는 거리
+    [SerializeField] float pushedBackForce; // blocking 때 밀려나는 힘
+    [SerializeField] GameObject blockingEffect;
     [SerializeField] bool isDetectingPlayer;  // serialized for debugging
 
     float attackCounter;
     int currentIndex;
     Vector2 attackTarget;
+    float horizontalDirection; // 뒤로 밀려날 방향 체크를 위해
+    Vector2 pushedBackPosition; // 어디까지 뒤로 물러날지 
 
     Animator anim;
     Rigidbody2D theRB;
@@ -81,6 +86,10 @@ public class Bat : MonoBehaviour
     }
     void Patrol()
     {
+        if (!IsPlayingAnim("Walk"))
+        {
+            anim.Play("Walk");
+        }
         transform.position = Vector2.MoveTowards(transform.position, patrolPoints[currentIndex].position, moveSpeed * Time.deltaTime);
         if (Vector2.Distance(transform.position, patrolPoints[currentIndex].position) < .5f)
         {
@@ -102,6 +111,18 @@ public class Bat : MonoBehaviour
         else
         {
             transform.eulerAngles = new Vector3(0, 180f, 0);
+        }
+    }
+
+    void CheckDirectionToPlayer()
+    {
+        if (transform.position.x >= PlayerController.instance.transform.position.x)
+        {
+            horizontalDirection = 1;
+        }
+        else
+        {
+            horizontalDirection = -1;
         }
     }
 
@@ -145,11 +166,19 @@ public class Bat : MonoBehaviour
 
     void Blocking()
     {
-        if (!IsPlayingAnim("Block"))
+        if (!IsPlayingAnim("Block"))  // block 상태로 들어가기 전 한 번만 실행 (Enter blockState)
         {
             anim.Play("Block");
+            CheckDirectionToPlayer();
+            CheckDirection();
+            enemyHealth.WhiteFlash();
+            pushedBackPosition = (Vector2)transform.position + new Vector2(horizontalDirection * pushedBackDistance, 0);
+            Instantiate(blockingEffect, transform.position, Quaternion.identity);
         }
-        theRB.velocity = new Vector2(0, theRB.velocity.y);
+        if (Vector2.Distance((Vector2)transform.position, pushedBackPosition) > .2)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, pushedBackPosition, pushedBackForce * Time.deltaTime);
+        }
 
         if (enemyHealth.IsBlocking() == false)
         {

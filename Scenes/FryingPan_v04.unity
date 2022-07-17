@@ -574,7 +574,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &133268223
 Transform:
   m_ObjectHideFlags: 0
@@ -3145,26 +3145,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 133268223}
     m_Modifications:
-    - target: {fileID: 219603771781750358, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -10.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 219603771781750358, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 219603772182153306, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 219603772182153306, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 219603772182153306, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 219603772285806608, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -3213,22 +3193,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bat (4)
       objectReference: {fileID: 0}
-    - target: {fileID: 219603772285806623, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
-      propertyPath: attackCoolTime
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 219603772367473391, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
       propertyPath: mSprite
       value: 
       objectReference: {fileID: 2064039633}
-    - target: {fileID: 219603772367473391, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
-      propertyPath: blockTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 219603772367473391, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
-      propertyPath: canBlockCapture
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
 --- !u!1 &553785561
@@ -3672,7 +3640,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &656048493
 Transform:
   m_ObjectHideFlags: 0
@@ -7300,7 +7268,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1406347592
 Transform:
   m_ObjectHideFlags: 0

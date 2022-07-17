@@ -176,11 +176,16 @@ public class EnemyHealth : MonoBehaviour
         isStunned = false;
         Destroy(transform.parent.gameObject);
     }
-    IEnumerator WhiteFlash()
+    IEnumerator WhiteFlashCo()
     {
         theSR.material = whiteMat;
         yield return new WaitForSecondsRealtime(blinkingDuration);
         theSR.material = initialMat;
+    }
+
+    public void WhiteFlash()
+    {
+        StartCoroutine(WhiteFlashCo());
     }
 
     // 본체에서 참조하는 함수들
@@ -218,7 +223,7 @@ public class EnemyHealth : MonoBehaviour
             knockBack = false;
             isBlocking = false;
 
-            StartCoroutine(WhiteFlash());
+            StartCoroutine(WhiteFlashCo());
             return;
         }
         theRB.bodyType = RigidbodyType2D.Dynamic;
@@ -229,7 +234,7 @@ public class EnemyHealth : MonoBehaviour
         if (isParried)
         {
             theRB.bodyType = RigidbodyType2D.Kinematic;
-            StartCoroutine(WhiteFlash());
+            StartCoroutine(WhiteFlashCo());
             return;
         }
     }
@@ -239,7 +244,7 @@ public class EnemyHealth : MonoBehaviour
         if (knockBack)
         {
             theRB.bodyType = RigidbodyType2D.Kinematic;
-            StartCoroutine(WhiteFlash());
+            StartCoroutine(WhiteFlashCo());
             return;
         }
     }
@@ -249,7 +254,6 @@ public class EnemyHealth : MonoBehaviour
         if (isBlocking)
         {
             theRB.bodyType = RigidbodyType2D.Kinematic;
-            StartCoroutine(WhiteFlash());
             return;
         }
     }

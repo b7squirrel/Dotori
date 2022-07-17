@@ -549,6 +549,9 @@ MonoBehaviour:
   _debugAlpha: 0
   moveSpeed: 3
   timeToStopFollowing: 5
+  pushedBackDistance: 1.5
+  pushedBackForce: 7
+  blockingEffect: {fileID: 5090427162195939564, guid: cfb19a9bda3e8bd40a92995ab5a6faac, type: 3}
   attackDistnace: 6
   attackCoolTime: 3
   attackStepForce: 1000
