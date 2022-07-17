@@ -26,8 +26,8 @@ public class Bat : MonoBehaviour
     [Header("Debug")]
     [SerializeField] GameObject debugDot;
 
-    enum EnemyState { patrol, attack, backToPatrol, stunned }
-    EnemyState currentState;
+    enum EnemyState { patrol, attack, backToPatrol, stunned, block }
+    [SerializeField] EnemyState currentState;  // 디버깅 목적으로 serialized
 
 
     void Start()
@@ -43,9 +43,22 @@ public class Bat : MonoBehaviour
 
     void Update()
     {
-        CheckIsStunned();
-        SetAttackTarget();
-        CheckDirection();
+        if (enemyHealth.IsBlocking())
+        {
+            CaptureBoxActive(false);
+            currentState = EnemyState.block;
+        }
+        else if (enemyHealth.IsStunned())
+        {
+            CaptureBoxActive(false);
+            currentState = EnemyState.stunned;
+        }
+        else
+        {
+            SetAttackTarget();
+            CheckDirection();
+        }
+        
 
         switch (currentState)
         {
@@ -60,6 +73,9 @@ public class Bat : MonoBehaviour
                 break;
             case EnemyState.stunned:
                 Stunned();
+                break;
+            case EnemyState.block:
+                Blocking();
                 break;
         }
     }
@@ -89,17 +105,9 @@ public class Bat : MonoBehaviour
         }
     }
 
-    void CheckIsStunned()
+    void CaptureBoxActive(bool _value)
     {
-        if (enemyHealth.IsStunned())
-        {
-            if (!IsPlayingAnim("Stunned"))
-            {
-                anim.Play("Stunned");
-            }
-            CaptureBoxActive(false);
-            currentState = EnemyState.stunned;
-        }
+        captureBox.gameObject.SetActive(_value);
     }
     void SetAttackTarget()
     {
@@ -119,6 +127,10 @@ public class Bat : MonoBehaviour
     }
     void Stunned()
     {
+        if (!IsPlayingAnim("Stunned"))
+        {
+            anim.Play("Stunned");
+        }
         theRB.bodyType = RigidbodyType2D.Dynamic;
         theRB.gravityScale = 5f;
         theRB.velocity = new Vector2(0, theRB.velocity.y);
@@ -126,6 +138,21 @@ public class Bat : MonoBehaviour
         if (enemyHealth.IsStunned() == false)
         {
             theRB.gravityScale = 0f;
+            CaptureBoxActive(true);
+            currentState = EnemyState.patrol;
+        }
+    }
+
+    void Blocking()
+    {
+        if (!IsPlayingAnim("Block"))
+        {
+            anim.Play("Block");
+        }
+        theRB.velocity = new Vector2(0, theRB.velocity.y);
+
+        if (enemyHealth.IsBlocking() == false)
+        {
             CaptureBoxActive(true);
             currentState = EnemyState.patrol;
         }
@@ -159,11 +186,7 @@ public class Bat : MonoBehaviour
             currentState = EnemyState.patrol;
         }
     }
-
-    void CaptureBoxActive(bool _value)
-    {
-        captureBox.gameObject.SetActive(_value);
-    }
+    
     bool IsPlayingAnim(string _animation)
     {
         if (anim.GetCurrentAnimatorStateInfo(0).IsName(_animation))
