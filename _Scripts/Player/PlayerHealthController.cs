@@ -6,6 +6,7 @@ public class PlayerHealthController : MonoBehaviour
 {
     public static PlayerHealthController instance;
     PlayerHurtBox playerHurtBox;
+    PanManager panManager;
     [SerializeField] GameObject playerDieEffect;
     [SerializeField] GameObject playerCaptured;
     bool isDead;
@@ -18,6 +19,7 @@ public class PlayerHealthController : MonoBehaviour
     {
         isDead = false;
         playerHurtBox = GetComponentInChildren<PlayerHurtBox>();
+        panManager = GetComponentInChildren<PanManager>();
     }
 
     private void Update()
@@ -26,6 +28,7 @@ public class PlayerHealthController : MonoBehaviour
         {
             GameObject dieEffect = Instantiate(playerDieEffect, transform.position, transform.rotation);
             dieEffect.transform.eulerAngles = new Vector3(0, playerHurtBox.Angle_Y, 0);
+            panManager.DropAllRolls();
             gameObject.SetActive(false);
         }
     }

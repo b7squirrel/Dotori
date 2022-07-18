@@ -182,6 +182,41 @@ public class PanManager : MonoBehaviour
         _panSlots[_panSlots.Length - 1].RemoveRoll();
     }
 
+    //플레이어가 죽으면 Roll을 모두 떨어트림
+    public void DropAllRolls()
+    {
+        int _numberOfRolls = CountRollNumber();  // CountRollNumber는 0, 1, 2 슬롯번호를 가리킨다
+        float[] _vSpeeds = new float[_numberOfRolls];
+        GameObject[] _rolls = new GameObject[_numberOfRolls];
+        PhysicsMaterial2D[] _physicsMats = new PhysicsMaterial2D[_numberOfRolls];
+        Rigidbody2D[] _theRBs = new Rigidbody2D[_numberOfRolls];
+        BoxCollider2D[] _capColls = new BoxCollider2D[_numberOfRolls];
+        for (int i = 0; i < _rolls.Length; i++)
+        {
+            _rolls[i] = _panSlots[i].GetRoll().gameObject;
+            if (_rolls[i].GetComponent<EnemyRolling>().isFlavored)
+            {
+                _rolls[i].tag = "RollFlavored";
+            }
+            else
+            {
+                _rolls[i].tag = "Untagged";
+            }
+            _physicsMats[i] = _rolls[i].GetComponent<EnemyRolling>().physicsMat;
+            _theRBs[i] = _rolls[i].AddComponent<Rigidbody2D>();
+            _capColls[i] = _rolls[i].AddComponent<BoxCollider2D>();
+            _vSpeeds[i] = _rolls[i].GetComponent<EnemyRolling>().verticalDropSpeed;
+
+            _theRBs[i].sharedMaterial = _physicsMats[i];
+            _capColls[i].size = new Vector2(1f, 1f);
+            //_capColls[i].direction = CapsuleDirection2D.Horizontal;
+            _theRBs[i].gravityScale = _rolls[i].GetComponent<EnemyRolling>().dropGravity;
+            _theRBs[i].velocity = new Vector2(0, _vSpeeds[i]);
+
+            _panSlots[i].RemoveRoll();
+        }
+    }
+
     public int CountRollNumber()
     {
         for (int i = 0; i < _panSlots.Length; i++)

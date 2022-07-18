@@ -124,6 +124,9 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage()
     {
+        if (isParried) // parried 와 stunned가 거의 동시에 걸리는 경우를 배제하기 위해
+            return;
+        
         AudioManager.instance.Play("pan_hit_05");
         SetStunState(true);
         SetKnockBackState(true);
