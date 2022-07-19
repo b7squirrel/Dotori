@@ -3581,7 +3581,7 @@ MonoBehaviour:
   flavorSo: {fileID: 11400000, guid: 398028c4e1b6d6c4694034f891f8ba31, type: 2}
   captureBoxOnTime: 0.07
   slotPhysicsSet: {fileID: 1819328065}
-  lengthSlowMotion: 0.15
+  lengthSlowMotion: 0.5
   HitRollEffect: {fileID: 5090427162195939564, guid: cfb19a9bda3e8bd40a92995ab5a6faac, type: 3}
   captureBox: {fileID: 2029100655}
   _isTossing: 0
@@ -38989,11 +38989,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 219603772285806608, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.63246
+      value: -42.77
       objectReference: {fileID: 0}
     - target: {fileID: 219603772285806608, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.058562
+      value: 12.46
       objectReference: {fileID: 0}
     - target: {fileID: 219603772285806608, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
       propertyPath: m_LocalPosition.z

@@ -41,6 +41,7 @@ public class PlayerCapture : MonoBehaviour
         {
             isTossing = false;
         }
+        Toss();
         Capture();
         HitRolls();
         Debugging();
@@ -75,14 +76,14 @@ public class PlayerCapture : MonoBehaviour
             {
                 isCapturing = true;
             }
-            if (isTossing) // 순서가 중요함. 이전 프레임에서 toss를 했다면 이제는 capture가 가능함
-            {
-                isCapturing = true;
-            }
-            if (slotPhysicsSet.IsRollsOnPan)  // 순서가 중요함. 롤이 팬 위에 있을 때는 Toss를 발동시킴
-            {
-                isTossing = true;
-            }
+            //if (isTossing) // 순서가 중요함. 이전 프레임에서 toss를 했다면 이제는 capture가 가능함
+            //{
+            //    isCapturing = true;
+            //}
+            //if (slotPhysicsSet.IsRollsOnPan)  // 순서가 중요함. 롤이 팬 위에 있을 때는 Toss를 발동시킴
+            //{
+            //    isTossing = true;
+            //}
             //if (isCapturing)
             //{
             //    panAnim.Play("Pan_Capture");
@@ -92,6 +93,19 @@ public class PlayerCapture : MonoBehaviour
             //    panAnim.Play("Pan_Toss");
             //}
             panAnim.Play("Pan_Capture");
+        }
+    }
+    void Toss()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (slotPhysicsSet.IsRollsOnPan == false) // 슬롯위에 롤이 없으면 Toss 입력 무시
+                return;
+            if (slotPhysicsSet.IsAnchorGrounded)  // 슬롯이 팬에 붙어 있다면 롤이 아래로 떨어지도록 속도 대입
+            {
+                slotPhysicsSet.TossRolls();
+            }
+            panAnim.Play("Pan_Toss");
         }
     }
     void HitRolls()
