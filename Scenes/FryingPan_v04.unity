@@ -2800,10 +2800,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.0012406948
     y: 0
-    width: 1
-    height: 1
+    width: 0.9975186
+    height: 0.9988975
   near clip plane: 1
   far clip plane: 1000
   field of view: 60
@@ -37242,9 +37242,9 @@ MonoBehaviour:
   - {fileID: 694232837}
   slotPhysicsBase: {fileID: 1209489008}
   anchor: {fileID: 1405039048}
-  tossForce: 12
+  tossForce: 18
   tossGravity: 9.8
-  tossGravityScale: 4
+  tossGravityScale: 5
   tossVelocity: 0
   anchorInitialPoint: {fileID: 1923925783}
   dotDebugging: {fileID: 4787702940570283804, guid: 120be6e7c0d0dfc498095ecf3bd62779, type: 3}
