@@ -11,6 +11,9 @@ public class PlayerCapture : MonoBehaviour
     [SerializeField] RollSO rollso;
     [SerializeField] FlavorSo flavorSo;
 
+    [Header("Capture")]
+    [SerializeField] float captureBoxOnTime;  // 캡쳐박스가 활성화 되는 시간
+
     [Header("Toss Rolls")]
     [SerializeField] SlotPhysics slotPhysicsSet;
     [SerializeField] float lengthSlowMotion;
@@ -80,14 +83,15 @@ public class PlayerCapture : MonoBehaviour
             {
                 isTossing = true;
             }
-            if (isCapturing)
-            {
-                panAnim.Play("Pan_Capture");
-            }
-            else if (isTossing) // isCapturing이 거짓이고 isTossing만 참이라면 Tossing
-            {
-                panAnim.Play("Pan_Toss");
-            }
+            //if (isCapturing)
+            //{
+            //    panAnim.Play("Pan_Capture");
+            //}
+            //else if (isTossing) // isCapturing이 거짓이고 isTossing만 참이라면 Tossing
+            //{
+            //    panAnim.Play("Pan_Toss");
+            //}
+            panAnim.Play("Pan_Capture");
         }
     }
     void HitRolls()
@@ -118,6 +122,8 @@ public class PlayerCapture : MonoBehaviour
         //if (!isCapturing) // isCapturing이 아니라면 Capture Box를 발동시키지 않는다
         //    return;
         captureBox.gameObject.SetActive(true);
+        StartCoroutine(DeactivateCaptureBox());
+
     }
     void CaptureBoxOff()
     {
@@ -125,13 +131,20 @@ public class PlayerCapture : MonoBehaviour
     }
     void StartSlowMotion()
     {
-        if (isTossing)
-        {
-            SlowMotionManager.instance.StartSlowMotion();
-            StartCoroutine(StopSlowMotionCo());
-        }
+        SlowMotionManager.instance.StartSlowMotion();
+        StartCoroutine(StopSlowMotionCo());
+        //if (isTossing)
+        //{
+        //    SlowMotionManager.instance.StartSlowMotion();
+        //    StartCoroutine(StopSlowMotionCo());
+        //}
     }
-
+    IEnumerator DeactivateCaptureBox()
+    {
+        yield return new WaitForSeconds(captureBoxOnTime);
+        CaptureBoxOff();
+        isCapturing = false;
+    }
     IEnumerator StopSlowMotionCo()
     {
         yield return new WaitForSeconds(lengthSlowMotion);

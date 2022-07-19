@@ -12,6 +12,7 @@ public class PlayerAttack : MonoBehaviour
     PlayerController playerController;
     PanManager panManager;
     PlayerAttackBox playerAttackBox;
+    PlayerCaptureBox playerCaptureBox;
     Animator panAnim;
 
     void Start()
@@ -20,6 +21,7 @@ public class PlayerAttack : MonoBehaviour
         playerController = GetComponentInParent<PlayerController>();
         panManager = GetComponentInChildren<PanManager>();
         playerAttackBox = GetComponentInChildren<PlayerAttackBox>();
+        playerCaptureBox = GetComponentInChildren<PlayerCaptureBox>();
         playerAttackBox.gameObject.SetActive(false);
     }
 
@@ -72,6 +74,10 @@ public class PlayerAttack : MonoBehaviour
         playerController.IsAttacking = true;
         playerAttackBox.gameObject.SetActive(true);
         playerController.SetParryStepTarget();
+        if (playerCaptureBox == null)
+            return;
+        playerCaptureBox.gameObject.SetActive(false);
+        
     }
     void ExitAttack()
     {
