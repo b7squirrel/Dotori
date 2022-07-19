@@ -6,8 +6,8 @@ public class SlowMotionManager : MonoBehaviour
 {
     public static SlowMotionManager instance;
     [SerializeField] float slowMotionTimeScale;
-    float defaultTimeScale;
-    float defaultFixedDeltaTime;
+    float defaultTimeScale = 1f;
+    float defaultFixedDeltaTime = 0.02f;
 
     private void Awake()
     {
@@ -16,8 +16,7 @@ public class SlowMotionManager : MonoBehaviour
 
     private void Start()
     {
-        defaultTimeScale = Time.timeScale;
-        defaultFixedDeltaTime = Time.fixedDeltaTime;
+        StopSlowMotion();
     }
 
     public void StartSlowMotion()

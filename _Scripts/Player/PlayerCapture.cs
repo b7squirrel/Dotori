@@ -34,6 +34,10 @@ public class PlayerCapture : MonoBehaviour
     }
     void Update()
     {
+        if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_Toss") == false)
+        {
+            isTossing = false;
+        }
         Capture();
         HitRolls();
         Debugging();
@@ -58,6 +62,7 @@ public class PlayerCapture : MonoBehaviour
             //    return;
             if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_Capture"))
                 return;
+            
             
             if (slotPhysicsSet.IsAnchorGrounded)  // 슬롯이 팬에 붙어 있다면 롤이 아래로 떨어지도록 속도 대입
             {
