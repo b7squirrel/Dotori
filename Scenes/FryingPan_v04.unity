@@ -2800,10 +2800,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0012406948
+    x: 0
     y: 0
-    width: 0.9975186
-    height: 0.9988975
+    width: 1
+    height: 1
   near clip plane: 1
   far clip plane: 1000
   field of view: 60
@@ -3443,8 +3443,11 @@ MonoBehaviour:
   rollso: {fileID: 11400000, guid: 7786f313465a50441a19c196721aacdb, type: 2}
   flavorSo: {fileID: 11400000, guid: 398028c4e1b6d6c4694034f891f8ba31, type: 2}
   slotPhysicsSet: {fileID: 1819328065}
+  lengthSlowMotion: 0.3
   HitRollEffect: {fileID: 5090427162195939564, guid: cfb19a9bda3e8bd40a92995ab5a6faac, type: 3}
   captureBox: {fileID: 2029100655}
+  _isTossing: 0
+  _isCapturing: 0
 --- !u!114 &619753140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37239,7 +37242,7 @@ MonoBehaviour:
   - {fileID: 694232837}
   slotPhysicsBase: {fileID: 1209489008}
   anchor: {fileID: 1405039048}
-  tossForce: 9
+  tossForce: 12
   tossGravity: 9.8
   tossGravityScale: 4
   tossVelocity: 0

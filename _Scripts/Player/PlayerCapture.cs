@@ -13,10 +13,18 @@ public class PlayerCapture : MonoBehaviour
 
     [Header("Toss Rolls")]
     [SerializeField] SlotPhysics slotPhysicsSet;
+    [SerializeField] float lengthSlowMotion;
+    bool isTossing;  // 참일 떄만 슬로우모션이 발동되도록 (capture할 때)
+    bool isCapturing;
 
     [Header("Effects")]
     [SerializeField] GameObject HitRollEffect;
     [SerializeField] Transform captureBox;  // 여기서 HItRoll Effect를 발생시키기
+
+    [Header("Debug")]
+    [SerializeField] bool _isTossing;
+    [SerializeField] bool _isCapturing;
+
 
     void Start()
     {
@@ -28,10 +36,22 @@ public class PlayerCapture : MonoBehaviour
     {
         Capture();
         HitRolls();
-        TossRolls();
+        Debugging();
     }
+
+    private void Debugging()
+    {
+        _isCapturing = isCapturing;
+        _isTossing = isTossing;
+    }
+
     void Capture()
     {
+        if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_Capture") == false)
+        {
+            isCapturing = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.S) || Input.GetMouseButtonDown(1))
         {
             //if (Input.GetKey(KeyCode.Z) || Input.GetMouseButtonDown(0))  // 캡쳐 캔슬
@@ -39,11 +59,30 @@ public class PlayerCapture : MonoBehaviour
             if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_Capture"))
                 return;
             
-            if (slotPhysicsSet.IsAnchorGrounded)
+            if (slotPhysicsSet.IsAnchorGrounded)  // 슬롯이 팬에 붙어 있다면 롤이 아래로 떨어지도록 속도 대입
             {
                 slotPhysicsSet.TossRolls();
             }
-            panAnim.Play("Pan_Capture");
+            if (slotPhysicsSet.IsRollsOnPan == false) // 롤이 없다면 바로 캡쳐를 하도록
+            {
+                isCapturing = true;
+            }
+            if (isTossing) // 순서가 중요함. 이전 프레임에서 toss를 했다면 이제는 capture가 가능함
+            {
+                isCapturing = true;
+            }
+            if (slotPhysicsSet.IsRollsOnPan)  // 순서가 중요함. 롤이 팬 위에 있을 때는 Toss를 발동시킴
+            {
+                isTossing = true;
+            }
+            if (isCapturing)
+            {
+                panAnim.Play("Pan_Capture");
+            }
+            else if (isTossing) // isCapturing이 거짓이고 isTossing만 참이라면 Tossing
+            {
+                panAnim.Play("Pan_Toss");
+            }
         }
     }
     void HitRolls()
@@ -59,17 +98,7 @@ public class PlayerCapture : MonoBehaviour
             EffectsClearRoll();
         }
     }
-    void TossRolls()
-    {
-        //if (Input.GetKeyDown(KeyCode.LeftShift))
-        //{
-        //    if (slotPhysicsSet.IsRollsOnPan == false)
-        //    {
-        //        return;
-        //    }
-        //    slotPhysicsSet.TossRolls();
-        //}
-    }
+    
     // Capture의 마지막 프레임에서 애니메이션 이벤트로 실행
     void Panning()
     {
@@ -81,6 +110,8 @@ public class PlayerCapture : MonoBehaviour
     }
     void CaptureBoxOn()
     {
+        //if (!isCapturing) // isCapturing이 아니라면 Capture Box를 발동시키지 않는다
+        //    return;
         captureBox.gameObject.SetActive(true);
     }
     void CaptureBoxOff()
@@ -89,11 +120,18 @@ public class PlayerCapture : MonoBehaviour
     }
     void StartSlowMotion()
     {
-        SlowMotionManager.instance.StartSlowMotion();
+        if (isTossing)
+        {
+            SlowMotionManager.instance.StartSlowMotion();
+            StartCoroutine(StopSlowMotionCo());
+        }
     }
-    void StopSlowMotion()
+
+    IEnumerator StopSlowMotionCo()
     {
+        yield return new WaitForSeconds(lengthSlowMotion);
         SlowMotionManager.instance.StopSlowMotion();
+        isTossing = false;
     }
 
     void EffectsClearRoll()

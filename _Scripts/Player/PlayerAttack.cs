@@ -41,8 +41,8 @@ public class PlayerAttack : MonoBehaviour
         {
             if (slotPhysicsSet.IsRollsOnPan)
                 return;
-            if (IsPlayingPanAnimation("Pan_Capture"))
-                return;
+            //if (IsPlayingPanAnimation("Pan_Capture"))
+            //    return;
             if (IsPlayingPanAnimation("Pan_Attack"))
                 return;
             if (IsPlayingPanAnimation("Pan_HitRoll"))
