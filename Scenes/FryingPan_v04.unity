@@ -2937,10 +2937,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.0012406948
     y: 0
-    width: 1
-    height: 1
+    width: 0.9975186
+    height: 0.9988975
   near clip plane: 1
   far clip plane: 1000
   field of view: 60
@@ -3581,7 +3581,7 @@ MonoBehaviour:
   flavorSo: {fileID: 11400000, guid: 398028c4e1b6d6c4694034f891f8ba31, type: 2}
   captureBoxOnTime: 0.07
   slotPhysicsSet: {fileID: 1819328065}
-  lengthSlowMotion: 0.23
+  lengthSlowMotion: 0.15
   HitRollEffect: {fileID: 5090427162195939564, guid: cfb19a9bda3e8bd40a92995ab5a6faac, type: 3}
   captureBox: {fileID: 2029100655}
   _isTossing: 0
