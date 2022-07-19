@@ -31,11 +31,23 @@ public class Warlock : MonoBehaviour
     bool detectingPlayer;   //retreat해야 하는 지점까지 플레이어가 들어왔을 때
     bool canRetreat;
 
+    [Header("Edge Check")]
+    [SerializeField] float distanceToEdge;  // edge 체크를 할 거리
+    [SerializeField] float heightThresholdToJump;  // 이 높이의 edge가 뒤에 있으면 retreat 하지 않는다
+    RaycastHit2D hitEdge;
+    bool detectingEdge;
+
+    [Header("Wall Check")]
     [SerializeField] Transform detectingWallPoint; // 뒤에 벽이 있으면 점프하지 않도록
     [SerializeField] float distanceToWall;
     [SerializeField] LayerMask groundMask;
     RaycastHit2D hitWall;
     bool detectingWall;
+
+    [Header("Debug")]
+    [SerializeField] bool _detectingWall;
+    [SerializeField] bool _detectingEdge;
+    [SerializeField] bool _canRetreat;
 
     [SerializeField] GameObject projectile;
     [SerializeField] float shootAnticTime;
@@ -67,8 +79,10 @@ public class Warlock : MonoBehaviour
             AttackCoolTIme();
             CheckingDistance();
             DetectingWall();
+            DetectingEdge();
 
             DetectingPlayer();
+            Debugging();
         }
 
         // 모든 상태는 끝나면 Idle상태로 들어감. 
@@ -87,7 +101,6 @@ public class Warlock : MonoBehaviour
                 PlayAnimation("Warlock_Idle");
                 if (canRetreat)
                 {
-                    theRB.velocity = new Vector2(theRB.velocity.x, jumpForce); // 플레이어를 감지하면 y축 초기속도로 한 번 힘을 가해줌. 
                     currentState = EnemyState.retreat;
                 }
                 else if (isDetecting && shootCounter <= 0)
@@ -114,14 +127,11 @@ public class Warlock : MonoBehaviour
     /// </summary>
     void Retreat()
     {
-        if (detectingWall)
+        if (!IsPlayingAnimation("Warlock_Retreat"))  // retreat 상태로 들어오면서 한 번 실행
         {
-            canRetreat = false;
-            retreatCounter = retreatCoolTime;
-            currentState = EnemyState.idle;
-            return;
+            PlayAnimation("Warlock_Retreat");
+            theRB.velocity = new Vector2(theRB.velocity.x, jumpForce); // 플레이어를 감지하면 y축 초기속도로 한 번 힘을 가해줌. 
         }
-
         transform.position = Vector2.MoveTowards(transform.position, whereToRetreat, retreatSpeed * Time.deltaTime);
 
         if (Mathf.Abs(Vector2.Distance(transform.position, whereToRetreat)) < .5f || detectingWall)
@@ -237,7 +247,28 @@ public class Warlock : MonoBehaviour
             Debug.DrawLine(detectingWallPoint.position, _endPoint, Color.blue);
         }
     }
-    // 
+    void DetectingEdge()
+    {
+        float _distanceToEdge = distanceToEdge;
+        if (isFacingRight)
+        {
+            _distanceToEdge = -_distanceToEdge;
+        }
+        Vector2 _edgeCheckPoint = (Vector2)transform.position + new Vector2(_distanceToEdge, 0);
+        hitEdge = Physics2D.Linecast(_edgeCheckPoint, _edgeCheckPoint + Vector2.down * heightThresholdToJump, groundMask);
+
+
+        if (hitEdge)
+        {
+            detectingEdge = true;
+            Debug.DrawLine(_edgeCheckPoint, hitEdge.point, Color.yellow);
+        }
+        else
+        {
+            detectingEdge = false;
+            Debug.DrawLine(_edgeCheckPoint, _edgeCheckPoint + Vector2.down * heightThresholdToJump, Color.blue);
+        }
+    }
     /// <summary>
     /// Retreat을 하기 위한 조건들 검사
     /// retreat 쿨타임이 차지 않았거나, 플레이어를 감지하지 못했거나, 뒤에 벽이 있다면 retreat하지 않음
@@ -253,6 +284,13 @@ public class Warlock : MonoBehaviour
             return;
         if (detectingWall)
             return;
+        if (detectingWall || !detectingEdge)  //뒤에 벽이 있거나 막다른 절벽이라면 retreat하지 않는다
+        {
+            canRetreat = false;
+            retreatCounter = retreatCoolTime;
+            currentState = EnemyState.idle;
+            return;
+        }
 
         retreatCounter = retreatCoolTime;
         whereToRetreat = retreatPoint.position;
@@ -260,6 +298,12 @@ public class Warlock : MonoBehaviour
         canRetreat = true;
     }
     
+    bool IsPlayingAnimation(string _animation)
+    {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName(_animation))
+            return true;
+        return false;
+    }
     void PlayAnimation(string _animation)
     {
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName(_animation))
@@ -268,6 +312,12 @@ public class Warlock : MonoBehaviour
         }
     }
 
+    void Debugging()
+    {
+        _detectingEdge = detectingEdge;
+        _detectingWall = detectingWall;
+        _canRetreat = canRetreat;
+    }
     void Gravity()
     {
         if (theRB.velocity.y > 0)

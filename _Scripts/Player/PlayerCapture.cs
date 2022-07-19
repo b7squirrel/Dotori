@@ -87,6 +87,14 @@ public class PlayerCapture : MonoBehaviour
     {
         captureBox.gameObject.SetActive(false);
     }
+    void StartSlowMotion()
+    {
+        SlowMotionManager.instance.StartSlowMotion();
+    }
+    void StopSlowMotion()
+    {
+        SlowMotionManager.instance.StopSlowMotion();
+    }
 
     void EffectsClearRoll()
     {
