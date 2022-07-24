@@ -109,7 +109,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 32
-        width: 64
+        width: 48
         height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -128,9 +128,9 @@ TextureImporter:
       name: Player_Land_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 48
         y: 32
-        width: 64
+        width: 48
         height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -151,7 +151,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 48
         height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}

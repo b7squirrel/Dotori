@@ -54,7 +54,7 @@ public class GoulFighter : MonoBehaviour
         anim = GetComponent<Animator>();
         theRB = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponentInChildren<EnemyHealth>();
-        currentState = enemyState.follow;
+        currentState = enemyState.idle;
         isDetecting = false;
         isFacingLeft = true;
         wasPlayerToLeft = isPlayerToLeft;
@@ -78,6 +78,12 @@ public class GoulFighter : MonoBehaviour
 
         switch (currentState)
         {
+            case enemyState.idle:
+                if (canSeePlayer)
+                {
+                    currentState = enemyState.follow;
+                }
+                break;
             case enemyState.attack:
                 if (IsPlayingAnim("Goul_Fighter_Attack"))
                     return;

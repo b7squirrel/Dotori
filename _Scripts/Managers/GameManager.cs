@@ -53,6 +53,12 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(CameraShake(numberOfShake, shakingAmount));
         }
+
+        //마우스 스크린 안에 가두기
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+        }
     }
 
     public void StartCameraShake(int _numberOfShake, float _shakingAmount)

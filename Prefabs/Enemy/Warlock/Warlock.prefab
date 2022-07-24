@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &598113301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 598113302}
+  m_Layer: 0
+  m_Name: antic Magic Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &598113302
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598113301}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.83, y: 0.44, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5588364126146516484}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1847085845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1847085846}
+  m_Layer: 0
+  m_Name: shoot Magic Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1847085846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847085845}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.93, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5588364126146516484}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5588364124705702798
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,7 +431,7 @@ SpriteRenderer:
   m_SortingLayerID: -665836565
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -845045197500901298, guid: e1b0cc6f75e10624490f65da64dc590c, type: 3}
+  m_Sprite: {fileID: 958841950, guid: 81a82928b9c19394b88597d95a8bddce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -451,6 +513,8 @@ Transform:
   - {fileID: 5588364125780704806}
   - {fileID: 5588364124834320771}
   - {fileID: 5499587693807848051}
+  - {fileID: 598113302}
+  - {fileID: 1847085846}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -526,6 +590,13 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 384
+  anticMagicEffect: {fileID: 3535473531352290432, guid: 51be37334c8049340a8cc5266d6c3cf0, type: 3}
+  shootMagicEffect: {fileID: 6704841644087617107, guid: 7a0dde02255c35546bc150594930af24, type: 3}
+  anticMagicEffectPoint: {fileID: 598113302}
+  shootMagicEffectPoint: {fileID: 1847085846}
+  _detectingWall: 0
+  _detectingEdge: 0
+  _canRetreat: 0
   projectile: {fileID: 4585337845338926987, guid: 061b54978e2c05f449089fb8d162e04c, type: 3}
   shootAnticTime: 0.8
   currentState: 0

@@ -44,6 +44,14 @@ public class Warlock : MonoBehaviour
     RaycastHit2D hitWall;
     bool detectingWall;
 
+    [Header("Effect")]
+    [SerializeField] GameObject anticMagicEffect;
+    [SerializeField] GameObject shootMagicEffect;
+    [SerializeField] Transform anticMagicEffectPoint;
+    [SerializeField] Transform shootMagicEffectPoint;
+    GameObject anticMagic;
+    GameObject shootMagic;
+
     [Header("Debug")]
     [SerializeField] bool _detectingWall;
     [SerializeField] bool _detectingEdge;
@@ -310,6 +318,24 @@ public class Warlock : MonoBehaviour
         {
             anim.Play(_animation);
         }
+    }
+
+    // Animation Effects
+    void CreateAnticMagicEffect()
+    {
+        anticMagic = Instantiate(anticMagicEffect, anticMagicEffectPoint.position, transform.rotation);
+    }
+    void DestroyAnticMagicEffect()
+    {
+        Destroy(anticMagic);
+    }
+    void CreateShootMagicEffect()
+    {
+        shootMagic = Instantiate(shootMagicEffect, shootMagicEffectPoint.position, transform.rotation);
+    }
+    void DestroyShootMagicEffect()
+    {
+        Destroy(shootMagic);
     }
 
     void Debugging()

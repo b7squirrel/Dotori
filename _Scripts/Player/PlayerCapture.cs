@@ -17,6 +17,7 @@ public class PlayerCapture : MonoBehaviour
     [Header("Toss Rolls")]
     [SerializeField] SlotPhysics slotPhysicsSet;
     [SerializeField] float lengthSlowMotion;
+    [SerializeField] float startSlowMotionTImeOffset; // Toss anim 시작 후 얼마 후에 슬로우모션 시작할지
     bool isTossing;  // 참일 떄만 슬로우모션이 발동되도록 (capture할 때)
     bool isCapturing;
 
@@ -101,11 +102,14 @@ public class PlayerCapture : MonoBehaviour
         {
             if (slotPhysicsSet.IsRollsOnPan == false) // 슬롯위에 롤이 없으면 Toss 입력 무시
                 return;
-            if (slotPhysicsSet.IsAnchorGrounded)  // 슬롯이 팬에 붙어 있다면 롤이 아래로 떨어지도록 속도 대입
+            
+            if (slotPhysicsSet.IsAnchorGrounded)  // 슬롯이 팬에 붙어 있다면 위쪽으로 올라가는 속도 대입
             {
+                panAnim.Play("Pan_Toss");
                 slotPhysicsSet.TossRolls();
             }
-            panAnim.Play("Pan_Toss");
+            
+            StartSlowMotion();
         }
     }
     void HitRolls()
@@ -133,25 +137,12 @@ public class PlayerCapture : MonoBehaviour
     }
     void CaptureBoxOn()
     {
-        //if (!isCapturing) // isCapturing이 아니라면 Capture Box를 발동시키지 않는다
-        //    return;
         captureBox.gameObject.SetActive(true);
         StartCoroutine(DeactivateCaptureBox());
-
     }
     void CaptureBoxOff()
     {
         captureBox.gameObject.SetActive(false);
-    }
-    void StartSlowMotion()
-    {
-        SlowMotionManager.instance.StartSlowMotion();
-        StartCoroutine(StopSlowMotionCo());
-        //if (isTossing)
-        //{
-        //    SlowMotionManager.instance.StartSlowMotion();
-        //    StartCoroutine(StopSlowMotionCo());
-        //}
     }
     IEnumerator DeactivateCaptureBox()
     {
@@ -159,13 +150,22 @@ public class PlayerCapture : MonoBehaviour
         CaptureBoxOff();
         isCapturing = false;
     }
+    void StartSlowMotion()
+    {
+        StartCoroutine(StartSlowMotionCo());
+    }
+    IEnumerator StartSlowMotionCo()
+    {
+        yield return new WaitForSeconds(startSlowMotionTImeOffset);
+        SlowMotionManager.instance.StartSlowMotion();
+        StartCoroutine(StopSlowMotionCo());
+    }
     IEnumerator StopSlowMotionCo()
     {
         yield return new WaitForSeconds(lengthSlowMotion);
         SlowMotionManager.instance.StopSlowMotion();
         isTossing = false;
     }
-
     void EffectsClearRoll()
     {
         Instantiate(HitRollEffect, captureBox.position, Quaternion.identity);
