@@ -8,6 +8,8 @@ public class Spike : MonoBehaviour
     {
         if (collision.CompareTag("HurtBoxPlayer"))
         {
+            if (PlayerController.instance.IsGrounded)
+                return;
             PlayerHealthController.instance.KillPlayer();
         }
     }

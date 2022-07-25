@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
     Vector2 wallContactPoint;
     Vector2 GroundContactPoint;
 
+    public bool IsGrounded { get { return isGrounded; } }
     public bool IsAttacking { get; set; }
     public bool IsDodging { get; set; }
     public bool IsOnSlope
