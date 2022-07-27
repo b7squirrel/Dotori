@@ -372,7 +372,7 @@ public class GoulFighter : MonoBehaviour
     IEnumerator DirectionChange()
     {
         //anim.Play("Goul_Turn");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(0f);
         isChangingDirection = false;
     }
 
