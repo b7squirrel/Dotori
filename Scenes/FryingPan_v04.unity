@@ -2846,10 +2846,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.0012406948
     y: 0
-    width: 1
-    height: 1
+    width: 0.9975186
+    height: 0.9988975
   near clip plane: 1
   far clip plane: 1000
   field of view: 60
@@ -7329,34 +7329,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 656048493}
     m_Modifications:
-    - target: {fileID: 4071721333344830440, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_Size.y
-      value: 2.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 4071721333344830440, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 4071721333344830440, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 6493158245389905575, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_Size.x
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6493158245389905575, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_Size.y
-      value: 2.82
-      objectReference: {fileID: 0}
-    - target: {fileID: 6493158245389905575, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 6493158245389905575, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_Offset.y
-      value: 1.37
-      objectReference: {fileID: 0}
     - target: {fileID: 6493158246380748803, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
       propertyPath: m_Name
       value: Goul (8)
@@ -7404,14 +7376,6 @@ PrefabInstance:
     - target: {fileID: 6493158246380748831, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6493158246652258253, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 6493158246652258253, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
@@ -61949,7 +61913,7 @@ MonoBehaviour:
   isJumping: 0
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 133376
+    m_Bits: 133504
   groundCheck: {fileID: 716742713}
   wallCheck: {fileID: 629342936}
   ledgeCheck: {fileID: 1207750434}
