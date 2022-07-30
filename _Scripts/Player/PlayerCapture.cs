@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerCapture : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class PlayerCapture : MonoBehaviour
     [SerializeField] bool _isTossing;
     [SerializeField] bool _isCapturing;
 
+    [SerializeField] bool IsSlowMotion; // 슬로우 모션 상태가 되는 조건을 만족했을 때
+    [SerializeField] bool OnSlowMotion; // 슬로우 모션이 진행 중일 떄 (슬로우 모션 코루틴을 계속 실행시키지 않기 위해)
 
     void Start()
     {
@@ -45,6 +48,7 @@ public class PlayerCapture : MonoBehaviour
         Toss();
         Capture();
         HitRolls();
+        SlowMotion();
         Debugging();
     }
 
@@ -61,7 +65,7 @@ public class PlayerCapture : MonoBehaviour
             isCapturing = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.S) || Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             //if (Input.GetKey(KeyCode.Z) || Input.GetMouseButtonDown(0))  // 캡쳐 캔슬
             //    return;
@@ -77,28 +81,12 @@ public class PlayerCapture : MonoBehaviour
             {
                 isCapturing = true;
             }
-            //if (isTossing) // 순서가 중요함. 이전 프레임에서 toss를 했다면 이제는 capture가 가능함
-            //{
-            //    isCapturing = true;
-            //}
-            //if (slotPhysicsSet.IsRollsOnPan)  // 순서가 중요함. 롤이 팬 위에 있을 때는 Toss를 발동시킴
-            //{
-            //    isTossing = true;
-            //}
-            //if (isCapturing)
-            //{
-            //    panAnim.Play("Pan_Capture");
-            //}
-            //else if (isTossing) // isCapturing이 거짓이고 isTossing만 참이라면 Tossing
-            //{
-            //    panAnim.Play("Pan_Toss");
-            //}
-            panAnim.Play("Pan_Capture");
+                        panAnim.Play("Pan_Capture");
         }
     }
     void Toss()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(1))
         {
             if (slotPhysicsSet.IsRollsOnPan == false) // 슬롯위에 롤이 없으면 Toss 입력 무시
                 return;
@@ -108,8 +96,28 @@ public class PlayerCapture : MonoBehaviour
                 panAnim.Play("Pan_Toss");
                 slotPhysicsSet.TossRolls();
             }
-            
-            StartSlowMotion();
+        }
+    }
+    void SlowMotion()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            IsSlowMotion = true;
+        }
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    StartSlowMotion();
+        //}
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            IsSlowMotion = false;
+            OnSlowMotion = false;
+            SlowMotionManager.instance.StopSlowMotion();
+        }
+        if (IsSlowMotion == true && OnSlowMotion == false) //슬로우모션 조건을 만족하고 아직 슬로우 모션이 실행중이 아니라면
+        {
+            SlowMotionManager.instance.StartSlowMotion();
+            OnSlowMotion = true;
         }
     }
     void HitRolls()

@@ -39,23 +39,23 @@ public class PlayerAttack : MonoBehaviour
         }
 
         // 공격이 발동되면 패링카운터까지 초기화 되어 패링도 가능하게 된다.
-        if (Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(0))
-        {
-            if (slotPhysicsSet.IsRollsOnPan)
-                return;
-            //if (IsPlayingPanAnimation("Pan_Capture"))
-            //    return;
-            if (IsPlayingPanAnimation("Pan_Attack"))
-                return;
-            if (IsPlayingPanAnimation("Pan_HitRoll"))
-                return;
-            if (parryCoolingCounter <= 0f)
-            {
-                panAnim.Play("Pan_Attack");
-                AudioManager.instance.Play("whoosh_01");
-                parryCoolingCounter = parryCoolTime;
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(0))
+        //{
+        //    if (slotPhysicsSet.IsRollsOnPan)
+        //        return;
+        //    //if (IsPlayingPanAnimation("Pan_Capture"))
+        //    //    return;
+        //    if (IsPlayingPanAnimation("Pan_Attack"))
+        //        return;
+        //    if (IsPlayingPanAnimation("Pan_HitRoll"))
+        //        return;
+        //    if (parryCoolingCounter <= 0f)
+        //    {
+        //        panAnim.Play("Pan_Attack");
+        //        AudioManager.instance.Play("whoosh_01");
+        //        parryCoolingCounter = parryCoolTime;
+        //    }
+        //}
     }
     bool IsPlayingPanAnimation(string _animation)
     {

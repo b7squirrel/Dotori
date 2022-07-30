@@ -28,7 +28,7 @@ public class GoulFighter : MonoBehaviour
     [SerializeField] float timeToStopFollowing;
     bool isDetecting; // 시야에서 사라진 플레이어를 쫒는 구간을 위한 플래그
     bool isSearching; // 플레이어가 시야에서 사라졌고 isDetecting도 false일 때 stopFollowingPlayer 함수를 계속 호출하려 들어가지 못하도록 하는 플래그
-    bool isChangingDirection;
+    [SerializeField] bool isChangingDirection;  // debug용으로 serialized
 
     [Header("Stunned")]
     EnemyHealth enemyHealth;
@@ -57,7 +57,8 @@ public class GoulFighter : MonoBehaviour
         currentState = enemyState.idle;
         isDetecting = false;
         isFacingLeft = true;
-        wasPlayerToLeft = isPlayerToLeft;
+        CheckPlayerIsToLeft();  // 플레이어의 위치를 확인한 후
+        wasPlayerToLeft = isPlayerToLeft; // 두 값을 같게 해 준다. 그렇지 않으면 둘 다 false로 시작함
         attackBox.gameObject.SetActive(false);
     }
     bool IsPlayingAnim(string _animation)
@@ -141,7 +142,8 @@ public class GoulFighter : MonoBehaviour
 
                 if (isDetecting)
                 {
-                    FollowPlayer();
+                    CheckPlayerIsToLeft();  //방향 전환을 할지 결정한 후에 
+                    FollowPlayer();         // 플레이어를 따라감
                 }
 
                 if (IsAttackRange())
@@ -326,8 +328,7 @@ public class GoulFighter : MonoBehaviour
     {
         attackBox.gameObject.SetActive(false);
     }
-
-    void FollowPlayer()
+    void CheckPlayerIsToLeft()
     {
         if (transform.position.x - PlayerController.instance.transform.position.x > 0)
         {
@@ -337,7 +338,9 @@ public class GoulFighter : MonoBehaviour
         {
             isPlayerToLeft = false;
         }
-
+    }
+    void FollowPlayer()
+    {
         if (isPlayerToLeft != wasPlayerToLeft)
         {
             isChangingDirection = true;
@@ -345,6 +348,7 @@ public class GoulFighter : MonoBehaviour
 
         if (isChangingDirection)
         {
+            
             StartCoroutine(DirectionChange());
         }
         else
@@ -372,7 +376,7 @@ public class GoulFighter : MonoBehaviour
     IEnumerator DirectionChange()
     {
         //anim.Play("Goul_Turn");
-        yield return new WaitForSeconds(0f);
+        yield return new WaitForSeconds(.5f);
         isChangingDirection = false;
     }
 
