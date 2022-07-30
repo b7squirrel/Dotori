@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool canDoubleJump;
     [SerializeField] bool isOnSlope;
     [SerializeField] bool isJumping;
+    [SerializeField] bool isDodgeTurn;
 
     [Header("Ground Check")]
     [SerializeField] LayerMask whatIsGround;
