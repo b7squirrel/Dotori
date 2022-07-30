@@ -108,9 +108,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 192
-        width: 64
-        height: 64
+        y: 288
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,10 +128,10 @@ TextureImporter:
       name: Stunned_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 192
-        width: 64
-        height: 64
+        x: 128
+        y: 288
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,10 +149,10 @@ TextureImporter:
       name: Stunned_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 192
-        width: 64
-        height: 64
+        x: 256
+        y: 288
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,10 +170,10 @@ TextureImporter:
       name: Stunned_3
       rect:
         serializedVersion: 2
-        x: 192
-        y: 192
-        width: 64
-        height: 64
+        x: 384
+        y: 288
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,9 +192,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 128
-        width: 64
-        height: 64
+        y: 192
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -212,10 +212,10 @@ TextureImporter:
       name: Stunned_5
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
-        width: 64
-        height: 64
+        x: 128
+        y: 192
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -233,10 +233,10 @@ TextureImporter:
       name: Stunned_6
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 64
-        height: 64
+        x: 256
+        y: 192
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -254,10 +254,10 @@ TextureImporter:
       name: Stunned_7
       rect:
         serializedVersion: 2
-        x: 192
-        y: 128
-        width: 64
-        height: 64
+        x: 384
+        y: 192
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,9 +276,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
-        width: 64
-        height: 64
+        y: 96
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -296,10 +296,10 @@ TextureImporter:
       name: Stunned_9
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
+        x: 128
+        y: 96
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -317,10 +317,10 @@ TextureImporter:
       name: Stunned_10
       rect:
         serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
+        x: 256
+        y: 96
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -338,10 +338,10 @@ TextureImporter:
       name: Stunned_11
       rect:
         serializedVersion: 2
-        x: 192
-        y: 64
-        width: 64
-        height: 64
+        x: 384
+        y: 96
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -361,8 +361,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -380,10 +380,10 @@ TextureImporter:
       name: Stunned_13
       rect:
         serializedVersion: 2
-        x: 64
+        x: 128
         y: 0
-        width: 64
-        height: 64
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -401,10 +401,10 @@ TextureImporter:
       name: Stunned_14
       rect:
         serializedVersion: 2
-        x: 128
+        x: 256
         y: 0
-        width: 64
-        height: 64
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -422,10 +422,10 @@ TextureImporter:
       name: Stunned_15
       rect:
         serializedVersion: 2
-        x: 192
+        x: 384
         y: 0
-        width: 64
-        height: 64
+        width: 128
+        height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
