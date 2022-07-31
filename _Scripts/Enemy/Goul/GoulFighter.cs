@@ -18,8 +18,6 @@ public class GoulFighter : MonoBehaviour
     [SerializeField] float _debugAlpha;
 
     bool canSeePlayer;
-
-    [HideInInspector]
     bool isFacingLeft;
     bool isPlayerToLeft, wasPlayerToLeft;
 
@@ -77,6 +75,7 @@ public class GoulFighter : MonoBehaviour
         SetParriedState();
         SetBlockState();
         DetectingArea();
+        CheckIsFacingPlayer();
 
         switch (currentState)
         {
@@ -413,6 +412,26 @@ public class GoulFighter : MonoBehaviour
         {
             canSeePlayer = false;
         }
+    }
+
+    /// <summary>
+    /// 블락 가능한 적이 뒤에서 공격 받았는지를 체크해서 EnemyHealth로 전달
+    /// </summary>
+    void CheckIsFacingPlayer()
+    {
+        if (transform.position.x < PlayerController.instance.transform.position.x
+            && isFacingLeft == false)
+        {
+            enemyHealth.IsfacingPlayer = true;
+            return;
+        }
+        else if (transform.position.x > PlayerController.instance.transform.position.x
+            && isFacingLeft)
+        {
+            enemyHealth.IsfacingPlayer = true;
+            return;
+        }
+        enemyHealth.IsfacingPlayer = false;
     }
 
     private void OnDrawGizmos()

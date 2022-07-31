@@ -15,6 +15,7 @@ public class Bat : MonoBehaviour
     [SerializeField] GameObject blockingEffect;
     [SerializeField] bool isDetectingPlayer;  // serialized for debugging
 
+    bool isFacingLeft;
     float attackCounter;
     int currentIndex;
     Vector2 attackTarget;
@@ -62,6 +63,7 @@ public class Bat : MonoBehaviour
         {
             SetAttackTarget();
             CheckDirection();
+            CheckIsFacingPlayer();
         }
         
 
@@ -107,13 +109,19 @@ public class Bat : MonoBehaviour
         if (transform.position.x > patrolPoints[currentIndex].position.x)
         {
             transform.eulerAngles = new Vector3(0, 0, 0);
+            isFacingLeft = true;
         }
         else
         {
             transform.eulerAngles = new Vector3(0, 180f, 0);
+            isFacingLeft = false;
+
         }
     }
 
+    /// <summary>
+    /// 블락하고 뒤로 밀려날 때 어느 방향으로 밀려날지 결정하는 함수
+    /// </summary>
     void CheckDirectionToPlayer()
     {
         if (transform.position.x >= PlayerController.instance.transform.position.x)
@@ -223,6 +231,22 @@ public class Bat : MonoBehaviour
             return true;
         }
         return false;
+    }
+    void CheckIsFacingPlayer()
+    {
+        if (transform.position.x < PlayerController.instance.transform.position.x
+            && isFacingLeft == false)
+        {
+            enemyHealth.IsfacingPlayer = true;
+            return;
+        }
+        else if (transform.position.x > PlayerController.instance.transform.position.x
+            && isFacingLeft == true)
+        {
+            enemyHealth.IsfacingPlayer = true;
+            return;
+        }
+        enemyHealth.IsfacingPlayer = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

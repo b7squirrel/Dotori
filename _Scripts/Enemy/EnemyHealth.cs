@@ -42,6 +42,8 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] float blinkingDuration;
     Material initialMat;
     SpriteRenderer theSR;
+
+    public bool IsfacingPlayer { get; set; }
     
     private void Start()
     {
@@ -154,7 +156,8 @@ public class EnemyHealth : MonoBehaviour
             
         if (canBlockCapture) // 캡쳐를 블락하는 적인가?
         {
-            if (!isStunned && !isParried) // 그렇다면 스턴상태, 패리된 상태가 둘 다 아닐때만 블락
+            // 그렇다면 스턴상태, 패리된 상태가 둘 다 아니면서, 앞에서 공격당했을 때
+            if (!isStunned && !isParried && IsfacingPlayer) 
             {
                 SetBlockState(true);
                 return;
