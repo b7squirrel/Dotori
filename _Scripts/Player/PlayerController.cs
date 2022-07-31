@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
         Gravity();
         SurroundingCheck();
 
-        Jump();
+        Jump();  // state
         GenerateDustTrail();
         GenerateLandEffect();
         ManageContactStates();
@@ -109,12 +109,11 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         SlopeCheck();
-        Move();
+        Move();  // state
     }
 
     void SurroundingCheck()
     {
-        //isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(.55f, .34f), 0, whatIsGround);
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
     }

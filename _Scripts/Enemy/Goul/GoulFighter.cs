@@ -44,6 +44,7 @@ public class GoulFighter : MonoBehaviour
     [SerializeField] float attackDistnace;   // raycast 거리 설정
     [SerializeField] float attackCoolTime;
     [SerializeField] float attackStepForce;
+    [SerializeField] float attackAnticTime;
     float attackCounter;
 
     [Header("HitBox")]
@@ -86,15 +87,24 @@ public class GoulFighter : MonoBehaviour
                 }
                 break;
             case enemyState.attack:
+
+                theRB.velocity = new Vector2(0, theRB.velocity.y);  // 공격 모션 중이 아니라면 정지 (antic, followThrough 포험)
                 if (IsPlayingAnim("Goul_Fighter_Attack"))
+                {
+                    theRB.velocity = GetDirection() * attackStepForce;
                     return;
+                }
+                if (IsPlayingAnim("Goul_Fighter_AttackAntic")
+                    || IsPlayingAnim("Goul_Fighter_AttackFollowThrough"))
+                    return;
+
                 if (IsAttackRange() == false)
                 {
-                    if (!IsPlayingAnim("Goul_Fighter_Attack"))
+                    // 공격 모션 중이라면 그 모션이 끝이 날 때까지 기다림
+                    if (!IsPlayingAnim("Goul_Fighter_Attack")
+                        && !IsPlayingAnim("Goul_Fighter_AttackAntic")
+                        && !IsPlayingAnim("Goul_Fighter_AttackFollowThrough"))
                     {
-                        // 공격 모션 중이라면 그 모션이 끝이 날 때까지 기다림
-                        // Attack 모션은 끝이나면 walk 모션으로 들어감.
-                        // walk모션이 재생되고 있지만 Follow가 아니라 attack모드이므로 제자리에서 걷는데 플레이어에게 겹칠만큼 다가가지 않기 때문에 좋다
                         currentState = enemyState.follow;
                     }
                     else
@@ -107,6 +117,8 @@ public class GoulFighter : MonoBehaviour
                 if (attackCounter > 0f)
                 {
                     attackCounter -= Time.deltaTime;
+                    anim.Play("Goul_Fighter_Idle");
+                    
                 }
                 else
                 {
@@ -309,15 +321,13 @@ public class GoulFighter : MonoBehaviour
     {
         if (!IsPlayingAnim("Goul_Fighter_Stunned"))
         {
-            anim.Play("Goul_Fighter_Attack");
+            anim.Play("Goul_Fighter_AttackAntic");
+            Debug.Log("Attack Antic");
         }
+        
     }
 
     //animation event
-    void AttackStep()
-    {
-        //theRB.AddForce(attackStepForce * GetDirection(), ForceMode2D.Impulse);
-    }
 
     void AttackBoxOn()
     {

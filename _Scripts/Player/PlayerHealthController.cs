@@ -10,6 +10,7 @@ public class PlayerHealthController : MonoBehaviour
     [SerializeField] GameObject playerDieEffect;
     [SerializeField] GameObject playerCaptured;
     bool isDead;
+    
 
     private void Awake()
     {
@@ -35,7 +36,9 @@ public class PlayerHealthController : MonoBehaviour
 
     public void KillPlayer()
     {
-        isDead = true; 
+        if (GameManager.instance.IsInvincible)
+            return;
+        isDead = true;
     }
 
     public void CapturePlayer(Transform parentPosition)
