@@ -81,7 +81,7 @@ public class PlayerCapture : MonoBehaviour
             {
                 isCapturing = true;
             }
-                        panAnim.Play("Pan_Capture");
+            panAnim.Play("Pan_Capture");
         }
     }
     void Toss()
@@ -95,6 +95,7 @@ public class PlayerCapture : MonoBehaviour
             {
                 panAnim.Play("Pan_Toss");
                 slotPhysicsSet.TossRolls();
+                StartSlowMotion();
             }
         }
     }
@@ -104,10 +105,6 @@ public class PlayerCapture : MonoBehaviour
         {
             IsSlowMotion = true;
         }
-        //if (Input.GetKey(KeyCode.Space))
-        //{
-        //    StartSlowMotion();
-        //}
         if (Input.GetKeyUp(KeyCode.Space))
         {
             IsSlowMotion = false;
