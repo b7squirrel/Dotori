@@ -321,7 +321,6 @@ public class GoulFighter : MonoBehaviour
         if (!IsPlayingAnim("Goul_Fighter_Stunned"))
         {
             anim.Play("Goul_Fighter_AttackAntic");
-            Debug.Log("Attack Antic");
         }
         
     }

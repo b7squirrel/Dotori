@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float DodgeCoolTime;
     [SerializeField] int maxNumberOfDodge;
     [SerializeField] CapsuleCollider2D playerCollisionBox;
+    PlayerCapture playercapture;
     int dodgeNumberCounter;
     float DodgeCoolTimeCounter;
     bool onDownKey;  // 아래 버튼이 눌러져 있는지 여부
@@ -95,6 +96,7 @@ public class PlayerController : MonoBehaviour
     {
         theRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        playercapture = GetComponentInChildren<PlayerCapture>();
         footEmission = dustTrailParticle.emission;
         dodgeNumberCounter = maxNumberOfDodge;
     }
@@ -220,13 +222,17 @@ public class PlayerController : MonoBehaviour
         }
 
         CoolingDodge();
-        if (slotPhysicsSet.IsRollsOnPan)
-            return;
+        
         if (dodgeNumberCounter <= 0)
             return;
         
         if (Input.GetAxisRaw("Horizontal") != 0 && onDownKey)
         {
+            if (slotPhysicsSet.IsRollsOnPan)
+            {
+                playercapture.Toss();
+            }
+
             anim.Play("Player_Dodge");
         }
     }

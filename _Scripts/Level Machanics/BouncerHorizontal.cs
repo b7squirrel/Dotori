@@ -15,7 +15,6 @@ public class BouncerHorizontal : MonoBehaviour
     {
         if (collision.CompareTag("HurtBoxPlayer"))
         {
-            Debug.Log(directionVector * force);
             collision.GetComponentInParent<Rigidbody2D>().AddForce(directionVector * force, ForceMode2D.Impulse);
         }
     }
