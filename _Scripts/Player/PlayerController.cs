@@ -56,9 +56,15 @@ public class PlayerController : MonoBehaviour
     Vector2 newParryStepTarget;
 
     [Header("Dodge")]
-    [SerializeField] Transform dodgeStepTarget;
     [SerializeField] float dodgeSpeed;
-    Vector2 newDodgeStepTarget;
+    [SerializeField] SlotPhysics slotPhysicsSet;
+    [SerializeField] float DodgeCoolTime;
+    [SerializeField] int maxNumberOfDodge;
+    [SerializeField] CapsuleCollider2D playerCollisionBox;
+    int dodgeNumberCounter;
+    float DodgeCoolTimeCounter;
+    bool onDownKey;  // 아래 버튼이 눌러져 있는지 여부
+
 
     [Header("Particle")]
     [SerializeField] ParticleSystem dustTrailParticle;
@@ -74,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsGrounded { get { return isGrounded; } }
     public bool IsAttacking { get; set; }
-    public bool IsDodging { get; set; }
+    public bool IsDodging { get { return isDodgeTurn; } }
     public bool IsOnSlope
     {
         get { return isOnSlope; }
@@ -90,6 +96,7 @@ public class PlayerController : MonoBehaviour
         theRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         footEmission = dustTrailParticle.emission;
+        dodgeNumberCounter = maxNumberOfDodge;
     }
 
     void Update()
@@ -99,7 +106,8 @@ public class PlayerController : MonoBehaviour
         Gravity();
         SurroundingCheck();
 
-        Jump();  // state
+        Dodge();
+        Jump();  
         GenerateDustTrail();
         GenerateLandEffect();
         ManageContactStates();
@@ -109,7 +117,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         SlopeCheck();
-        Move();  // state
+        Move();  
     }
 
     void SurroundingCheck()
@@ -124,10 +132,6 @@ public class PlayerController : MonoBehaviour
         SlopeCheckVertical(checkPos);
     }
 
-    void SlopeCheckHorizontal(Vector2 checkPos)
-    {
-
-    }
     void SlopeCheckVertical(Vector2 checkPos)
     {
         xInput = Input.GetAxisRaw("Horizontal");
@@ -163,7 +167,6 @@ public class PlayerController : MonoBehaviour
 
         Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
         Debug.DrawRay(hit.point, hit.normal, Color.green);
-
     }
 
     void DirectionCheck()
@@ -179,9 +182,13 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
+        if (isDodgeTurn)
+        {
+            theRB.velocity = new Vector2(staticDirection * dodgeSpeed, theRB.velocity.y);
+            return;
+        }
         if (isGrounded && isOnSlope && isJumping == false)
         {
-            //theRB.velocity = new Vector2(-currentDirection * moveSpeed * slopeNormalPerp.x, -currentDirection * moveSpeed * slopeNormalPerp.y);
             theRB.velocity = -currentDirection * moveSpeed * slopeNormalPerp;
             return;
         }
@@ -197,11 +204,60 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// 닷지할 위치 설정
+    /// 비스듬히 밑이 입력되면 dodge turn. dodge turn이 재생되고 있지 않으면 isDodgeTurn은 false
+    /// 롤이 팬 위에 있다면(Is rolls on pan) 회피는 작동하지 않음
+    /// 회피 갯수가 남아 있지 않다면 회피는 작동하지 않음 
     /// </summary>
-    public void SetDodgeStepTarget()
+    void Dodge()
     {
-        newDodgeStepTarget = dodgeStepTarget.position;
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            onDownKey = true;
+        }
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            onDownKey = false;
+        }
+
+        CoolingDodge();
+        if (slotPhysicsSet.IsRollsOnPan)
+            return;
+        if (dodgeNumberCounter <= 0)
+            return;
+        
+        if (Input.GetAxisRaw("Horizontal") != 0 && onDownKey)
+        {
+            anim.Play("Player_Dodge");
+        }
+    }
+    void CoolingDodge()
+    {
+        if (dodgeNumberCounter >= maxNumberOfDodge)
+        {
+            dodgeNumberCounter = maxNumberOfDodge;
+            return;
+        }
+            
+        if (DodgeCoolTimeCounter < DodgeCoolTime)
+        {
+            DodgeCoolTimeCounter += Time.deltaTime;
+            return;
+        }
+        dodgeNumberCounter++;
+        DodgeCoolTimeCounter = 0;
+    }
+    void OnIsDodgeTurn()
+    {
+        isDodgeTurn = true;
+        playerCollisionBox.gameObject.layer = 18;  // 18. PlayerDodging
+        dodgeNumberCounter--;
+        DodgeCoolTimeCounter = 0; // 회피를 한 번 깎아먹은 시점부터 쿨링 시작
+    }
+    void OffIsDodgeTurn()
+    {
+        isDodgeTurn = false;
+        playerCollisionBox.gameObject.layer = 3;  // 3. Player
+
     }
 
     void Flip()
@@ -356,7 +412,6 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isWalking", true);
             anim.SetBool("isGrounded", true);
         }
-
         if (Mathf.Abs(theRB.velocity.y) < 0.1f && isGrounded)  // not falling
         {
             anim.SetBool("isJumping", false);

@@ -502,7 +502,7 @@ MonoBehaviour:
   blockingEffect: {fileID: 5090427162195939564, guid: cfb19a9bda3e8bd40a92995ab5a6faac, type: 3}
   attackDistnace: 3
   attackCoolTime: 3
-  attackStepForce: 10
+  attackStepForce: 0
   attackAnticTime: 0.02
   attackBox: {fileID: 6493158246076871488}
 --- !u!1 &6493158246652257842

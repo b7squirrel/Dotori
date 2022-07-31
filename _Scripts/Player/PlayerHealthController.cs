@@ -38,6 +38,8 @@ public class PlayerHealthController : MonoBehaviour
     {
         if (GameManager.instance.IsInvincible)
             return;
+        if (PlayerController.instance.IsDodging)
+            return;
         isDead = true;
     }
 

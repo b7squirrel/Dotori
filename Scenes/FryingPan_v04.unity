@@ -667,8 +667,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -665836565
-  m_SortingLayer: 2
+  m_SortingLayerID: -995443757
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -467307283419413426, guid: d552c10bccc63a84c9a6b89cd93b4525, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2847,9 +2847,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.0018744143
+    width: 0.99947286
+    height: 0.995314
   near clip plane: 1
   far clip plane: 1000
   field of view: 60
@@ -61929,8 +61929,11 @@ MonoBehaviour:
   coyoteTIme: 0.1
   parryStepTarget: {fileID: 408946436}
   parryDashSpeed: 6
-  dodgeStepTarget: {fileID: 163341542}
-  dodgeSpeed: 5
+  dodgeSpeed: 17
+  slotPhysicsSet: {fileID: 1819328065}
+  DodgeCoolTime: 1
+  maxNumberOfDodge: 3
+  playerCollisionBox: {fileID: 2047531066}
   dustTrailParticle: {fileID: 1781768933879972222}
   dustJump: {fileID: 2577432899587804309, guid: 9b75aac703ed28b4a8e061a7461a1523, type: 3}
   dustExtraJump: {fileID: 2577432899587804309, guid: 9b75aac703ed28b4a8e061a7461a1523, type: 3}
@@ -61944,7 +61947,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2809493762570032321}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -62.77, y: 0.23, z: 0}
+  m_LocalPosition: {x: -63.38, y: -0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
