@@ -769,6 +769,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
+--- !u!1 &169961000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 169961001}
+  m_Layer: 15
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &169961001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169961000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2809493762570032325}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &176167249
 GameObject:
   m_ObjectHideFlags: 0
@@ -3518,8 +3549,6 @@ MonoBehaviour:
   captureBox: {fileID: 2029100655}
   _isTossing: 0
   _isCapturing: 0
-  IsSlowMotion: 0
-  OnSlowMotion: 0
 --- !u!114 &619753140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61322,6 +61351,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27dab4ac19885640aa354d7d25063e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsSlowMotion: 0
+  OnSlowMotion: 0
   slowMotionTimeScale: 0.2
 --- !u!1 &2025951713
 GameObject:
@@ -62082,6 +62113,7 @@ Transform:
   - {fileID: 1114143424}
   - {fileID: 1209489008}
   - {fileID: 1819328064}
+  - {fileID: 169961001}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

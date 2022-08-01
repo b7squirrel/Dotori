@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAttackBox : MonoBehaviour
 {
     [SerializeField] EnemyHealth _enemyHealth; // 자신의 EnemyHealth 끌어놓기
-    [SerializeField] float parriedBufferTime;
+    [SerializeField] float parriedBufferTime;  // player의 hurtBox에 닿은 후 일정시간 후에 플레이어의 죽음을 판단. parried를 위해
     float parriedBufferTimeCounter;
     bool isHittingPlayer;
     bool isHittingAttackBox;
