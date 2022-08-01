@@ -108,11 +108,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 10
-        width: 48
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 32
+        width: 72
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -128,12 +128,12 @@ TextureImporter:
       name: Pan_DodgeTurn_1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 10
-        width: 48
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 72
+        y: 32
+        width: 72
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -149,12 +149,12 @@ TextureImporter:
       name: Pan_DodgeTurn_2
       rect:
         serializedVersion: 2
-        x: 96
-        y: 10
-        width: 48
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 144
+        y: 32
+        width: 72
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -172,10 +172,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 72
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -191,12 +191,12 @@ TextureImporter:
       name: Pan_DodgeTurn_4
       rect:
         serializedVersion: 2
-        x: 48
+        x: 72
         y: 0
-        width: 48
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 72
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

@@ -75,6 +75,9 @@ public class SlotPhysics : MonoBehaviour
         }
         IsRollsOnPan = false;
     }
+    /// <summary>
+    /// 롤이 아랫쪽으로 떨어짐. 팬 위에 떨어지면 속도를 0으로 만듬
+    /// </summary>
     void OnTossRolls()
     {
         tossVelocity += -tossGravity * tossGravityScale * Time.deltaTime;

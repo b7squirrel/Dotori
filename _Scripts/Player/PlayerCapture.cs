@@ -56,7 +56,7 @@ public class PlayerCapture : MonoBehaviour
         }
         Capture();
         HitRolls();
-        //DodgeTurnPan();
+        DodgeTurnPan();
         SlowMotion();
         Debugging();
     }
@@ -134,29 +134,18 @@ public class PlayerCapture : MonoBehaviour
 
     void DodgeTurnPan()
     {
+        if (IsCapturing)
+            return;
+
         if (playerController.IsDodging)
         {
-            panAnim.Play("Pan_DodgeTurn");
+            if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_DodgeTurn") == false)
+            {
+                panAnim.Play("Pan_DodgeTurn");
+            }
         }
     }
 
-    void PanState()
-    {
-
-    }
-
-    // animation events
-    //void ExitDodgeTurnPan()
-    //{
-    //    if (slotPhysicsSet.IsRollsOnPan)
-    //    {
-    //        panAnim.Play("Pan_Pan");
-    //    }
-    //    else
-    //    {
-    //        panAnim.Play("Pan_Idle");
-    //    }
-    //}
     void HitRolls()
     {
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(1))
@@ -171,13 +160,32 @@ public class PlayerCapture : MonoBehaviour
         }
     }
     
-    // Capture의 마지막 프레임에서 애니메이션 이벤트로 실행
     void Panning()
     {
         if (panManager.CountRollNumber() == 0)
             return;
         if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_Pan"))
             return;
+        panAnim.Play("Pan_Pan");
+    }
+
+    /// <summary>
+    /// Capture의 마지막 프레임에서 애니메이션 이벤트로 실행
+    /// Capture해서 롤이 팬 위에 있다면 Pan_Pan으로 그렇지 않다면 Pan_idle로
+    /// Capture가 끝났는데 DodgeTurn 상태라면 Pan_DodgeTurn으로
+    /// DodgeTurn 상태일 때는 항상 Roll은 공중에 떠있으니까 다른 경우의 수는 없다
+    /// </summary>
+    void ExitCapture()
+    {
+        if (panManager.CountRollNumber() == 0)
+            panAnim.Play("Pan_Idle");
+
+        if (playerController.IsDodging)
+            panAnim.Play("Pan_DodgeTurn");
+
+        if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_Pan"))
+            return;
+
         panAnim.Play("Pan_Pan");
     }
     void CaptureBoxOn()
