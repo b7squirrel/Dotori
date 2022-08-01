@@ -60132,7 +60132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5588364126146516484, guid: 3bf78f56dcc7a5b4f8c4a82eab5d8c89, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 68
+      value: 72.19
       objectReference: {fileID: 0}
     - target: {fileID: 5588364126146516484, guid: 3bf78f56dcc7a5b4f8c4a82eab5d8c89, type: 3}
       propertyPath: m_LocalPosition.y
@@ -61367,7 +61367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsSlowMotion: 0
   OnSlowMotion: 0
-  slowMotionTimeScale: 0.2
+  slowMotionTimeScale: 0.7
 --- !u!1 &2025951713
 GameObject:
   m_ObjectHideFlags: 0

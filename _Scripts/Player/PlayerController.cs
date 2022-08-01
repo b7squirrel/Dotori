@@ -245,7 +245,7 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetAxisRaw("Horizontal") != 0 && onDownKey)
         {
-            playercapture.Toss(false); // Toss 함수 안에서 롤이 팬 위에 있는지 없는지 검사함
+            playercapture.Toss(true); // Toss 함수 안에서 롤이 팬 위에 있는지 없는지 검사함
             anim.Play("Player_Dodge");
         }
     }
