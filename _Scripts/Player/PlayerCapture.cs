@@ -9,6 +9,9 @@ public class PlayerCapture : MonoBehaviour
     [Header("Pan Inventory")]
     Animator panAnim;
     PanManager panManager;
+    PlayerTargetController playerTargetController;
+    PlayerController playerController;
+
     [SerializeField] RollSO rollso;
     [SerializeField] FlavorSo flavorSo;
 
@@ -21,6 +24,10 @@ public class PlayerCapture : MonoBehaviour
     [SerializeField] float startSlowMotionTImeOffset; // Toss anim 시작 후 얼마 후에 슬로우모션 시작할지
     bool isTossing;  // 참일 떄만 슬로우모션이 발동되도록 (capture할 때)
     public bool IsCapturing { get; private set; } // player controller에서 움직임을 제어하기 위해 public
+
+    // player target controller에서 계속 업데이트 되는 horizontal direction을 가져와서 캡쳐를 시작할 때 고정
+    public float CaptureDirection; 
+    public float CaptureDashSpeed;
 
     [Header("Effects")]
     [SerializeField] GameObject HitRollEffect;
@@ -37,6 +44,8 @@ public class PlayerCapture : MonoBehaviour
     {
         panAnim = GetComponent<Animator>();
         panManager = GetComponentInChildren<PanManager>();
+        playerTargetController = GetComponentInParent<PlayerTargetController>();
+        playerController = GetComponentInParent<PlayerController>();
         captureBox.gameObject.SetActive(false);
     }
     void Update()
@@ -47,6 +56,7 @@ public class PlayerCapture : MonoBehaviour
         }
         Capture();
         HitRolls();
+        //DodgeTurnPan();
         SlowMotion();
         Debugging();
     }
@@ -80,22 +90,26 @@ public class PlayerCapture : MonoBehaviour
             {
                 IsCapturing = true;
             }
-            Toss();
+            CaptureDirection = playerTargetController.GetMouseHorizontalDirection();
+            Toss(false);
             panAnim.Play("Pan_Capture");
         }
     }
     /// <summary>
     /// 자동으로 토스가 됨
     /// </summary>
-    public void Toss()
+    public void Toss(bool _slowMotion)
     {
-        if (slotPhysicsSet.IsRollsOnPan == false) // 슬롯위에 롤이 없으면 Toss 입력 무시
-            return;
+        //if (slotPhysicsSet.IsRollsOnPan == false) // 슬롯위에 롤이 없으면 Toss 입력 무시
+        //    return;
 
         if (slotPhysicsSet.IsAnchorGrounded)  // 슬롯이 팬에 붙어 있다면 위쪽으로 올라가는 속도 대입
         {
             
             slotPhysicsSet.TossRolls();
+        }
+        if (_slowMotion)
+        {
             StartSlowMotion();
         }
     }
@@ -117,6 +131,32 @@ public class PlayerCapture : MonoBehaviour
             OnSlowMotion = true;
         }
     }
+
+    void DodgeTurnPan()
+    {
+        if (playerController.IsDodging)
+        {
+            panAnim.Play("Pan_DodgeTurn");
+        }
+    }
+
+    void PanState()
+    {
+
+    }
+
+    // animation events
+    //void ExitDodgeTurnPan()
+    //{
+    //    if (slotPhysicsSet.IsRollsOnPan)
+    //    {
+    //        panAnim.Play("Pan_Pan");
+    //    }
+    //    else
+    //    {
+    //        panAnim.Play("Pan_Idle");
+    //    }
+    //}
     void HitRolls()
     {
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(1))

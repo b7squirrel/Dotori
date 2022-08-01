@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
+
+    PlayerCapture playercapture;
+    PlayerTargetController playerTargetController;
+
     [SerializeField] float moveSpeed;
     Rigidbody2D theRB;
     Animator anim;
@@ -34,20 +38,19 @@ public class PlayerController : MonoBehaviour
     [Header("Slope")]
     [SerializeField] float slopeCheckDistance;
     [SerializeField] PhysicsMaterial2D playerFriction;
+    Vector2 slopeNormalPerp;
+    float slopeDownAngle;
+    float slopeDownAngleOld;
 
     [Header("Debug")]
     [SerializeField] float xInput; // 디버깅용
     [SerializeField] float friction;
 
-    Vector2 slopeNormalPerp;
-    float slopeDownAngle;
-    float slopeDownAngleOld;
-
     [Header("Jump")]
     [SerializeField] float jumpForce;
     [SerializeField] float jumpRememberTime;
-    float jumpRemember;
     [SerializeField] float coyoteTIme;
+    float jumpRemember;
     float coyoteTimeCounter;
 
     [Header("Parry")]
@@ -58,14 +61,17 @@ public class PlayerController : MonoBehaviour
     [Header("Dodge")]
     [SerializeField] float dodgeSpeed;
     [SerializeField] SlotPhysics slotPhysicsSet;
-    [SerializeField] float DodgeCoolTime;
+    [SerializeField] float DodgeNumberCoolTime;
     [SerializeField] int maxNumberOfDodge;
     [SerializeField] CapsuleCollider2D playerCollisionBox;
-    PlayerCapture playercapture;
+    [SerializeField] float dodgeCoolTime;
+    float dodgeCoolTimeCounter;
     int dodgeNumberCounter;
-    float DodgeCoolTimeCounter;
+    float dodgeNumberCoolTimeCounter;
     bool onDownKey;  // 아래 버튼이 눌러져 있는지 여부
 
+    [Header("Capture")]
+    bool isCapturing;
 
     [Header("Particle")]
     [SerializeField] ParticleSystem dustTrailParticle;
@@ -97,6 +103,7 @@ public class PlayerController : MonoBehaviour
         theRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         playercapture = GetComponentInChildren<PlayerCapture>();
+        playerTargetController = GetComponent<PlayerTargetController>();
         footEmission = dustTrailParticle.emission;
         dodgeNumberCounter = maxNumberOfDodge;
     }
@@ -180,20 +187,25 @@ public class PlayerController : MonoBehaviour
         {
             staticDirection = Input.GetAxisRaw("Horizontal");
         }
+        
     }
 
     void Move()
     {
+        // 회피
         if (isDodgeTurn)
         {
             theRB.velocity = new Vector2(staticDirection * dodgeSpeed, theRB.velocity.y);
             return;
         }
+        
+        // 경사면
         if (isGrounded && isOnSlope && isJumping == false)
         {
             theRB.velocity = -currentDirection * moveSpeed * slopeNormalPerp;
             return;
         }
+        // 일반
         theRB.velocity = new Vector2(currentDirection * moveSpeed, theRB.velocity.y);
     }
 
@@ -212,6 +224,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Dodge()
     {
+        
         if (Input.GetKeyDown(KeyCode.S))
         {
             onDownKey = true;
@@ -221,22 +234,22 @@ public class PlayerController : MonoBehaviour
             onDownKey = false;
         }
 
+        CoolingDodgeNumber();
         CoolingDodge();
-        
+
+        // 회피 갯수가 없거나 회피한지 얼마되지 않았으면 회피가 되지않음
         if (dodgeNumberCounter <= 0)
+            return;
+        if (dodgeCoolTimeCounter > 0)
             return;
         
         if (Input.GetAxisRaw("Horizontal") != 0 && onDownKey)
         {
-            if (slotPhysicsSet.IsRollsOnPan)
-            {
-                playercapture.Toss();
-            }
-
+            playercapture.Toss(true); // Toss 함수 안에서 롤이 팬 위에 있는지 없는지 검사함
             anim.Play("Player_Dodge");
         }
     }
-    void CoolingDodge()
+    void CoolingDodgeNumber()
     {
         if (dodgeNumberCounter >= maxNumberOfDodge)
         {
@@ -244,37 +257,63 @@ public class PlayerController : MonoBehaviour
             return;
         }
             
-        if (DodgeCoolTimeCounter < DodgeCoolTime)
+        if (dodgeNumberCoolTimeCounter < DodgeNumberCoolTime)
         {
-            DodgeCoolTimeCounter += Time.deltaTime;
+            dodgeNumberCoolTimeCounter += Time.deltaTime;
             return;
         }
         dodgeNumberCounter++;
-        DodgeCoolTimeCounter = 0;
+        dodgeNumberCoolTimeCounter = 0;
+    }
+    void CoolingDodge()
+    {
+        if (dodgeCoolTimeCounter > 0)
+        {
+            dodgeCoolTimeCounter -= Time.deltaTime;
+            return;
+        }
+        
     }
     void OnIsDodgeTurn()
     {
         isDodgeTurn = true;
         playerCollisionBox.gameObject.layer = 18;  // 18. PlayerDodging
         dodgeNumberCounter--;
-        DodgeCoolTimeCounter = 0; // 회피를 한 번 깎아먹은 시점부터 쿨링 시작
+        dodgeNumberCoolTimeCounter = 0; // 회피를 한 번 깎아먹은 시점부터 쿨링 시작
+        dodgeCoolTimeCounter = dodgeCoolTime; // 회피 쿨타임 초기화
+
     }
     void OffIsDodgeTurn()
     {
         isDodgeTurn = false;
         playerCollisionBox.gameObject.layer = 3;  // 3. Player
+        onDownKey = false; // 계속 누르고 있으면 회피가 되는 것을 방지
 
     }
 
     void Flip()
     {
-        if (currentDirection > 0f)
+        if (playercapture.IsCapturing == false)
         {
-            transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            if (currentDirection > 0f)
+            {
+                transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            }
+            else if (currentDirection < 0f)
+            {
+                transform.eulerAngles = new Vector3(0f, 180f, 0f);
+            }
         }
-        else if (currentDirection < 0f)
+        else
         {
-            transform.eulerAngles = new Vector3(0f, 180f, 0f);
+            if (playercapture.CaptureDirection > 0)
+            {
+                transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            }
+            else if (playercapture.CaptureDirection < 0)
+            {
+                transform.eulerAngles = new Vector3(0f, 180f, 0f);
+            }
         }
     }
 

@@ -23,4 +23,10 @@ public class PlayerTargetController : MonoBehaviour
         return offset.normalized;
     }
 
+    public float GetMouseHorizontalDirection()
+    {
+        float _horizontalDirection = GetMouseDirection().x > 0f ? 1f : -1f;
+        return _horizontalDirection;
+    }
+
 }
