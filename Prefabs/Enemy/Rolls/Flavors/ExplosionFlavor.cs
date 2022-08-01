@@ -93,11 +93,12 @@ public class ExplosionFlavor : MonoBehaviour
                 Vector3 _cellPosition =
                     new Vector3(_center.x + i, _center.y + j);
 
-                //Instantiate(debugDot, _cellPosition, Quaternion.identity);
+                ExplosionRangeDebugging(_cellPosition);
 
-                Collider2D _hitground = Physics2D.OverlapCircle(_cellPosition, .02f, groundLayer);
+                Collider2D _hitground = Physics2D.OverlapCircle(_cellPosition, .1f, groundLayer);
                 if (_hitground != null)
                 {
+                    Debug.Log("Here!");
                     _hitground.GetComponent<Tiles>().RemoveTile(_cellPosition);
                 }
             }
@@ -121,6 +122,10 @@ public class ExplosionFlavor : MonoBehaviour
                 boxCol[j].size = boxSize[i];
             }
         }
+    }
+    void ExplosionRangeDebugging(Vector3 _dotPosition)
+    {
+        Instantiate(debugDot, _dotPosition, Quaternion.identity);
     }
 
     private void OnDrawGizmos()

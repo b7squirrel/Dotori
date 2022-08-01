@@ -18,6 +18,7 @@ public class Tiles : MonoBehaviour
         Vector3Int _cellPosition = tileMap.WorldToCell(_point);
         if (tileMap.GetTile(_cellPosition) != null)
         {
+            Debug.Log("Removed Tile");
             tileMap.SetTile(_cellPosition, null);
             GenerateDebris(_cellPosition);
         }
