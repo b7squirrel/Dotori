@@ -212,11 +212,13 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        // 바운서
         if (isOnBouncer)
         {
             if (bouncerTimeCounter == bouncerTIme)  // 최초에만 실행하도록
             {
-                theRB.AddForce(bouncerForce, ForceMode2D.Impulse);
+                //theRB.AddForce(bouncerForce, ForceMode2D.Impulse);
+                theRB.velocity = bouncerForce;
             }
             if (bouncerTimeCounter > 0)
             {

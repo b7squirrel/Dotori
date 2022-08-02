@@ -12,7 +12,7 @@ public class BouncerHorizontal : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         bouncerForceVector = (detectionBox.position - transform.position).normalized;
-        bouncerForceVector = new Vector2(bouncerForceVector.x * horizontalSpeed, bouncerForceVector.y * verticalSpeed);
+        bouncerForceVector = new Vector2(bouncerForceVector.x * horizontalSpeed, verticalSpeed);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
