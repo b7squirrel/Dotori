@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class BouncerHorizontal : MonoBehaviour
 {
-    [SerializeField] float force;
+    [SerializeField] float horizontalSpeed, verticalSpeed;
     [SerializeField] Transform detectionBox;
-    Vector2 directionVector;
+    Animator anim;
+    Vector2 bouncerForceVector;
     private void Start()
     {
-        directionVector = (detectionBox.position - transform.position).normalized;
+        anim = GetComponent<Animator>();
+        bouncerForceVector = (detectionBox.position - transform.position).normalized;
+        bouncerForceVector = new Vector2(bouncerForceVector.x * horizontalSpeed, bouncerForceVector.y * verticalSpeed);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("HurtBoxPlayer"))
         {
-            collision.GetComponentInParent<Rigidbody2D>().AddForce(directionVector * force, ForceMode2D.Impulse);
+            anim.Play("Bouncer_On");
+            collision.gameObject.GetComponentInParent<PlayerController>().OnBouncer(bouncerForceVector);
         }
     }
 }

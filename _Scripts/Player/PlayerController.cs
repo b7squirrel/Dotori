@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool isOnSlope;
     [SerializeField] bool isJumping;
     [SerializeField] bool isDodgeTurn;
+    [SerializeField] bool isOnBouncer;
 
     [Header("Ground Check")]
     [SerializeField] LayerMask whatIsGround;
@@ -72,6 +73,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("Capture")]
     bool isCapturing;
+
+    [Header("Bouncer")]
+    [SerializeField] float bouncerTIme;
+    float bouncerTimeCounter;
+    Vector2 bouncerForce;
 
     [Header("Particle")]
     [SerializeField] ParticleSystem dustTrailParticle;
@@ -203,6 +209,23 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && isOnSlope && isJumping == false)
         {
             theRB.velocity = -currentDirection * moveSpeed * slopeNormalPerp;
+            return;
+        }
+
+        if (isOnBouncer)
+        {
+            if (bouncerTimeCounter == bouncerTIme)  // 최초에만 실행하도록
+            {
+                theRB.AddForce(bouncerForce, ForceMode2D.Impulse);
+            }
+            if (bouncerTimeCounter > 0)
+            {
+                bouncerTimeCounter -= Time.deltaTime;
+            }
+            else
+            {
+                isOnBouncer = false;
+            }
             return;
         }
         // 일반
@@ -390,6 +413,13 @@ public class PlayerController : MonoBehaviour
         {
             theRB.gravityScale = 6f;
         }
+    }
+
+    public void OnBouncer(Vector2 _bouncerForceVector)
+    {
+        bouncerForce = _bouncerForceVector;
+        isOnBouncer = true;
+        bouncerTimeCounter = bouncerTIme;
     }
 
     void GenerateDustTrail()
