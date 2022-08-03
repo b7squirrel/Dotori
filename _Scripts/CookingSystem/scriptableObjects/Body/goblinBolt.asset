@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: goblinBolt
   m_EditorClassIdentifier: 
   rollType: 3
+  enemyPrefab: {fileID: 8192047951693413151, guid: 5cdff8ef83c803b48af0bf6900501b0c, type: 3}
   rollSprite_UI: {fileID: 21300000, guid: 9e49a044e35d2184ba274e9773b56e36, type: 3}
   rollPrefab:
   - {fileID: 6140534103621643792, guid: 8beaa5af85ca03742acfa3fa19e9a99b, type: 3}
@@ -22,3 +23,4 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 08be648ef0900ac41a5dd6cb6e0e3d64, type: 2}
   - {fileID: 22100000, guid: 125c0fc945e29a14d899986d82ca8e66, type: 2}
   - {fileID: 22100000, guid: 9647d1323bd90e64db2392e0a2ceb7da, type: 2}
+  height: 0

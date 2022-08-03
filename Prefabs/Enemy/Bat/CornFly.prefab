@@ -320,7 +320,7 @@ GameObject:
   - component: {fileID: 5517110919780894030}
   - component: {fileID: 4992273215540110531}
   m_Layer: 0
-  m_Name: Bat
+  m_Name: CornFly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -540,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa511d730db8884e868288402949d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRollType: 1
+  myRollType: 4
   isStunned: 0
   isParried: 0
   isBlocking: 0

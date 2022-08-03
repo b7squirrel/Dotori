@@ -141,7 +141,8 @@ public class EnemyHealth : MonoBehaviour
         isStunned = false;
 
         RollSO _rollSo = RecipeRoll.instance.GetRollSo(myRollType);
-        Instantiate(_rollSo.rollPrefab[0], dieEffectPoint.position, transform.rotation);
+        GameObject _roll = Instantiate(_rollSo.rollPrefab[0], dieEffectPoint.position, transform.rotation);
+        _roll.GetComponent<EnemyRolling>().m_RollSo = _rollSo;  // 부활할 때 참조할 rollSo
         Die();
     }
 

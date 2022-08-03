@@ -70,8 +70,7 @@ public class PanManager : MonoBehaviour
                 flavourParticle[i] = Instantiate(_flavorSo.flavorParticle, _panSlots[i].transform.position, _flavorEffectRot.rotation);
                 flavourParticle[i].GetComponent<ParticleController>().SetSlotToFollow(_panSlots[i]);
 
-                _panSlots[i].GetRoll().GetComponent<EnemyRolling>().isFlavored = true;
-                _panSlots[i].GetRoll().GetComponent<EnemyRolling>().m_flavorSO = _flavorSo;
+                _panSlots[i].GetRoll().GetComponent<EnemyRolling>().SetFlavor(true, _flavorSo);
 ;            }
         }
         currentFlavourSo = _flavorSo;
@@ -87,8 +86,7 @@ public class PanManager : MonoBehaviour
                 {
                     // 파티클 없애고, Flavour 상태 초기화, FlavourSo 초기화
                     flavourParticle[i].GetComponent<ParticleController>().DestroyParticle();
-                    _panSlots[i].GetRoll().GetComponent<EnemyRolling>().isFlavored = false;
-                    _panSlots[i].GetRoll().GetComponent<EnemyRolling>().m_flavorSO = defaultFlavorSo;
+                    _panSlots[i].GetRoll().GetComponent<EnemyRolling>().SetFlavor(false, defaultFlavorSo);
                 }
             }
         }
@@ -129,13 +127,17 @@ public class PanManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// enemy를 roll로 만들어 슬롯에 넣으면 rigidBody나 collider가 없는 상태이다.
+    /// Hit Roll을 할 때 rigidBody와 collider를 붙여서 내보낸다
+    /// </summary>
     public void ClearRoll()
     {
         int _numberOfRolls = CountRollNumber();
         GameObject _roll = _panSlots[0].GetRoll().gameObject;
         _roll.transform.position = hitRollPoint.position;
 
-        if (_roll.GetComponent<EnemyRolling>().isFlavored)
+        if (_roll.GetComponent<EnemyRolling>().IsFlavored)
         {
             _roll.tag = "RollFlavored";
         }
@@ -164,9 +166,22 @@ public class PanManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// enemy를 roll로 만들어 슬롯에 넣으면 rigidBody나 collider가 없는 상태이다.
+    /// Hit Roll을 할 때 rigidBody와 collider를 붙여서 내보낸다
+    /// </summary>
     void DropRoll()
     {
         GameObject _roll = _panSlots[_panSlots.Length - 1].GetRoll().gameObject;
+
+        if (_roll.GetComponent<EnemyRolling>().IsFlavored)
+        {
+            _roll.tag = "RollFlavored";
+        }
+        else
+        {
+            _roll.tag = "Rolling";
+        }
 
         float _direction = PlayerController.instance.GetPlayerDirection();
         float _vSpeed = _roll.GetComponent<EnemyRolling>().verticalDropSpeed;
@@ -182,7 +197,9 @@ public class PanManager : MonoBehaviour
         _panSlots[_panSlots.Length - 1].RemoveRoll();
     }
 
-    //플레이어가 죽으면 Roll을 모두 떨어트림
+    /// <summary>
+    /// 플레이어가 죽으면 Roll을 모두 떨어트림
+    /// </summary>
     public void DropAllRolls()
     {
         int _numberOfRolls = CountRollNumber();  // CountRollNumber는 0, 1, 2 슬롯번호를 가리킨다
@@ -194,7 +211,7 @@ public class PanManager : MonoBehaviour
         for (int i = 0; i < _rolls.Length; i++)
         {
             _rolls[i] = _panSlots[i].GetRoll().gameObject;
-            if (_rolls[i].GetComponent<EnemyRolling>().isFlavored)
+            if (_rolls[i].GetComponent<EnemyRolling>().IsFlavored)
             {
                 _rolls[i].tag = "RollFlavored";
             }

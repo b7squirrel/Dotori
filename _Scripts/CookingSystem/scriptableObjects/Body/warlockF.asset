@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: warlockF
   m_EditorClassIdentifier: 
   rollType: 2
+  enemyPrefab: {fileID: 5588364126146516482, guid: 3bf78f56dcc7a5b4f8c4a82eab5d8c89, type: 3}
   rollSprite_UI: {fileID: 21300000, guid: 38e3af302ea9547409422af19b43d404, type: 3}
   rollPrefab:
   - {fileID: 1289749946308134405, guid: 666728c79bed8884499e320ca636aa5e, type: 3}
@@ -22,3 +23,4 @@ MonoBehaviour:
   - {fileID: 22100000, guid: c5e9f8f3dc35f9d4f9d231af7c9e5441, type: 2}
   - {fileID: 22100000, guid: d0efd44372997124faa8a6c4360fb109, type: 2}
   - {fileID: 22100000, guid: 2cfec63d5167f794daecd80cf33d0322, type: 2}
+  height: 0

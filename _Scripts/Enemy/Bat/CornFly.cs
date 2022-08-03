@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bat : MonoBehaviour
+public class CornFly : MonoBehaviour
 {
     [SerializeField] Transform[] patrolPoints;
     [SerializeField] float moveSpeed;

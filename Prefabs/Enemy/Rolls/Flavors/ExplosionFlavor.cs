@@ -98,7 +98,6 @@ public class ExplosionFlavor : MonoBehaviour
                 Collider2D _hitground = Physics2D.OverlapCircle(_cellPosition, .1f, groundLayer);
                 if (_hitground != null)
                 {
-                    Debug.Log("Here!");
                     _hitground.GetComponent<Tiles>().RemoveTile(_cellPosition);
                 }
             }

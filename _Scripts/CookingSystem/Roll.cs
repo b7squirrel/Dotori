@@ -10,6 +10,7 @@ public class Roll
         goulF,
         warlockF,
         goblinBolt,
+        cornFly,
         projectileF
     }
     public RollSO rollSo;

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7a0fbd48b7a495469c9caec40c4cca9, type: 3}
-  m_Name: goulF
+  m_Name: conrFly
   m_EditorClassIdentifier: 
-  rollType: 1
-  enemyPrefab: {fileID: 6493158246380748803, guid: 3f9f37ebfa06c17438af2239b2d80890, type: 3}
+  rollType: 4
+  enemyPrefab: {fileID: 219603772285806620, guid: 22d920c4c9fb3b54d99ca71cec805460, type: 3}
   rollSprite_UI: {fileID: 21300000, guid: 80f8352f1ca6abb48bea64e603dc9ade, type: 3}
   rollPrefab:
-  - {fileID: 7610329646806732424, guid: 5fc775bc90cb27e4fa0b6b623ce36899, type: 3}
-  - {fileID: 8222311326959845307, guid: e24f4cd114cf8704ebc2da22dba429ea, type: 3}
-  - {fileID: 2096227515432031546, guid: 794de3ab1af6ff84aac94828139dd5a2, type: 3}
+  - {fileID: 7457894187198739750, guid: be6a121c86447ff49a3bc5d60fa07bfb, type: 3}
+  - {fileID: 7457894187198739750, guid: be6a121c86447ff49a3bc5d60fa07bfb, type: 3}
+  - {fileID: 7457894187198739750, guid: be6a121c86447ff49a3bc5d60fa07bfb, type: 3}
   roll_OverrideController:
   - {fileID: 22100000, guid: ed6fb2243f45c8f46878aee6a9b637c3, type: 2}
   - {fileID: 22100000, guid: 3775b96df3ac12446bdc1fa5ddba5446, type: 2}

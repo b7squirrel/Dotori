@@ -119,14 +119,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59cf8164bc1e5ce41bfa36b5276c9f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFlavored: 0
-  m_flavorSO: {fileID: 0}
   horizontalSpeed: 18
   verticalSpeed: 5
   gravity: 1
   physicsMat: {fileID: 6200000, guid: 69162b284af75af4f8bfa17706f2d1d4, type: 2}
   verticalDropSpeed: 8
   dropGravity: 2
+  resurrectionTime: 4
   hitEffect: {fileID: 2720419082649462560, guid: e6a0bf88b6867174bb7e0843401eeb70, type: 3}
   hitEffectPoint: {fileID: 3410760840224446877}
   timeToExplode: 1

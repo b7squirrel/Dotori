@@ -69,6 +69,9 @@ public class PanSlot : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 롤의 페어런트를 끊고 슬롯은 isEmpty상태로 설정한다
+    /// </summary>
     public void RemoveRoll()
     {
         GetRoll().parent = null;
