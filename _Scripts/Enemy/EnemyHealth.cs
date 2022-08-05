@@ -6,6 +6,7 @@ public class EnemyHealth : MonoBehaviour
 {
     [Header("RollType")]
     [SerializeField] Roll.rollType myRollType;
+    [SerializeField] Flavor.flavorType myFlavorType;
 
     // 디버깅을 위해 serialized
     [SerializeField] bool isStunned;
@@ -140,9 +141,19 @@ public class EnemyHealth : MonoBehaviour
 
         isStunned = false;
 
-        RollSO _rollSo = RecipeRoll.instance.GetRollSo(myRollType);
-        GameObject _roll = Instantiate(_rollSo.rollPrefab[0], dieEffectPoint.position, transform.rotation);
-        _roll.GetComponent<EnemyRolling>().m_RollSo = _rollSo;  // 부활할 때 참조할 rollSo
+        // 마법사 등 flavor를 가지고 있는 적이라면 flavor를 넘기고 죽음, 그렇지 않으면 roll이 됨
+        if (myFlavorType != Flavor.flavorType.none)
+        {
+            FlavorSo _flavorSo = RecipeFlavor.instance.GetFlavourSo(myFlavorType);
+            PanManager.instance.AcquireFlavor(_flavorSo);
+        }
+        else
+        {
+            RollSO _rollSo = RecipeRoll.instance.GetRollSo(myRollType);
+            GameObject _roll = Instantiate(_rollSo.rollPrefab[0], dieEffectPoint.position, transform.rotation);
+            _roll.GetComponent<EnemyRolling>().m_RollSo = _rollSo;  // 부활할 때 참조할 rollSo
+        }
+        
         Die();
     }
 

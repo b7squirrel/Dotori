@@ -113,7 +113,7 @@ public class EnemyRolling : MonoBehaviour
         if (m_FlavorSO.flavorType == Flavor.flavorType.none)
             return;
 
-        FlavorSo _flavorSo = RecipeFlavor.instance.GetFlavourSo(m_FlavorSO);
+        FlavorSo _flavorSo = RecipeFlavor.instance.GetFlavourSo(m_FlavorSO.flavorType);
         Instantiate(_flavorSo.actionPrefab, transform.position, transform.rotation);
         DestroyPrefab();
     }

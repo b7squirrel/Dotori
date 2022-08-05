@@ -13,16 +13,18 @@ public class RecipeFlavor : MonoBehaviour
         instance = this;
     }
 
-    public FlavorSo GetFlavourSo(FlavorSo _flavorSo)
+    /// <summary>
+    /// 프로젝타일 혹은 마법사들이 죽기 전에 호출
+    /// </summary>
+    public FlavorSo GetFlavourSo(Flavor.flavorType _flavorType)
     {
-        FlavorSo _temp = _flavorSo; // 값을 할당해야 하므로 아무 값이나 할당했음.
         foreach (var _recipe in recipeFlavor)
         {
-            if (_flavorSo == _recipe)
+            if (_flavorType == _recipe.flavorType)
             {
-                _temp = _recipe;
+                return _recipe;
             }
         }
-        return _temp;
+        return null;
     }
 }
