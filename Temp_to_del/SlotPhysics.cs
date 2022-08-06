@@ -32,8 +32,8 @@ public class SlotPhysics : MonoBehaviour
         InitSlotPosition();
         anchor.position = anchorInitialPoint.position;
         transform.parent = null;
-        dotOnAnchor = Instantiate(dotDebugging, targetDebugging.position, Quaternion.identity);
-        dotOnAnchor.transform.parent = anchorInitialPoint;
+        //dotOnAnchor = Instantiate(dotDebugging, targetDebugging.position, Quaternion.identity);
+        //dotOnAnchor.transform.parent = anchorInitialPoint;
     }
 
     private void Update()

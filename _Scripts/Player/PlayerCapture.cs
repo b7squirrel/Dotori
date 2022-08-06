@@ -26,8 +26,8 @@ public class PlayerCapture : MonoBehaviour
     public bool IsCapturing { get; private set; } // player controller에서 움직임을 제어하기 위해 public
 
     // player target controller에서 계속 업데이트 되는 horizontal direction을 가져와서 캡쳐를 시작할 때 고정
-    public float CaptureDirection; 
-    public float CaptureDashSpeed;
+    public float CaptureDirection { get; private set; } 
+    public float CaptureDashSpeed { get; private set; }
 
     [Header("Effects")]
     [SerializeField] GameObject HitRollEffect;
@@ -72,11 +72,8 @@ public class PlayerCapture : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            //if (Input.GetKey(KeyCode.Z) || Input.GetMouseButtonDown(0))  // 캡쳐 캔슬
-            //    return;
             if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_Capture"))
                 return;
-            
             
             if (slotPhysicsSet.IsAnchorGrounded)  // 슬롯이 팬에 붙어 있다면 롤이 아래로 떨어지도록 속도 대입
             {

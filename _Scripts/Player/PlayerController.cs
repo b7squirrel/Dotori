@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     Animator anim;
     float currentDirection;
     float staticDirection;
+    float directionOnDOdgeTurn;
+    float direcitonOnCapture;
 
     [SerializeField] bool isGrounded;
     [SerializeField] bool canDoubleJump;
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool isJumping;
     [SerializeField] bool isDodgeTurn;
     [SerializeField] bool isOnBouncer;
+    [SerializeField] bool isCapturing;
 
     [Header("Ground Check")]
     [SerializeField] LayerMask whatIsGround;
@@ -72,7 +75,7 @@ public class PlayerController : MonoBehaviour
     bool onDownKey;  // 아래 버튼이 눌러져 있는지 여부
 
     [Header("Capture")]
-    bool isCapturing;
+    [SerializeField] float captureMoveSpeed;
 
     [Header("Bouncer")]
     [SerializeField] float bouncerTIme;
@@ -199,12 +202,27 @@ public class PlayerController : MonoBehaviour
     void Move()
     {
         // 회피
+        if (isDodgeTurn == false)
+        {
+            directionOnDOdgeTurn = staticDirection;
+        }
         if (isDodgeTurn)
         {
-            theRB.velocity = new Vector2(staticDirection * dodgeSpeed, theRB.velocity.y);
+            theRB.velocity = new Vector2(directionOnDOdgeTurn * dodgeSpeed, theRB.velocity.y);
             return;
         }
-        
+
+        // 캡쳐
+        if (isCapturing == false)
+        {
+            direcitonOnCapture = staticDirection;
+        }
+        if (isCapturing)
+        {
+            theRB.velocity = new Vector2(direcitonOnCapture * captureMoveSpeed, theRB.velocity.y);
+            return;
+        }
+
         // 경사면
         if (isGrounded && isOnSlope && isJumping == false)
         {
