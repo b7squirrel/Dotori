@@ -1,0 +1,173 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2946378719093230932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2946378719093230922}
+  - component: {fileID: 2946378719093230923}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2946378719093230922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2946378719093230932}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -16.720396, y: -0.9986891, z: -3.783838}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2946378719093230923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2946378719093230932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d67dc73072da9842a47172fad1d6370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: ambient_01
+    clip: {fileID: 8300000, guid: d456bfa16889fa745af3ea7885fe2961, type: 3}
+    volume: 0.782
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: pan_hit_01
+    clip: {fileID: 8300000, guid: 342f3829121ba214cb89d2c657f6e859, type: 3}
+    volume: 0.58
+    pitch: 1.96
+    loop: 0
+    source: {fileID: 0}
+  - name: pan_hit_02
+    clip: {fileID: 8300000, guid: a69c22798e82c7b49b90dae52c94799b, type: 3}
+    volume: 0.58
+    pitch: 2
+    loop: 0
+    source: {fileID: 0}
+  - name: pan_hit_03
+    clip: {fileID: 8300000, guid: 12704a847f6a4d44cb960325473aaa08, type: 3}
+    volume: 0.133
+    pitch: 1.94
+    loop: 0
+    source: {fileID: 0}
+  - name: pan_hit_04
+    clip: {fileID: 8300000, guid: a726e50fd1b8e5d4d9224d6415722fe9, type: 3}
+    volume: 0.246
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: pan_hit_05
+    clip: {fileID: 8300000, guid: de7334b2addd37a4a84c317b1b09331b, type: 3}
+    volume: 0.41
+    pitch: 0.66
+    loop: 0
+    source: {fileID: 0}
+  - name: whoosh_01
+    clip: {fileID: 8300000, guid: 0faf433b5d019a449b29f36e7dd144e3, type: 3}
+    volume: 0.58
+    pitch: 2
+    loop: 0
+    source: {fileID: 0}
+  - name: whoosh_02
+    clip: {fileID: 8300000, guid: 11cfc52c1a75db144aa989a2c9d64c88, type: 3}
+    volume: 0.58
+    pitch: 1.97
+    loop: 0
+    source: {fileID: 0}
+  - name: PanCapture
+    clip: {fileID: 8300000, guid: c54e38ede8cdcf647a3d0c905293ae4b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: fire_explosion_01
+    clip: {fileID: 8300000, guid: e0a14a912a0d0e040b4c5cb7a747de87, type: 3}
+    volume: 0.365
+    pitch: 2.39
+    loop: 0
+    source: {fileID: 0}
+  - name: Goul_Die_01
+    clip: {fileID: 8300000, guid: 78c5fec443da9254e9e257cdbb784754, type: 3}
+    volume: 0.319
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: GetRolled_01
+    clip: {fileID: 8300000, guid: 9dd304ff7b35d1c499307b70a039181b, type: 3}
+    volume: 0.58
+    pitch: 1.99
+    loop: 0
+    source: {fileID: 0}
+  - name: GetStunned_01
+    clip: {fileID: 8300000, guid: d15123f7f729f7a4b8296545855a2c0b, type: 3}
+    volume: 0.58
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Energy_01
+    clip: {fileID: 8300000, guid: 8c9e39e552ce20644a17ee0395b4df41, type: 3}
+    volume: 0.272
+    pitch: 1.82
+    loop: 0
+    source: {fileID: 0}
+  - name: FireSpell_01
+    clip: {fileID: 8300000, guid: 4c6f23544f900dc4f82115b3c0daac19, type: 3}
+    volume: 0.58
+    pitch: 1.82
+    loop: 0
+    source: {fileID: 0}
+  - name: FIre_Parried
+    clip: {fileID: 8300000, guid: 0960fe3c220c5ae40994686262074d98, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Explosion_Debris_01
+    clip: {fileID: 8300000, guid: 93d62bf3a4a61e74099dc2703eb78bf0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: GoulBlock
+    clip: {fileID: 8300000, guid: 8be0690036fa97d448d8f5d96c9a3f5b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: GoulBreak01
+    clip: {fileID: 8300000, guid: 6289b5d42541a8548ac86e042d77d185, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: InsectCrush_01
+    clip: {fileID: 8300000, guid: 331af7b054bf14947b4d446086ab62ec, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: InsectCrush_02
+    clip: {fileID: 8300000, guid: ee5b726aad4820541a2503cd737c6c2b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
