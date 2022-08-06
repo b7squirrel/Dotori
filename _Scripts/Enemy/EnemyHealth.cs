@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] Roll.rollType myRollType;
     [SerializeField] Flavor.flavorType myFlavorType;
 
+    EnemyData enemyData;
     // 디버깅을 위해 serialized
     [SerializeField] bool isStunned;
     [SerializeField] bool isParried;
@@ -51,6 +52,7 @@ public class EnemyHealth : MonoBehaviour
         currentHP = maxHP;
         theSR = mSprite.GetComponent<SpriteRenderer>();
         theRB = GetComponentInParent<Rigidbody2D>();
+        enemyData = GetComponentInParent<EnemyData>();
         initialMat = theSR.material;
         parriedTimeCounter = parriedTime;
         stunnedTImeCounter = stunnedTime;
@@ -103,14 +105,12 @@ public class EnemyHealth : MonoBehaviour
         }
         if (collision.CompareTag("ProjectileDeflected"))
         {
-            AudioManager.instance.Play("Goul_Die_01");
             GameManager.instance.StartCameraShake(4, .5f);
             Die();
         }
 
         if (collision.CompareTag("Explosion"))
         {
-            AudioManager.instance.Play("Goul_Die_01");
             Die();
         }
 
@@ -188,7 +188,7 @@ public class EnemyHealth : MonoBehaviour
     {
         Instantiate(dieBones, dieEffectPoint.position, transform.rotation);
         Instantiate(dieEffect, transform.position, transform.rotation);
-        AudioManager.instance.Play("Goul_Die_01");
+        enemyData.PlayDieSound();
         AudioManager.instance.Stop("Energy_01");
         currentHP = maxHP;
         isStunned = false;

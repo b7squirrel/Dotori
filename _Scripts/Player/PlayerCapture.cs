@@ -74,17 +74,11 @@ public class PlayerCapture : MonoBehaviour
         {
             if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_Capture"))
                 return;
-            
-            if (slotPhysicsSet.IsAnchorGrounded)  // 슬롯이 팬에 붙어 있다면 롤이 아래로 떨어지도록 속도 대입
-            {
-                slotPhysicsSet.TossRolls();
-            }
-            if (slotPhysicsSet.IsRollsOnPan == false) // 롤이 없다면 바로 캡쳐를 하도록
-            {
-                IsCapturing = true;
-            }
+
+            IsCapturing = true;
+            AudioManager.instance.Play("PanCapture");
             CaptureDirection = playerTargetController.GetMouseHorizontalDirection();
-            Toss(false);
+            Toss(true);
             panAnim.Play("Pan_Capture");
         }
     }
@@ -98,7 +92,6 @@ public class PlayerCapture : MonoBehaviour
 
         if (slotPhysicsSet.IsAnchorGrounded)  // 슬롯이 팬에 붙어 있다면 위쪽으로 올라가는 속도 대입
         {
-            
             slotPhysicsSet.TossRolls();
         }
         if (_slowMotion)

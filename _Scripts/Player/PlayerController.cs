@@ -219,7 +219,8 @@ public class PlayerController : MonoBehaviour
         }
         if (isCapturing)
         {
-            theRB.velocity = new Vector2(direcitonOnCapture * captureMoveSpeed, theRB.velocity.y);
+            theRB.velocity = 
+                new Vector2(playercapture.CaptureDirection * captureMoveSpeed, theRB.velocity.y);
             return;
         }
 

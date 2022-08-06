@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: 219603772285806622}
   - component: {fileID: 5517110919780894030}
   - component: {fileID: 4992273215540110531}
+  - component: {fileID: -1460402625775305002}
   m_Layer: 0
   m_Name: CornFly
   m_TagString: Untagged
@@ -468,6 +469,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-1460402625775305002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219603772285806620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 331b20598c5b6b44dbf933fc61aee394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentEnemyType: 3
 --- !u!1 &219603772367473386
 GameObject:
   m_ObjectHideFlags: 0
@@ -541,6 +555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRollType: 4
+  myFlavorType: 0
   isStunned: 0
   isParried: 0
   isBlocking: 0

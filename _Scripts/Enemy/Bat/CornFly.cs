@@ -177,6 +177,7 @@ public class CornFly : MonoBehaviour
         if (!IsPlayingAnim("Block"))  // block 상태로 들어가기 전 한 번만 실행 (Enter blockState)
         {
             anim.Play("Block");
+            AudioManager.instance.Play("GoulBlock");
             CheckDirectionToPlayer();
             CheckDirection();
             enemyHealth.WhiteFlash();

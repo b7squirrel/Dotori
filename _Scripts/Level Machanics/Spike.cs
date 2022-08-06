@@ -12,5 +12,9 @@ public class Spike : MonoBehaviour
                 return;
             PlayerHealthController.instance.KillPlayer();
         }
+        if (collision.CompareTag("Enemy"))
+        {
+            collision.GetComponent<EnemyHealth>().Die();
+        }
     }
 }

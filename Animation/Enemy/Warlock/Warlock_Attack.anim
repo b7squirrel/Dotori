@@ -267,21 +267,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: AnticShoot
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
     functionName: CreateAnticMagicEffect
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6666667
-    functionName: DestroyAnticMagicEffect
+  - time: 0
+    functionName: AnticShoot
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -289,6 +282,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.6666667
     functionName: CreateShootMagicEffect
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6666667
+    functionName: DestroyAnticMagicEffect
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

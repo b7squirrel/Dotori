@@ -260,6 +260,7 @@ public class GoulFighter : MonoBehaviour
             if (!IsPlayingAnim("Goul_Fighter_Block"))  // Block 상태로 들어가기 전 한 번만 실행
             {
                 anim.Play("Goul_Fighter_Block");
+                AudioManager.instance.Play("GoulBlock");
                 enemyHealth.WhiteFlash();
                 // 플레이어를 바라보면서 block 하도록
                 if (GetPushedBackDirection().x == 1)
