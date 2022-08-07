@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int maxNumberOfDodge;
     [SerializeField] CapsuleCollider2D playerCollisionBox;
     [SerializeField] float dodgeCoolTime;
+    PlayerHurtBox playerHurtBox;
     float dodgeCoolTimeCounter;
     int dodgeNumberCounter;
     float dodgeNumberCoolTimeCounter;
@@ -113,6 +114,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         playercapture = GetComponentInChildren<PlayerCapture>();
         playerTargetController = GetComponent<PlayerTargetController>();
+        playerHurtBox = GetComponentInChildren<PlayerHurtBox>();
         footEmission = dustTrailParticle.emission;
         dodgeNumberCounter = maxNumberOfDodge;
     }
@@ -322,6 +324,7 @@ public class PlayerController : MonoBehaviour
     {
         isDodgeTurn = true;
         playerCollisionBox.gameObject.layer = 18;  // 18. PlayerDodging
+        playerHurtBox.gameObject.SetActive(false);
         dodgeNumberCounter--;
         dodgeNumberCoolTimeCounter = 0; // 회피를 한 번 깎아먹은 시점부터 쿨링 시작
         dodgeCoolTimeCounter = dodgeCoolTime; // 회피 쿨타임 초기화
@@ -331,6 +334,7 @@ public class PlayerController : MonoBehaviour
     {
         isDodgeTurn = false;
         playerCollisionBox.gameObject.layer = 3;  // 3. Player
+        playerHurtBox.gameObject.SetActive(true);
         onDownKey = false; // 계속 누르고 있으면 회피가 되는 것을 방지
 
     }

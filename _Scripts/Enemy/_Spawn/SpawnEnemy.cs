@@ -19,9 +19,9 @@ public class SpawnEnemy : MonoBehaviour
     [SerializeField] float offsetX = 0;
     [Range(-10f, 10f)]
     [SerializeField] float offsetY = 0;
+    [SerializeField] float spawnCoolTime;
     Vector2 size;
     Vector2 offset;
-    float spawnCoolTime;
     float spawnTimeCounter;
     int currentIndex;
     int numberOfSpawnedEnemy;
@@ -67,7 +67,6 @@ public class SpawnEnemy : MonoBehaviour
         numberOfSpawnedEnemy++;
         currentIndex++;
         isPlayerIn = false;
-        spawnCoolTime = initialSpawnTime + 3f;
         spawnTimeCounter = spawnCoolTime;
     }
 
