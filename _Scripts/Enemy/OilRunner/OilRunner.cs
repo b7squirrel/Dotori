@@ -11,17 +11,19 @@ public class OilRunner : MonoBehaviour
     float idleTimeCounter;
     float currentDirection; // player를 지나쳤는지 감지하기 위해.
     bool isFacingLeft = true;
+    bool isDetectingPlyer;
     Rigidbody2D theRB;
     Animator anim;
 
-    enum enemyState { idle, run, turn}
+    enum enemyState { run, ready, idle, turn}
     enemyState currentState;
+    [SerializeField] enemyState startingState;
 
     private void Start()
     {
         theRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        currentState = enemyState.run;
+        currentState = startingState;
         CheckingPlayerPosition();
         currentDirection = direction.x;
 
@@ -30,6 +32,9 @@ public class OilRunner : MonoBehaviour
     {
         switch (currentState)
         {
+            case enemyState.ready:
+                Ready();
+                break;
             case enemyState.idle:
                 Idle();
                 break;
@@ -129,7 +134,17 @@ public class OilRunner : MonoBehaviour
             currentDirection = direction.x;
         }
     }
-    
+    void Ready()
+    {
+        if (IsPlayingAnimation("Idle")) // Enter Ready State
+        {
+            anim.Play("Idle");
+        }
+        if (isDetectingPlyer == false)
+            return;
+        currentState = enemyState.run; // Exit Ready State
+    }
+
     bool IsPlayingAnimation(string _animation)
     {
         if (anim.GetCurrentAnimatorStateInfo(0).IsName(_animation))
@@ -137,4 +152,25 @@ public class OilRunner : MonoBehaviour
         return false;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("HurtBoxPlayer"))
+        {
+            isDetectingPlyer = true;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("HurtBoxPlayer"))
+        {
+            isDetectingPlyer = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("HurtBoxPlayer"))
+        {
+            isDetectingPlyer = false;
+        }
+    }
 }

@@ -7,6 +7,7 @@ public class PlayerHealthController : MonoBehaviour
     public static PlayerHealthController instance;
     PlayerHurtBox playerHurtBox;
     PanManager panManager;
+    PlayerData playerData;
     [SerializeField] GameObject playerDieEffect;
     [SerializeField] GameObject playerCaptured;
     bool isDead;
@@ -21,6 +22,7 @@ public class PlayerHealthController : MonoBehaviour
         isDead = false;
         playerHurtBox = GetComponentInChildren<PlayerHurtBox>();
         panManager = GetComponentInChildren<PanManager>();
+        playerData = GetComponentInParent<PlayerData>();
     }
 
     private void Update()
@@ -40,6 +42,7 @@ public class PlayerHealthController : MonoBehaviour
             return;
         if (PlayerController.instance.IsDodging)
             return;
+        playerData.Play(PlayerData.soundType.die);
         isDead = true;
     }
 

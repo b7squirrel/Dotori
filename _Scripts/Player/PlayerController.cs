@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     PlayerCapture playercapture;
     PlayerTargetController playerTargetController;
+    PlayerData playerData;
 
     [SerializeField] float moveSpeed;
     Rigidbody2D theRB;
@@ -115,6 +116,7 @@ public class PlayerController : MonoBehaviour
         playercapture = GetComponentInChildren<PlayerCapture>();
         playerTargetController = GetComponent<PlayerTargetController>();
         playerHurtBox = GetComponentInChildren<PlayerHurtBox>();
+        playerData = GetComponent<PlayerData>();
         footEmission = dustTrailParticle.emission;
         dodgeNumberCounter = maxNumberOfDodge;
     }
@@ -293,6 +295,7 @@ public class PlayerController : MonoBehaviour
         {
             playercapture.Toss(true); // Toss 함수 안에서 롤이 팬 위에 있는지 없는지 검사함
             anim.Play("Player_Dodge");
+            playerData.Play(PlayerData.soundType.dash);
         }
     }
     void CoolingDodgeNumber()
@@ -393,6 +396,7 @@ public class PlayerController : MonoBehaviour
         {
             isJumping = true;
             theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+            playerData.Play(PlayerData.soundType.jump);
             GenerateJumpEffect();
         }
 
@@ -401,6 +405,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.W) && canDoubleJump)
             {
                 theRB.velocity = new Vector2(theRB.velocity.x, jumpForce * 1.2f);
+                playerData.Play(PlayerData.soundType.jump);
                 GenerateExtraJumpDust();
                 canDoubleJump = false;
             }

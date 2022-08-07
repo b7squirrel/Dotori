@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     float parryCoolingCounter;
     PlayerController playerController;
     PanManager panManager;
+    PlayerData playerData;
     PlayerAttackBox playerAttackBox;
     PlayerCaptureBox playerCaptureBox;
     Animator panAnim;
@@ -20,6 +21,7 @@ public class PlayerAttack : MonoBehaviour
         panAnim = GetComponentInChildren<PlayerCapture>().GetComponent<Animator>();
         playerController = GetComponentInParent<PlayerController>();
         panManager = GetComponentInChildren<PanManager>();
+        playerData = GetComponent<PlayerData>();
         playerAttackBox = GetComponentInChildren<PlayerAttackBox>();
         playerCaptureBox = GetComponentInChildren<PlayerCaptureBox>();
         playerAttackBox.gameObject.SetActive(false);
@@ -57,7 +59,7 @@ public class PlayerAttack : MonoBehaviour
             if (parryCoolingCounter <= 0f)
             {
                 panAnim.Play("Pan_Attack");
-                AudioManager.instance.Play("whoosh_01");
+                playerData.Play(PlayerData.soundType.hitRollSwing);
                 parryCoolingCounter = parryCoolTime;
             }
         }

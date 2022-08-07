@@ -9,6 +9,7 @@ public class PlayerCapture : MonoBehaviour
     [Header("Pan Inventory")]
     Animator panAnim;
     PanManager panManager;
+    PlayerData playerData;
     PlayerTargetController playerTargetController;
     PlayerController playerController;
 
@@ -43,6 +44,7 @@ public class PlayerCapture : MonoBehaviour
         panManager = GetComponentInChildren<PanManager>();
         playerTargetController = GetComponentInParent<PlayerTargetController>();
         playerController = GetComponentInParent<PlayerController>();
+        playerData = GetComponentInParent<PlayerData>();
         captureBox.gameObject.SetActive(false);
     }
     void Update()
@@ -76,7 +78,7 @@ public class PlayerCapture : MonoBehaviour
                 return;
 
             IsCapturing = true;
-            AudioManager.instance.Play("PanCapture");
+            playerData.Play(PlayerData.soundType.captureSwing);
             CaptureDirection = playerTargetController.GetMouseHorizontalDirection();
             Toss(true);
             panAnim.Play("Pan_Capture");
@@ -203,8 +205,10 @@ public class PlayerCapture : MonoBehaviour
     void EffectsClearRoll()
     {
         Instantiate(HitRollEffect, captureBox.position, Quaternion.identity);
-        AudioManager.instance.Play("fire_explosion_01");
-        AudioManager.instance.Play("pan_hit_03");
+
+        playerData.Play(PlayerData.soundType.hitRoll_01);
+        playerData.Play(PlayerData.soundType.hitRoll_02);
+        
         GameManager.instance.StartCameraShake(8, .8f);
         GameManager.instance.TimeStop(.1f);
     }
