@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7a0fbd48b7a495469c9caec40c4cca9, type: 3}
+  m_Name: runner
+  m_EditorClassIdentifier: 
+  rollType: 5
+  enemyPrefab: {fileID: 1921420695698103560, guid: 221bd82b2e6682b448c3eea769c1d824, type: 3}
+  rollSprite_UI: {fileID: 21300000, guid: 80f8352f1ca6abb48bea64e603dc9ade, type: 3}
+  rollPrefab:
+  - {fileID: 1922504644840209821, guid: bd0b37916cd40f845a97f44e1c19ffe7, type: 3}
+  - {fileID: 1922504644840209821, guid: bd0b37916cd40f845a97f44e1c19ffe7, type: 3}
+  - {fileID: 1922504644840209821, guid: bd0b37916cd40f845a97f44e1c19ffe7, type: 3}
+  roll_OverrideController:
+  - {fileID: 22100000, guid: ed6fb2243f45c8f46878aee6a9b637c3, type: 2}
+  - {fileID: 22100000, guid: 3775b96df3ac12446bdc1fa5ddba5446, type: 2}
+  - {fileID: 22100000, guid: 3b50b9069b90c024fa0aad63748c3d5e, type: 2}
+  height: 0

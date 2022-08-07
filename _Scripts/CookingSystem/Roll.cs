@@ -11,6 +11,7 @@ public class Roll
         warlockF,
         goblinBolt,
         cornFly,
+        runner,
         projectileF
     }
     public RollSO rollSo;
