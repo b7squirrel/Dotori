@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,21 @@ public class OilRunner : MonoBehaviour
     [SerializeField] float moveSpeed;
     [SerializeField] float idleTime;
     [SerializeField] float keepRunningTime;
+    [SerializeField] Transform castingForWallPoint;
+    [SerializeField] Transform groundCheckPoint;
+    [SerializeField] LayerMask groundMask;
+    [SerializeField] float jumpForce;
+
+    [Header("CheckSurroundings")]
+    [SerializeField] float distanceToWallForJump;
 
     Vector2 direction;
     float idleTimeCounter;
     float currentDirection; // player를 지나쳤는지 감지하기 위해.
     bool isFacingLeft = true;
     bool isDetectingPlyer;
+    bool isDetectingWall;
+    bool isGrounded;
     Rigidbody2D theRB;
     Animator anim;
     EnemyHealth enemyhealth;
@@ -47,10 +57,12 @@ public class OilRunner : MonoBehaviour
                 Idle();
                 break;
             case enemyState.run:
+                GroundCheck();
                 CheckingPlayerPosition();
                 Run();
                 FacingDirection();
                 Flip();
+                CheckWallForJump();
                 break;
             case enemyState.turn:
                 Turn();
@@ -61,6 +73,20 @@ public class OilRunner : MonoBehaviour
             case enemyState.stunned:
                 break;
         }
+    }
+
+    private void Jump()
+    {
+        if (isGrounded)
+        {
+            theRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+        
+    }
+
+    void GroundCheck()
+    {
+        isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, .2f, groundMask);
     }
 
     bool PastPlayer()
@@ -102,6 +128,29 @@ public class OilRunner : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, 180f, 0);
         }
+    }
+    void CheckWallForJump()
+    {
+        float _distanceToWallForJump = distanceToWallForJump;
+        if (isFacingLeft == false)
+        {
+            _distanceToWallForJump = -_distanceToWallForJump;
+        }
+        Vector2 _endPoint = 
+            (Vector2)castingForWallPoint.position + Vector2.left * _distanceToWallForJump;
+        RaycastHit2D _hit =
+            Physics2D.Linecast(castingForWallPoint.position, _endPoint, groundMask);
+        if (_hit)
+        {
+            Debug.DrawLine(castingForWallPoint.position, _endPoint, Color.green);
+            isDetectingWall = true;
+            Jump();
+        }else
+        {
+            Debug.DrawLine(castingForWallPoint.position, _endPoint, Color.red);
+            isDetectingWall = false;
+        }
+
     }
     void Run()
     {
