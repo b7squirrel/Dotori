@@ -739,6 +739,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 118876663768712139, guid: d9b79c2fb5987ae459420de06fe3fea9, type: 3}
   m_PrefabInstance: {fileID: 52209555}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &57444068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 57444069}
+  m_Layer: 0
+  m_Name: TrapChackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &57444069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57444068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.35, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1316298487}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &66672800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4135,10 +4166,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0012406948
+    x: 0
     y: 0
-    width: 0.9975186
-    height: 0.9988975
+    width: 1
+    height: 1
   near clip plane: 1
   far clip plane: 1000
   field of view: 60
@@ -9527,6 +9558,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1338172259}
   m_CullTransparentMesh: 1
+--- !u!1 &1341863943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1341863944}
+  m_Layer: 0
+  m_Name: WallCheckPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1341863944
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341863943}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.61, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1316298487}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1342259703
 GameObject:
   m_ObjectHideFlags: 0
@@ -11167,11 +11229,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1921420695698103562, guid: 221bd82b2e6682b448c3eea769c1d824, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -47.88956
+      value: -49.49
       objectReference: {fileID: 0}
     - target: {fileID: 1921420695698103562, guid: 221bd82b2e6682b448c3eea769c1d824, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.37615
+      value: 15.43
       objectReference: {fileID: 0}
     - target: {fileID: 1921420695698103562, guid: 221bd82b2e6682b448c3eea769c1d824, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11208,6 +11270,18 @@ PrefabInstance:
     - target: {fileID: 1921420695698103563, guid: 221bd82b2e6682b448c3eea769c1d824, type: 3}
       propertyPath: startingState
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921420696238615284, guid: 221bd82b2e6682b448c3eea769c1d824, type: 3}
+      propertyPath: bouncerTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3226196662655806272, guid: 221bd82b2e6682b448c3eea769c1d824, type: 3}
+      propertyPath: m_Size.x
+      value: 16.252716
+      objectReference: {fileID: 0}
+    - target: {fileID: 3226196662655806272, guid: 221bd82b2e6682b448c3eea769c1d824, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.33831024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 221bd82b2e6682b448c3eea769c1d824, type: 3}
@@ -66601,7 +66675,7 @@ MonoBehaviour:
   playerCollisionBox: {fileID: 2047531066}
   dodgeCoolTime: 0.8
   captureMoveSpeed: 0
-  bouncerTIme: 0.3
+  bouncerTime: 0.5
   dustTrailParticle: {fileID: 1781768933879972222}
   dustJump: {fileID: 2577432899587804309, guid: 9b75aac703ed28b4a8e061a7461a1523, type: 3}
   dustExtraJump: {fileID: 2577432899587804309, guid: 9b75aac703ed28b4a8e061a7461a1523, type: 3}
@@ -66615,7 +66689,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2809493762570032321}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -63.1, y: 2.1, z: 0}
+  m_LocalPosition: {x: -48.87, y: 10.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -184,6 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   idleTime: 1
+  keepRunningTime: 0.5
   startingState: 0
 --- !u!114 &1921420695698103566
 MonoBehaviour:
@@ -418,11 +419,13 @@ MonoBehaviour:
   isParried: 0
   isBlocking: 0
   knockBack: 0
+  isOnBouncer: 0
   maxHP: 1
   canBlockCapture: 0
   blockTime: 0
   stunnedTime: 1
   parriedTime: 0.8
+  bouncerTime: 0
   dieEffect: {fileID: 6987084327100221053, guid: 036f43595c5bb0743a94c6b3227bc1f5, type: 3}
   dieBones: {fileID: 1257496888122881004, guid: 72bfe5f32aebd3440bbea00645628e46, type: 3}
   dieEffectPoint: {fileID: 1921420695627468033}

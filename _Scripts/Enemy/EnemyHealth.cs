@@ -14,6 +14,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] bool isParried;
     [SerializeField] bool isBlocking;
     [SerializeField] bool knockBack;
+    [SerializeField] bool isOnBouncer;
 
     [Header("HP")]
     [SerializeField] int maxHP;
@@ -32,6 +33,11 @@ public class EnemyHealth : MonoBehaviour
     [Header("Parried")]
     [SerializeField] float parriedTime;
     float parriedTimeCounter;
+
+    [Header("On Bounder")]
+    [SerializeField] float bouncerTime;
+    float bouncerTimeCounter;
+    Vector2 bouncerForce;
 
     [Header("Effects")]
     [SerializeField] GameObject dieEffect;
@@ -92,6 +98,16 @@ public class EnemyHealth : MonoBehaviour
             }
             blockTimeCounter = blockTime;
             SetBlockState(false);
+        }
+        if (isOnBouncer)
+        {
+            if (bouncerTimeCounter > 0)
+            {
+                bouncerTimeCounter -= Time.deltaTime;
+                return;
+            }
+            bouncerTimeCounter = bouncerTime;
+            isOnBouncer = false;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -182,6 +198,20 @@ public class EnemyHealth : MonoBehaviour
         }
 
         GetRolled(); // 캡쳐를 블락하는 적이 아니라면 그냥 GetRolled
+    }
+    public void OnBouncer(Vector2 _bouncerForceVector)
+    {
+        bouncerForce = _bouncerForceVector;
+        isOnBouncer = true;
+        bouncerTimeCounter = bouncerTime;
+    }
+    public Vector2 GetBouncerForce()
+    {
+        return bouncerForce;
+    }
+    public bool CheckIsOnBouncer()
+    {
+        return isOnBouncer;
     }
 
     public void Die()

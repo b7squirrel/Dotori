@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float captureMoveSpeed;
 
     [Header("Bouncer")]
-    [SerializeField] float bouncerTIme;
+    [SerializeField] float bouncerTime;
     float bouncerTimeCounter;
     Vector2 bouncerForce;
 
@@ -238,9 +238,10 @@ public class PlayerController : MonoBehaviour
         // 바운서
         if (isOnBouncer)
         {
-            if (bouncerTimeCounter == bouncerTIme)  // 최초에만 실행하도록
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Player_Bouncer") == false)  // 최초에만 실행하도록
             {
                 //theRB.AddForce(bouncerForce, ForceMode2D.Impulse);
+                anim.Play("Player_Bouncer");
                 theRB.velocity = bouncerForce;
             }
             if (bouncerTimeCounter > 0)
@@ -249,6 +250,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                anim.Play("Player_Idle");
                 isOnBouncer = false;
             }
             return;
@@ -449,7 +451,7 @@ public class PlayerController : MonoBehaviour
     {
         bouncerForce = _bouncerForceVector;
         isOnBouncer = true;
-        bouncerTimeCounter = bouncerTIme;
+        bouncerTimeCounter = bouncerTime;
     }
 
     void GenerateDustTrail()

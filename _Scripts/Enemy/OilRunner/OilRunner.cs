@@ -6,6 +6,7 @@ public class OilRunner : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
     [SerializeField] float idleTime;
+    [SerializeField] float keepRunningTime;
 
     Vector2 direction;
     float idleTimeCounter;
@@ -14,8 +15,9 @@ public class OilRunner : MonoBehaviour
     bool isDetectingPlyer;
     Rigidbody2D theRB;
     Animator anim;
+    EnemyHealth enemyhealth;
 
-    enum enemyState { run, ready, idle, turn}
+    enum enemyState { run, ready, idle, turn, onBouncer, stunned}
     enemyState currentState;
     [SerializeField] enemyState startingState;
 
@@ -23,6 +25,7 @@ public class OilRunner : MonoBehaviour
     {
         theRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        enemyhealth = GetComponentInChildren<EnemyHealth>();
         currentState = startingState;
         CheckingPlayerPosition();
         currentDirection = direction.x;
@@ -30,6 +33,11 @@ public class OilRunner : MonoBehaviour
     }
     private void Update()
     {
+        if (enemyhealth.CheckIsOnBouncer())
+        {
+            currentState = enemyState.onBouncer;
+        }
+
         switch (currentState)
         {
             case enemyState.ready:
@@ -46,6 +54,11 @@ public class OilRunner : MonoBehaviour
                 break;
             case enemyState.turn:
                 Turn();
+                break;
+            case enemyState.onBouncer:
+                Bouncer();
+                break;
+            case enemyState.stunned:
                 break;
         }
     }
@@ -99,7 +112,7 @@ public class OilRunner : MonoBehaviour
         }
         if (PastPlayer()) // Exit Run State
         {
-            currentState = enemyState.idle;
+            KeepRunning();
         }
         theRB.velocity = new Vector2(currentDirection * moveSpeed, theRB.velocity.y);
     }
@@ -121,6 +134,15 @@ public class OilRunner : MonoBehaviour
         theRB.velocity = new Vector2(0, theRB.velocity.y);
     }
 
+    void KeepRunning()
+    {
+        StartCoroutine(KeepRunningCo());
+    }
+    IEnumerator KeepRunningCo()
+    {
+        yield return new WaitForSeconds(keepRunningTime);
+        currentState = enemyState.idle;
+    }
     void Turn()
     {
         if (IsPlayingAnimation("Turn") == false) // Enter Turn State
@@ -136,13 +158,25 @@ public class OilRunner : MonoBehaviour
     }
     void Ready()
     {
-        if (IsPlayingAnimation("Idle")) // Enter Ready State
+        if (IsPlayingAnimation("Ready") == false) // Enter Ready State
         {
-            anim.Play("Idle");
+            anim.Play("Ready");
         }
         if (isDetectingPlyer == false)
             return;
         currentState = enemyState.run; // Exit Ready State
+    }
+    void Bouncer()
+    {
+        if (IsPlayingAnimation("Bouncer") == false)
+        {
+            anim.Play("Bouncer");
+            theRB.velocity = enemyhealth.GetBouncerForce();
+        }
+        if (enemyhealth.CheckIsOnBouncer() == false)
+        {
+            currentState = enemyState.ready;
+        }
     }
 
     bool IsPlayingAnimation(string _animation)

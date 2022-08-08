@@ -21,5 +21,10 @@ public class BouncerHorizontal : MonoBehaviour
             anim.Play("Bouncer_On");
             collision.gameObject.GetComponentInParent<PlayerController>().OnBouncer(bouncerForceVector);
         }
+        if (collision.CompareTag("Enemy"))
+        {
+            anim.Play("Bouncer_On");
+            collision.gameObject.GetComponent<EnemyHealth>().OnBouncer(bouncerForceVector);
+        }
     }
 }
