@@ -5228,6 +5228,7 @@ MonoBehaviour:
   rollso: {fileID: 11400000, guid: 7786f313465a50441a19c196721aacdb, type: 2}
   flavorSo: {fileID: 11400000, guid: 398028c4e1b6d6c4694034f891f8ba31, type: 2}
   captureBoxOnTime: 0.07
+  slowMotionTimeScale: 0.8
   slotPhysicsSet: {fileID: 1819328065}
   lengthSlowMotion: 0.3
   startSlowMotionTImeOffset: 0.03
@@ -60882,9 +60883,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27dab4ac19885640aa354d7d25063e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsSlowMotion: 0
+  TriggerSlowMotion: 0
   OnSlowMotion: 0
-  slowMotionTimeScale: 0.8
+  slowMotionTimeScale: 0.5
 --- !u!1 &2002378037
 GameObject:
   m_ObjectHideFlags: 0
@@ -67190,7 +67191,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2809493762570032321}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -62.8, y: 0.2, z: 0}
+  m_LocalPosition: {x: -71.7, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
