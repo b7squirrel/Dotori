@@ -24,3 +24,4 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 3775b96df3ac12446bdc1fa5ddba5446, type: 2}
   - {fileID: 22100000, guid: 3b50b9069b90c024fa0aad63748c3d5e, type: 2}
   height: 0
+  fragmentPrefab: {fileID: 6987084327100221053, guid: 036f43595c5bb0743a94c6b3227bc1f5, type: 3}

@@ -145,19 +145,12 @@ public class PanManager : MonoBehaviour
         {
             _roll.tag = "Rolling";
         }
-
-        float _direction = PlayerController.instance.GetPlayerDirection();
+        AddPhysics(_roll);
         float _hSpeed = _roll.GetComponent<EnemyRolling>().horizontalSpeed;
         float _vSpeed = _roll.GetComponent<EnemyRolling>().verticalSpeed;
-        PhysicsMaterial2D _physicsMat = _roll.GetComponent<EnemyRolling>().physicsMat;
-        Rigidbody2D _theRB = _roll.AddComponent<Rigidbody2D>();
-        CapsuleCollider2D _capColl = _roll.AddComponent<CapsuleCollider2D>();
-        _theRB.sharedMaterial = _physicsMat;
-        _capColl.size = new Vector2(1f, 1f);
-        _capColl.direction = CapsuleDirection2D.Horizontal;
-        _theRB.gravityScale = _roll.GetComponent<EnemyRolling>().gravity;
         Vector2 _mouseDirection = playerTargetController.GetMouseDirection();
-        _theRB.velocity = new Vector2(_mouseDirection.x * _hSpeed, _mouseDirection.y * _hSpeed);
+        _roll.GetComponent<Rigidbody2D>().velocity = 
+            new Vector2(_mouseDirection.x * _hSpeed, _mouseDirection.y * _hSpeed);
 
         // 0번 슬롯의 롤을 비워주고 롤 갯수를 하나 줄임
         _panSlots[0].RemoveRoll();
@@ -182,19 +175,29 @@ public class PanManager : MonoBehaviour
         {
             _roll.tag = "Rolling";
         }
-
-        float _direction = PlayerController.instance.GetPlayerDirection();
+        AddPhysics(_roll);
         float _vSpeed = _roll.GetComponent<EnemyRolling>().verticalDropSpeed;
+        _roll.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-1f, 1f), _vSpeed);
+
+        _panSlots[_panSlots.Length - 1].RemoveRoll();
+    }
+    void AddPhysics(GameObject _roll)
+    {
+        float _direction = PlayerController.instance.GetPlayerDirection();
+        
         PhysicsMaterial2D _physicsMat = _roll.GetComponent<EnemyRolling>().physicsMat;
         Rigidbody2D _theRB = _roll.AddComponent<Rigidbody2D>();
         CapsuleCollider2D _capColl = _roll.AddComponent<CapsuleCollider2D>();
+        CapsuleCollider2D _capCollwTrigger = _roll.AddComponent<CapsuleCollider2D>();
+
         _theRB.sharedMaterial = _physicsMat;
+        _theRB.mass = _roll.GetComponent<EnemyRolling>().mass;
+        _theRB.gravityScale = _roll.GetComponent<EnemyRolling>().dropGravity;
         _capColl.size = new Vector2(1f, 1f);
         _capColl.direction = CapsuleDirection2D.Horizontal;
-        _theRB.gravityScale = _roll.GetComponent<EnemyRolling>().dropGravity;
-        _theRB.velocity = new Vector2(0, _vSpeed);
-
-        _panSlots[_panSlots.Length - 1].RemoveRoll();
+        _capCollwTrigger.size = new Vector2(1f, 1f);
+        _capCollwTrigger.direction = CapsuleDirection2D.Horizontal;
+        _capCollwTrigger.isTrigger = true;
     }
 
     /// <summary>
@@ -204,10 +207,12 @@ public class PanManager : MonoBehaviour
     {
         int _numberOfRolls = CountRollNumber();  // CountRollNumber는 0, 1, 2 슬롯번호를 가리킨다
         float[] _vSpeeds = new float[_numberOfRolls];
+
         GameObject[] _rolls = new GameObject[_numberOfRolls];
         PhysicsMaterial2D[] _physicsMats = new PhysicsMaterial2D[_numberOfRolls];
         Rigidbody2D[] _theRBs = new Rigidbody2D[_numberOfRolls];
-        BoxCollider2D[] _capColls = new BoxCollider2D[_numberOfRolls];
+        CapsuleCollider2D[] _capColls = new CapsuleCollider2D[_numberOfRolls];
+        CapsuleCollider2D[] _capCollwTriggers = new CapsuleCollider2D[_numberOfRolls];
         for (int i = 0; i < _rolls.Length; i++)
         {
             _rolls[i] = _panSlots[i].GetRoll().gameObject;
@@ -217,18 +222,22 @@ public class PanManager : MonoBehaviour
             }
             else
             {
-                _rolls[i].tag = "Untagged";
+                _rolls[i].tag = "Rolling";
             }
             _physicsMats[i] = _rolls[i].GetComponent<EnemyRolling>().physicsMat;
             _theRBs[i] = _rolls[i].AddComponent<Rigidbody2D>();
-            _capColls[i] = _rolls[i].AddComponent<BoxCollider2D>();
+            _theRBs[i].mass = _rolls[i].GetComponent<EnemyRolling>().mass;
+            _capColls[i] = _rolls[i].AddComponent<CapsuleCollider2D>();
+            _capCollwTriggers[i] = _rolls[i].AddComponent<CapsuleCollider2D>();
             _vSpeeds[i] = _rolls[i].GetComponent<EnemyRolling>().verticalDropSpeed;
 
             _theRBs[i].sharedMaterial = _physicsMats[i];
             _capColls[i].size = new Vector2(1f, 1f);
-            //_capColls[i].direction = CapsuleDirection2D.Horizontal;
+            _capCollwTriggers[i].size = new Vector2(1f, 1f);
+            _capCollwTriggers[i].direction = CapsuleDirection2D.Horizontal;
+            _capCollwTriggers[i].isTrigger = true;
             _theRBs[i].gravityScale = _rolls[i].GetComponent<EnemyRolling>().dropGravity;
-            _theRBs[i].velocity = new Vector2(0, _vSpeeds[i]);
+            _theRBs[i].velocity = new Vector2(Random.Range(-1f, 1f), _vSpeeds[i]);
 
             _panSlots[i].RemoveRoll();
         }

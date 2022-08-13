@@ -11,4 +11,5 @@ public class RollSO : ScriptableObject
     public GameObject[] rollPrefab;
     public AnimatorOverrideController[] roll_OverrideController;
     public float height;
+    public GameObject fragmentPrefab;
 }

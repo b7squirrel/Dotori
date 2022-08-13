@@ -397,7 +397,6 @@ public class PlayerController : MonoBehaviour
         if (jumpRemember > 0f && coyoteTimeCounter > 0)
         {
             isJumping = true;
-            Debug.Log("Jump");
             theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
             playerData.Play(PlayerData.soundType.jump);
             GenerateJumpEffect();

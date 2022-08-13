@@ -22,6 +22,7 @@ public class EnemyRolling : MonoBehaviour
     [Header("When Cleared")]
     public float horizontalSpeed;
     public float verticalSpeed;
+    public float mass;
     public float gravity;
     public PhysicsMaterial2D physicsMat;
 
@@ -32,6 +33,12 @@ public class EnemyRolling : MonoBehaviour
     [Header("Resurrection")]
     [SerializeField] float resurrectionTime;
     float resurrentionTimeCounter;
+
+    [Header("Die")]
+    [SerializeField] bool dieOnCollision;
+    [SerializeField] float dieTime;
+    float dieTimeCounter;
+    bool isDead;
 
     [Header("Hit Effects")]
     [SerializeField] GameObject hitEffect;
@@ -49,6 +56,7 @@ public class EnemyRolling : MonoBehaviour
         PanManager.instance.AcquireRoll(transform);
         explodeCounter = timeToExplode;
         resurrentionTimeCounter = resurrectionTime;
+        dieTimeCounter = dieTime;
     }
 
     void Update()
@@ -65,7 +73,8 @@ public class EnemyRolling : MonoBehaviour
         {
             case rollingState.shooting:
                 CountDownExplosion();
-                CountDownResurrection();
+                //CountDownResurrection();
+                CountDownToDie();
                 break;
 
             case rollingState.onPan:
@@ -106,6 +115,15 @@ public class EnemyRolling : MonoBehaviour
         }
         Resurrection();
     }
+    void CountDownToDie()
+    {
+        if (dieTimeCounter > 0)
+        {
+            dieTimeCounter -= Time.deltaTime;
+            return;
+        }
+        DestroyPrefab();
+    }
     void Explode()
     {
         if (m_FlavorSO == null)
@@ -127,6 +145,25 @@ public class EnemyRolling : MonoBehaviour
 
     void DestroyPrefab()
     {
+        if (isDead)
+            return;
+        Instantiate(m_RollSo.fragmentPrefab, transform.position, Quaternion.identity);
+        isDead = true;
         Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Out");
+
+        if (dieOnCollision == false)
+            return;
+        if (collision.CompareTag("Ground") 
+            || collision.CompareTag("HurtBoxPlayer") 
+            || collision.CompareTag("Enemy"))
+        {
+            Debug.Log("In");
+            DestroyPrefab();
+        }
     }
 }

@@ -18,6 +18,7 @@ public class PlayerCapture : MonoBehaviour
 
     [Header("Capture")]
     [SerializeField] float captureBoxOnTime;  // 캡쳐박스가 활성화 되는 시간
+    [SerializeField] float slowMotionTimeScale;
 
     [Header("Toss Rolls")]
     [SerializeField] SlotPhysics slotPhysicsSet;
@@ -193,7 +194,7 @@ public class PlayerCapture : MonoBehaviour
     IEnumerator StartSlowMotionCo()
     {
         yield return new WaitForSeconds(startSlowMotionTImeOffset);
-        SlowMotionManager.instance.StartSlowMotion();
+        SlowMotionManager.instance.StartSlowMotion(slowMotionTimeScale);
         StartCoroutine(StopSlowMotionCo());
     }
     IEnumerator StopSlowMotionCo()

@@ -281,7 +281,7 @@ public class EnemyHealth : MonoBehaviour
         isParried = state;
         if (isParried)
         {
-            theRB.bodyType = RigidbodyType2D.Kinematic;
+            //theRB.bodyType = RigidbodyType2D.Kinematic;
             StartCoroutine(WhiteFlashCo());
             return;
         }
@@ -291,7 +291,7 @@ public class EnemyHealth : MonoBehaviour
         knockBack = state;
         if (knockBack)
         {
-            theRB.bodyType = RigidbodyType2D.Kinematic;
+            //theRB.bodyType = RigidbodyType2D.Kinematic;
             StartCoroutine(WhiteFlashCo());
             return;
         }
@@ -301,7 +301,7 @@ public class EnemyHealth : MonoBehaviour
         isBlocking = state;
         if (isBlocking)
         {
-            theRB.bodyType = RigidbodyType2D.Kinematic;
+            //theRB.bodyType = RigidbodyType2D.Kinematic;
             return;
         }
     }

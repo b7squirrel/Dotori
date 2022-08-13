@@ -19,6 +19,8 @@ public class OilRunner : MonoBehaviour
     Vector2 direction;
     float idleTimeCounter;
     float currentDirection; // player를 지나쳤는지 감지하기 위해.
+    float jumpGravity, jumpGravityScale;
+    float jumpVelocity;
     bool isFacingLeft = true;
     bool isDetectingPlyer;
     bool isDetectingWall;
@@ -27,7 +29,7 @@ public class OilRunner : MonoBehaviour
     Animator anim;
     EnemyHealth enemyhealth;
 
-    enum enemyState { run, ready, idle, turn, onBouncer, stunned}
+    enum enemyState { run, ready, idle, turn, onBouncer, stunned, jump}
     enemyState currentState;
     [SerializeField] enemyState startingState;
 
@@ -36,6 +38,8 @@ public class OilRunner : MonoBehaviour
         theRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         enemyhealth = GetComponentInChildren<EnemyHealth>();
+        jumpGravity = 9.8f;
+        jumpGravityScale = theRB.gravityScale;
         currentState = startingState;
         CheckingPlayerPosition();
         currentDirection = direction.x;
@@ -55,6 +59,9 @@ public class OilRunner : MonoBehaviour
                 break;
             case enemyState.idle:
                 Idle();
+                break;
+            case enemyState.jump:
+                Jump();
                 break;
             case enemyState.run:
                 GroundCheck();
@@ -77,11 +84,15 @@ public class OilRunner : MonoBehaviour
 
     private void Jump()
     {
+        if (IsPlayingAnimation("Jump") == false)
+        {
+            anim.Play("Jump");
+            theRB.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
+        }
         if (isGrounded)
         {
-            theRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            currentState = enemyState.run;
         }
-        
     }
 
     void GroundCheck()
@@ -144,8 +155,12 @@ public class OilRunner : MonoBehaviour
         {
             Debug.DrawLine(castingForWallPoint.position, _endPoint, Color.green);
             isDetectingWall = true;
-            Jump();
-        }else
+            if (isGrounded)
+            {
+                currentState = enemyState.jump;
+            }
+        }
+        else
         {
             Debug.DrawLine(castingForWallPoint.position, _endPoint, Color.red);
             isDetectingWall = false;
@@ -198,7 +213,7 @@ public class OilRunner : MonoBehaviour
         {
             anim.Play("Turn");
         }
-        if (IsPlayingAnimation("Run")) // Exit Turn State, turn 애니가 끝나면 Run으로 Transition.
+        if (IsPlayingAnimation("Run")) // Exit Turn State, turn 애니가 끝나면 Run으로 Transition(Animator)
         {
 
             currentState = enemyState.run;

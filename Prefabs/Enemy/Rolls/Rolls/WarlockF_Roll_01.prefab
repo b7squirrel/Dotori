@@ -126,6 +126,7 @@ MonoBehaviour:
   verticalDropSpeed: 8
   dropGravity: 2
   resurrectionTime: 2.5
+  dieTime: 1
   hitEffect: {fileID: 2720419082649462560, guid: e6a0bf88b6867174bb7e0843401eeb70, type: 3}
   hitEffectPoint: {fileID: 3410760840224446877}
   timeToExplode: 1
