@@ -24,7 +24,7 @@ public class SlowMotionManager : MonoBehaviour
     private void Update()
     {
         //SlowMotion();
-        SlowMotionToggle();
+        //SlowMotionToggle();
     }
     void SlowMotion()
     {

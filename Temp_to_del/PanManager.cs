@@ -193,6 +193,7 @@ public class PanManager : MonoBehaviour
         _theRB.sharedMaterial = _physicsMat;
         _theRB.mass = _roll.GetComponent<EnemyRolling>().mass;
         _theRB.gravityScale = _roll.GetComponent<EnemyRolling>().dropGravity;
+        _theRB.angularDrag = 5;
         _capColl.size = new Vector2(1f, 1f);
         _capColl.direction = CapsuleDirection2D.Horizontal;
         _capCollwTrigger.size = new Vector2(1f, 1f);

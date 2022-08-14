@@ -116,6 +116,7 @@ public class EnemyHealth : MonoBehaviour
         {
             if(!isStunned)
             {
+                Debug.Log("HIT");
                 TakeDamage();
             }
         }
@@ -127,6 +128,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (collision.CompareTag("Explosion"))
         {
+            Debug.Log("Enemy Die");
             Die();
         }
 

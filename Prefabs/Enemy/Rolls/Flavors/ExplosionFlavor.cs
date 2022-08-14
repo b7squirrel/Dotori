@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// 타일은 직접 검사해서 폭발여부를 타일에게 전달. 적이나 프랍은 폭발을 자체적으로 감지해서 죽음, 폭발 여부 결정
+/// </summary>
 public class ExplosionFlavor : MonoBehaviour
 {
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask enemyLayer;
+    [SerializeField] LayerMask propsLayer;
     [SerializeField] GameObject[] explosionEffect = new GameObject[3];
 
     BoxCollider2D boxCol_1;  // 1차 폭발
@@ -99,6 +104,15 @@ public class ExplosionFlavor : MonoBehaviour
                 if (_hitground != null)
                 {
                     _hitground.GetComponent<Tiles>().RemoveTile(_cellPosition);
+                }
+                Collider2D _hitProps = Physics2D.OverlapCircle(_cellPosition, .1f, propsLayer);
+                if (_hitProps != null)
+                {
+                    if (_hitProps.GetComponent<Props>() == null)
+                    {
+                        return;
+                    }
+                    _hitProps.GetComponent<Props>().isDead = true;
                 }
             }
         }

@@ -154,15 +154,12 @@ public class EnemyRolling : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Out");
-
         if (dieOnCollision == false)
             return;
         if (collision.CompareTag("Ground") 
             || collision.CompareTag("HurtBoxPlayer") 
             || collision.CompareTag("Enemy"))
         {
-            Debug.Log("In");
             DestroyPrefab();
         }
     }

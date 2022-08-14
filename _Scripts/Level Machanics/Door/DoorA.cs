@@ -8,7 +8,9 @@ public class DoorA : MonoBehaviour
     BoxCollider2D boxCol;
     public bool isOpen;
 
-    [SerializeField] LayerMask PlayerMask;
+    [SerializeField] LayerMask playerLayer;
+    [SerializeField] LayerMask enemyLayer;
+    [SerializeField] BoxCollider2D attackBox;
 
     [Range(-1.5f, 1f)]
     [SerializeField] float offsetX;
@@ -45,19 +47,45 @@ public class DoorA : MonoBehaviour
 
     void PlayerCheck()
     {
-        isPlayerIn = Physics2D.OverlapBox(center, size, 0, PlayerMask);
+        isPlayerIn = Physics2D.OverlapBox(center, size, 0, playerLayer);
+    }
+    void AttackEnemy()
+    {
+        Collider2D _hit = Physics2D.OverlapBox((Vector2)transform.position + attackBox.offset, attackBox.size, 0, enemyLayer);
+        if (_hit)
+        {
+            _hit.GetComponent<EnemyHealth>().TakeDamage();
+        }
     }
     public void OpenDoor()
     {
         anim.SetTrigger("Open");
         isOpen = true;
         boxCol.enabled = false;
+        AttackEnemy();
+        PlaySound();
     }
 
-    private void OnDrawGizmosSelected()
+    IEnumerator ActivateAttackBoxCo()
+    {
+        attackBox.enabled = true;
+        yield return new WaitForSeconds(.3f);
+        attackBox.enabled = false;
+
+    }
+    private void OnDrawGizmos()
     {
         Gizmos.color = new Color(1, 0, 0, .5f);
-        Gizmos.DrawCube(center, size);
+        //Gizmos.DrawCube(center, size);
+        //Gizmos.DrawCube((Vector2)transform.position + attackBox.offset, attackBox.size);
     }
-    
+    void PlaySound()
+    {
+        AudioManager.instance.Play("Door01");
+        AudioManager.instance.Play("Door02");
+        AudioManager.instance.Play("Door03");
+        AudioManager.instance.Play("Door04");
+
+    }
+
 }

@@ -77,6 +77,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  propsLayer:
+    serializedVersion: 2
+    m_Bits: 1048576
   explosionEffect:
   - {fileID: 5773635911598489654, guid: 939c758f0881ded40bf4cef30a4650d2, type: 3}
   - {fileID: 8871838030137777785, guid: 246c6877b6ff9604bbfc1467a78a4891, type: 3}

@@ -154,7 +154,7 @@ MonoBehaviour:
   verticalSpeed: 5
   mass: 10
   gravity: 5
-  physicsMat: {fileID: 6200000, guid: 69162b284af75af4f8bfa17706f2d1d4, type: 2}
+  physicsMat: {fileID: 6200000, guid: ba73fb8d113004b4b9f9241c45d59930, type: 2}
   verticalDropSpeed: 8
   dropGravity: 2
   resurrectionTime: 2.5
