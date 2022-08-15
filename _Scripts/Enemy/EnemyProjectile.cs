@@ -134,7 +134,7 @@ public class EnemyProjectile : MonoBehaviour
             if (this.gameObject.CompareTag("ProjectileEnemy"))
                 isHittingPlayer = true;
         }
-        if (collision.CompareTag("Ground"))
+        if (collision.CompareTag("Ground") || collision.CompareTag("Props"))
         {
             DestroyProjectile();
         }

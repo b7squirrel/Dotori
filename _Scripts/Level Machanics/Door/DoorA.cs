@@ -5,11 +5,11 @@ using UnityEngine;
 public class DoorA : MonoBehaviour
 {
     Animator anim;
-    BoxCollider2D boxCol;
     public bool isOpen;
 
     [SerializeField] LayerMask playerLayer;
     [SerializeField] LayerMask enemyLayer;
+    [SerializeField] BoxCollider2D boxCol;
     [SerializeField] BoxCollider2D attackBox;
 
     [Range(-1.5f, 1f)]
@@ -27,7 +27,6 @@ public class DoorA : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-        boxCol = GetComponent<BoxCollider2D>();
         size = new Vector3(sizeX, sizeY);
         center = new Vector3(transform.position.x + offsetX, transform.position.y + offsetY);
     }

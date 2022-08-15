@@ -200,7 +200,6 @@ public class PlayerController : MonoBehaviour
         {
             staticDirection = Input.GetAxisRaw("Horizontal");
         }
-        
     }
 
     void Move()
