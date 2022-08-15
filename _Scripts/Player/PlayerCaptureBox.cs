@@ -19,6 +19,11 @@ public class PlayerCaptureBox : MonoBehaviour
             _clone.IsCaptured = true;
             _clone.tag = "ProjectileCaptured";
         }
+        if (collision.CompareTag("FlavorBG"))
+        {
+            FlavorBG _flavorBG = collision.GetComponent<FlavorBG>();
+            _flavorBG.IsCaptured = true;
+        }
 
         if (collision.CompareTag("Enemy"))
         {
