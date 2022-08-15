@@ -86,7 +86,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1341863943}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.03, y: 1.01, z: 0}
+  m_LocalPosition: {x: -1.03, y: 0.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -285,10 +285,10 @@ MonoBehaviour:
   groundCheckPoint: {fileID: 529337245}
   groundMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1048832
   jumpForce: 3.5
   distanceToWallForJump: 1
-  startingState: 0
+  startingState: 1
 --- !u!114 &1921420695698103566
 MonoBehaviour:
   m_ObjectHideFlags: 0
