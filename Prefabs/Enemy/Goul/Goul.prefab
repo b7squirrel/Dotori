@@ -167,11 +167,13 @@ MonoBehaviour:
   isParried: 0
   isBlocking: 0
   knockBack: 0
+  isOnBouncer: 0
   maxHP: 1
   canBlockCapture: 1
   blockTime: 0.5
   stunnedTime: 1
   parriedTime: 0.8
+  bouncerTime: 0
   dieEffect: {fileID: 6987084327100221053, guid: 036f43595c5bb0743a94c6b3227bc1f5, type: 3}
   dieBones: {fileID: 1257496888122881004, guid: 72bfe5f32aebd3440bbea00645628e46, type: 3}
   dieEffectPoint: {fileID: 247175487961203935}
@@ -491,6 +493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   castPoint: {fileID: 6493158246652258253}
+  detectingDistance: 8
   action:
     serializedVersion: 2
     m_Bits: 8

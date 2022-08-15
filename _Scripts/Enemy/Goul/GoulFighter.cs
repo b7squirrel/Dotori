@@ -12,6 +12,7 @@ public class GoulFighter : MonoBehaviour
 
     [Header("Detecting")]
     [SerializeField] Transform castPoint;
+    [SerializeField] float detectingDistance;
     [SerializeField] LayerMask action;
     [SerializeField] BoxCollider2D detectingArea;
     Vector2 _center, _size;
@@ -74,7 +75,8 @@ public class GoulFighter : MonoBehaviour
         SetStunnedState();
         SetParriedState();
         SetBlockState();
-        DetectingArea();
+        DetectingPlayer();
+        //DetectingArea();
         CheckIsFacingPlayer();
 
         switch (currentState)
@@ -278,6 +280,36 @@ public class GoulFighter : MonoBehaviour
 
             AttackBoxOff();
             currentState = enemyState.block;
+        }
+    }
+
+    void DetectingPlayer()
+    {
+        float _castDistance = detectingDistance;
+        if (isFacingLeft)
+        {
+            // 스프라이트가 뒤집히면 Line도 반대 방향으로 쏘도록
+            _castDistance = -_castDistance;
+        }
+        Vector2 _endPosition = castPoint.position + Vector3.right * _castDistance;
+
+        RaycastHit2D hit = Physics2D.Linecast(castPoint.position, _endPosition, action);
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject.CompareTag("HurtBoxPlayer"))
+            {
+                canSeePlayer = true;
+            }
+            else
+            {
+                canSeePlayer = false;
+            }
+
+            Debug.DrawLine(castPoint.position, hit.point, Color.red); // 자신의 앞에 무엇인가를 감지하면 yellow
+        }
+        else
+        {
+            Debug.DrawLine(castPoint.position, _endPosition, Color.yellow); // 아무것도 감지하지 못할 때는 blue
         }
     }
 
