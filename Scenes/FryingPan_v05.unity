@@ -11263,7 +11263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1307358977}
   - component: {fileID: 1307358978}
-  m_Layer: 20
+  m_Layer: 23
   m_Name: AttackBoxDoor
   m_TagString: AttackBoxPlayer
   m_Icon: {fileID: 0}
@@ -13444,7 +13444,7 @@ GameObject:
   - component: {fileID: 1605455729}
   - component: {fileID: 1605455728}
   - component: {fileID: 1605455727}
-  m_Layer: 20
+  m_Layer: 23
   m_Name: DoorA (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -496,7 +496,7 @@ MonoBehaviour:
   detectingDistance: 8
   action:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 8388616
   detectingArea: {fileID: 6493158245768596053}
   _debugAlpha: 0
   moveSpeed: 3
