@@ -5,7 +5,7 @@ using UnityEngine;
 public class FlavorBG : MonoBehaviour
 {
     [SerializeField] GameObject[] torchParts;
-    [SerializeField] Flavor.flavorType flavorType;
+    [SerializeField] Flavor.flavorType myFlavorType;
     FlavorSo flavorSo;
     public bool IsCaptured { get; set; }
 
@@ -22,8 +22,9 @@ public class FlavorBG : MonoBehaviour
     /// </summary>
     void GetFlavored()
     {
-        flavorSo = RecipeFlavor.instance.GetFlavourSo(flavorType);
-        PanManager.instance.AcquireFlavor(flavorSo);
+        FlavorSo _flavorSo = RecipeFlavor.instance.GetFlavourSo(myFlavorType);
+        PanManager.instance.AcquireFlavor(_flavorSo);
+        
         foreach (var item in torchParts)
         {
             item.SetActive(false);
