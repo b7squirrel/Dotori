@@ -148,9 +148,11 @@ public class PanManager : MonoBehaviour
         AddPhysics(_roll);
         float _hSpeed = _roll.GetComponent<EnemyRolling>().horizontalSpeed;
         float _vSpeed = _roll.GetComponent<EnemyRolling>().verticalSpeed;
-        Vector2 _mouseDirection = playerTargetController.GetMouseDirection();
-        _roll.GetComponent<Rigidbody2D>().velocity = 
-            new Vector2(_mouseDirection.x * _hSpeed, _mouseDirection.y * _hSpeed);
+        //Vector2 _mouseDirection = playerTargetController.GetMouseDirection();
+        //_roll.GetComponent<Rigidbody2D>().velocity = 
+        //    new Vector2(_mouseDirection.x * _hSpeed, _mouseDirection.y * _hSpeed);
+        _roll.GetComponent<Rigidbody2D>().velocity =
+            new Vector2(_hSpeed * PlayerController.instance.GetPlayerDirection(), _hSpeed);
 
         // 0번 슬롯의 롤을 비워주고 롤 갯수를 하나 줄임
         _panSlots[0].RemoveRoll();

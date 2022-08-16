@@ -81,7 +81,7 @@ public class EnemyProjectile : MonoBehaviour
             theRB.velocity = new Vector2(moveDirection.x, moveDirection.y);
             return;
         }
-        FeedbackOnParried();
+        //FeedbackOnParried();
     }
 
     /// <summary>
@@ -187,8 +187,8 @@ public class EnemyProjectile : MonoBehaviour
         effectPoint.position += new Vector3(2f, .7f, 0f);
         effectPoint.eulerAngles = new Vector3(transform.rotation.x, PlayerController.instance.transform.rotation.y, -10f);
 
-        Vector2 _mouseDirection = playerTargetController.GetMouseDirection();
-        theRB.velocity = deflectionSpeed * _mouseDirection;
+        //Vector2 _mouseDirection = playerTargetController.GetMouseDirection();
+        //theRB.velocity = deflectionSpeed * _mouseDirection;
     }
     Vector2 CalculateVelecity(Vector2 _target, Vector2 _origin, float time)
     {

@@ -274,11 +274,11 @@ public class PlayerController : MonoBehaviour
     void Dodge()
     {
         
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             onDownKey = true;
         }
-        if (Input.GetKeyUp(KeyCode.S))
+        if (Input.GetKeyUp(KeyCode.DownArrow))
         {
             onDownKey = false;
         }
@@ -388,7 +388,7 @@ public class PlayerController : MonoBehaviour
         jumpRemember -= Time.deltaTime;
         ManageCoyoteTime();
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             jumpRemember = jumpRememberTime;
         }
@@ -403,7 +403,7 @@ public class PlayerController : MonoBehaviour
 
         if (coyoteTimeCounter < 0)
         {
-            if (Input.GetKeyDown(KeyCode.W) && canDoubleJump)
+            if (Input.GetKeyDown(KeyCode.X) && canDoubleJump)
             {
                 theRB.velocity = new Vector2(theRB.velocity.x, jumpForce * 1.2f);
                 playerData.Play(PlayerData.soundType.jump);

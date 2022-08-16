@@ -73,14 +73,14 @@ public class PlayerCapture : MonoBehaviour
             IsCapturing = false;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Z))
         {
             if (panAnim.GetCurrentAnimatorStateInfo(0).IsName("Pan_Capture"))
                 return;
 
             IsCapturing = true;
             playerData.Play(PlayerData.soundType.captureSwing);
-            CaptureDirection = playerTargetController.GetMouseHorizontalDirection();
+            //CaptureDirection = playerTargetController.GetMouseHorizontalDirection();
             Toss(true);
             panAnim.Play("Pan_Capture");
         }
@@ -119,7 +119,7 @@ public class PlayerCapture : MonoBehaviour
 
     void HitRolls()
     {
-        if (Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.C) || Input.GetMouseButtonDown(1))
         {
             if (panManager.CountRollNumber() == 0)
                 return;
